@@ -4,7 +4,7 @@
 # The site's label check reads the copy (site/src/scripts/labels.test.js); CI never fetches the portal.
 # With --check, nothing is written: the copy is compared with that commit, and the script exits 1 when they differ.
 # A release runs --check with the titan-cloud-console commit it ships. Exit 1 means only that the copy differs; any
-# failure to read the portal's words (unknown commit, files moved, no lib/*State.ts) exits 2.
+# failure to read the portal's words (unknown commit, files moved, no lib/*State.ts), or a missing ref, exits 2.
 # Usage: scripts/sync-portal-labels.sh [--check] <titan-cloud-console commit, tag or branch>
 set -euo pipefail
 check=false
@@ -12,14 +12,18 @@ if [ "${1:-}" = "--check" ]; then
   check=true
   shift
 fi
-ref=${1:?usage: scripts/sync-portal-labels.sh [--check] <titan-cloud-console commit, tag or branch>}
+if [ -z "${1:-}" ]; then
+  echo "usage: scripts/sync-portal-labels.sh [--check] <titan-cloud-console commit, tag or branch>" >&2
+  exit 2
+fi
+ref=$1
 cd "$(dirname "$0")/.."
 repo=OpenViCloud/titan-cloud-console
 cannot_read() {
   echo "cannot read the portal's words at $repo@$ref: $1" >&2
   exit 2
 }
-sha=$(gh api "repos/$repo/commits/$ref" --jq .sha) || cannot_read "unknown commit"
+sha=$(gh api "repos/$repo/commits/$ref" --jq .sha) || cannot_read "cannot resolve the commit (unknown ref, or gh failed)"
 
 fetched=$(mktemp -d)
 trap 'rm -rf "$fetched"' EXIT
