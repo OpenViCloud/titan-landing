@@ -36,7 +36,9 @@ portal's words changed since the copy, so the docs are checked again before the 
 
 Every push to `main` publishes the `linux/arm64` image `ghcr.io/openvicloud/titan-landing` (`ci-site.yml`), tagged
 with the commit's first 7 characters. Only the publishing job of a push to `main` may write packages; pull requests run
-the tests only. OpenViCloud/titan decides which tag each of its environments runs and is responsible for pulling it.
+the tests only. Dev runs the tag that `scripts/pull-images.py` of
+[OpenViCloud/titan-local-cluster](https://github.com/OpenViCloud/titan-local-cluster) picks; staging runs the tag a
+release of [OpenViCloud/titan](https://github.com/OpenViCloud/titan) promotes.
 
 ## License
 

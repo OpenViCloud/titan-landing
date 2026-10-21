@@ -1,0 +1,4 @@
+{
+  "apiBaseUrl": "http://api.localhost:8080",
+  "portalUrl": "http://portal.localhost:8080"
+}
