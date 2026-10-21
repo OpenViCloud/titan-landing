@@ -1,0 +1,13 @@
+---
+// Starlight's head plus the language boot (docs/features/public-site/design.md#site-language): remember the
+// language select, and move a first visit from Vietnam to the Vietnamese page.
+import Default from '@astrojs/starlight/components/Head.astro';
+---
+
+<Default><slot /></Default>
+
+<script>
+  import { boot } from '../scripts/language.js';
+
+  boot();
+</script>

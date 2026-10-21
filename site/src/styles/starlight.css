@@ -1,0 +1,21 @@
+/* Starlight mapped onto the site brand (tokens.css). Starlight's own light-theme block is
+   :root[data-theme='light'], more specific than :root, so light mode needs its own accents:
+   the landing amber is too light to read on white. */
+:root,
+::backdrop {
+  --sl-font: var(--font-sans);
+  --sl-font-mono: var(--font-mono);
+  --sl-color-accent-low: hsl(36 45% 14%);
+  --sl-color-accent: hsl(38 95% 50%);
+  --sl-color-accent-high: hsl(38 95% 58%);
+  --sl-color-black: hsl(225 18% 5%);
+  --sl-color-gray-6: hsl(225 16% 8%);
+  --sl-color-gray-5: hsl(225 12% 18%);
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+  --sl-color-accent-low: hsl(40 90% 90%);
+  --sl-color-accent: hsl(30 90% 32%);
+  --sl-color-accent-high: hsl(28 85% 22%);
+}

@@ -1,0 +1,21 @@
+{
+  "name": "titan-site",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "pretest": "node scripts/check-node.mjs",
+    "test": "node --test 'src/scripts/*.test.js' 'scripts/*.test.mjs'",
+    "check-dist": "node scripts/check-dist.mjs"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.4",
+    "@fontsource/be-vietnam-pro": "5.3.0",
+    "astro": "7.3.5"
+  }
+}
