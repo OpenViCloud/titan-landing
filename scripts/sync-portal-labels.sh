@@ -3,7 +3,8 @@
 # portal/src/i18n/{en,vi}.ts and portal/src/lib/*State.ts, and records that commit in portal-labels/SOURCE.
 # The site's label check reads the copy (site/src/scripts/labels.test.js); CI never fetches the portal.
 # With --check, nothing is written: the copy is compared with that commit, and the script exits 1 when they differ.
-# A release runs --check with the titan-cloud-console commit it ships.
+# A release runs --check with the titan-cloud-console commit it ships. Exit 1 means only that the copy differs; any
+# failure to read the portal's words (unknown commit, files moved, no lib/*State.ts) exits 2.
 # Usage: scripts/sync-portal-labels.sh [--check] <titan-cloud-console commit, tag or branch>
 set -euo pipefail
 check=false
@@ -14,20 +15,25 @@ fi
 ref=${1:?usage: scripts/sync-portal-labels.sh [--check] <titan-cloud-console commit, tag or branch>}
 cd "$(dirname "$0")/.."
 repo=OpenViCloud/titan-cloud-console
-sha=$(gh api "repos/$repo/commits/$ref" --jq .sha)
+cannot_read() {
+  echo "cannot read the portal's words at $repo@$ref: $1" >&2
+  exit 2
+}
+sha=$(gh api "repos/$repo/commits/$ref" --jq .sha) || cannot_read "unknown commit"
 
 fetched=$(mktemp -d)
 trap 'rm -rf "$fetched"' EXIT
 mkdir -p "$fetched/i18n" "$fetched/lib"
 fetch() {
-  gh api "repos/$repo/contents/portal/src/$1?ref=$sha" -H "Accept: application/vnd.github.raw" > "$fetched/$1"
+  gh api "repos/$repo/contents/portal/src/$1?ref=$sha" -H "Accept: application/vnd.github.raw" > "$fetched/$1" ||
+    cannot_read "no portal/src/$1"
 }
 fetch i18n/en.ts
 fetch i18n/vi.ts
-states=$(gh api "repos/$repo/contents/portal/src/lib?ref=$sha" --jq '.[] | select(.name | endswith("State.ts")) | .name')
+states=$(gh api "repos/$repo/contents/portal/src/lib?ref=$sha" --jq '.[] | select(.name | endswith("State.ts")) | .name') ||
+  cannot_read "no portal/src/lib"
 if [ -z "$states" ]; then
-  echo "no portal/src/lib/*State.ts at $repo@$sha: the portal moved its state words, so the copy cannot be trusted" >&2
-  exit 2
+  cannot_read "no portal/src/lib/*State.ts"
 fi
 while IFS= read -r name; do
   fetch "lib/$name"
