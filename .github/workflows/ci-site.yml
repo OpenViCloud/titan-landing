@@ -36,8 +36,8 @@ jobs:
       # The internal docs live in OpenViCloud/titan-ops; the copy check below compares the dist against its main.
       # TITAN_OPS_READ can only read that repository, so the download keeps working once titan-ops is private; without
       # it (not set, or a run from a fork or Dependabot) this repository's token reads titan-ops only while it is
-      # public. It runs before npm ci, so no dependency's code sees the token. The log names the token used, which a
-      # green run alone does not show while titan-ops is public. Token: titan-ops
+      # public. It runs before npm ci, so no dependency's code sees TITAN_OPS_READ. The log names the token used, which
+      # a green run alone does not show while titan-ops is public. Token: titan-ops
       # docs/infra/runbooks/runbook-titan-ops-read-token.md
       - name: Download the titan-ops docs
         env:
