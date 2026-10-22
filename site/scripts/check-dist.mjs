@@ -1,7 +1,8 @@
-// The site must never ship the internal docs of OpenViCloud/titan (docs/features/public-site/user-stories.md#us-site-02 AC-3).
-// Customer pages are written under site/src/content/; a stray copy of titan's docs/ would publish internal design
-// notes, and credentials.local.md files hold real test passwords.
-// Usage: node scripts/check-dist.mjs [--docs-dir <titan docs/>] [--require-docs]
+// The site must never ship the internal docs of OpenViCloud/titan-ops
+// (docs/features/public-site/user-stories.md#us-site-02 AC-3). Customer pages are written under site/src/content/; a
+// stray copy of titan-ops's docs/ would publish internal design notes, and credentials.local.md files hold real test
+// passwords.
+// Usage: node scripts/check-dist.mjs [--docs-dir <titan-ops docs/>] [--require-docs]
 import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
@@ -80,5 +81,5 @@ if (isMain(process.argv[1], import.meta.url)) {
     for (const problem of problems) console.error(`  - ${problem}`);
     process.exit(1);
   }
-  console.log(`check-dist: OK — ${distCount} dist files, compared against ${docsCompared} titan docs files`);
+  console.log(`check-dist: OK — ${distCount} dist files, compared against ${docsCompared} titan-ops docs files`);
 }
