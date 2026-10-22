@@ -42,11 +42,17 @@ jobs:
       - name: Build
         run: npm run build
 
-      # The internal docs live in OpenViCloud/titan-ops (public); the copy check compares the dist against its main.
+      # The internal docs live in OpenViCloud/titan-ops; the copy check compares the dist against its main. TITAN_OPS_READ
+      # is a token that can only read that repository, so the download keeps working once titan-ops is private. Without
+      # the secret (not set, or a pull request from a fork) this repository's own token reads it only while titan-ops
+      # is public.
       - name: Dist holds no internal docs
+        env:
+          GH_TOKEN: ${{ secrets.TITAN_OPS_READ || github.token }}
         run: |
           mkdir -p "$RUNNER_TEMP/titan"
-          curl -fsSL https://codeload.github.com/OpenViCloud/titan-ops/tar.gz/main | tar -xz -C "$RUNNER_TEMP/titan" --strip-components=1 --wildcards '*/docs/*'
+          gh api repos/OpenViCloud/titan-ops/tarball/main \
+            | tar -xz -C "$RUNNER_TEMP/titan" --strip-components=1 --wildcards '*/docs/*'
           node scripts/check-dist.mjs --require-docs --docs-dir "$RUNNER_TEMP/titan/docs"
 
       # Served by the real nginx config: real 404s and the noindex header, which a build alone cannot show. The image
