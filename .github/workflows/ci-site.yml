@@ -33,6 +33,23 @@ jobs:
           cache: 'npm'
           cache-dependency-path: site/package-lock.json
 
+      # The internal docs live in OpenViCloud/titan-ops; the copy check below compares the dist against its main.
+      # TITAN_OPS_READ can only read that repository, so the download keeps working once titan-ops is private; without
+      # it (not set, or a run from a fork or Dependabot) this repository's token reads titan-ops only while it is
+      # public. It runs before npm ci, so no dependency's code sees the token. The log names the token used, which a
+      # green run alone does not show while titan-ops is public. Token: titan-ops
+      # docs/infra/runbooks/runbook-titan-ops-read-token.md
+      - name: Download the titan-ops docs
+        env:
+          GH_TOKEN: ${{ secrets.TITAN_OPS_READ || github.token }}
+          TOKEN_SOURCE: ${{ secrets.TITAN_OPS_READ != '' && 'TITAN_OPS_READ' || 'github.token' }}
+        run: |
+          set -o pipefail
+          echo "titan-ops read with $TOKEN_SOURCE"
+          mkdir -p "$RUNNER_TEMP/titan"
+          gh api repos/OpenViCloud/titan-ops/tarball/main \
+            | tar -xz -C "$RUNNER_TEMP/titan" --strip-components=1 --wildcards '*/docs/*'
+
       - name: Install dependencies
         run: npm ci
 
@@ -42,18 +59,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      # The internal docs live in OpenViCloud/titan-ops; the copy check compares the dist against its main. TITAN_OPS_READ
-      # is a token that can only read that repository, so the download keeps working once titan-ops is private. Without
-      # the secret (not set, or a pull request from a fork) this repository's own token reads it only while titan-ops
-      # is public.
       - name: Dist holds no internal docs
-        env:
-          GH_TOKEN: ${{ secrets.TITAN_OPS_READ || github.token }}
-        run: |
-          mkdir -p "$RUNNER_TEMP/titan"
-          gh api repos/OpenViCloud/titan-ops/tarball/main \
-            | tar -xz -C "$RUNNER_TEMP/titan" --strip-components=1 --wildcards '*/docs/*'
-          node scripts/check-dist.mjs --require-docs --docs-dir "$RUNNER_TEMP/titan/docs"
+        run: node scripts/check-dist.mjs --require-docs --docs-dir "$RUNNER_TEMP/titan/docs"
 
       # Served by the real nginx config: real 404s and the noindex header, which a build alone cannot show. The image
       # runs with no env of its own: the install script no longer carries the site's address.
