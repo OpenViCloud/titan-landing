@@ -26,8 +26,8 @@ def fetch(url):
 
 
 # The CLI is not served by the site: the install script and the CLI guide take it from the latest release of
-# OpenViCloud/cli (docs/features/cli/design.md#cli-download).
-CLI_RELEASE = "https://github.com/OpenViCloud/cli/releases/latest/download"
+# OpenViCloud/titan-cli (docs/features/cli/design.md#cli-download).
+CLI_RELEASE = "https://github.com/OpenViCloud/titan-cli/releases/latest/download"
 
 
 def cli_download_checks(base):

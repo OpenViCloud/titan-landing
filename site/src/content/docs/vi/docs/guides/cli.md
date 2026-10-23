@@ -21,18 +21,18 @@ Trên Windows, hoặc khi muốn cài tay, làm theo các bước dưới.
 
 ## Tải về
 
-CLI được phát hành trên GitHub: mọi file dưới đây lấy từ [bản phát hành mới nhất](https://github.com/OpenViCloud/cli/releases/latest) của [OpenViCloud/cli](https://github.com/OpenViCloud/cli), nơi có cả mã nguồn của CLI. Chọn file theo hệ điều hành và kiến trúc máy của bạn.
+CLI được phát hành trên GitHub: mọi file dưới đây lấy từ [bản phát hành mới nhất](https://github.com/OpenViCloud/titan-cli/releases/latest) của [OpenViCloud/titan-cli](https://github.com/OpenViCloud/titan-cli), nơi có cả mã nguồn của CLI. Chọn file theo hệ điều hành và kiến trúc máy của bạn.
 
 | Hệ điều hành | Kiến trúc | Tải về |
 |---|---|---|
-| macOS | Apple silicon | [openvicloud-darwin-arm64](https://github.com/OpenViCloud/cli/releases/latest/download/openvicloud-darwin-arm64) |
-| macOS | Intel | [openvicloud-darwin-amd64](https://github.com/OpenViCloud/cli/releases/latest/download/openvicloud-darwin-amd64) |
-| Linux | x86_64 | [openvicloud-linux-amd64](https://github.com/OpenViCloud/cli/releases/latest/download/openvicloud-linux-amd64) |
-| Linux | arm64 | [openvicloud-linux-arm64](https://github.com/OpenViCloud/cli/releases/latest/download/openvicloud-linux-arm64) |
-| Windows | x86_64 | [openvicloud-windows-amd64.exe](https://github.com/OpenViCloud/cli/releases/latest/download/openvicloud-windows-amd64.exe) |
-| Windows | arm64 | [openvicloud-windows-arm64.exe](https://github.com/OpenViCloud/cli/releases/latest/download/openvicloud-windows-arm64.exe) |
+| macOS | Apple silicon | [openvicloud-darwin-arm64](https://github.com/OpenViCloud/titan-cli/releases/latest/download/openvicloud-darwin-arm64) |
+| macOS | Intel | [openvicloud-darwin-amd64](https://github.com/OpenViCloud/titan-cli/releases/latest/download/openvicloud-darwin-amd64) |
+| Linux | x86_64 | [openvicloud-linux-amd64](https://github.com/OpenViCloud/titan-cli/releases/latest/download/openvicloud-linux-amd64) |
+| Linux | arm64 | [openvicloud-linux-arm64](https://github.com/OpenViCloud/titan-cli/releases/latest/download/openvicloud-linux-arm64) |
+| Windows | x86_64 | [openvicloud-windows-amd64.exe](https://github.com/OpenViCloud/titan-cli/releases/latest/download/openvicloud-windows-amd64.exe) |
+| Windows | arm64 | [openvicloud-windows-arm64.exe](https://github.com/OpenViCloud/titan-cli/releases/latest/download/openvicloud-windows-arm64.exe) |
 
-Tải thêm [SHA256SUMS](https://github.com/OpenViCloud/cli/releases/latest/download/SHA256SUMS) vào cùng thư mục với file CLI, để kiểm tra ở bước sau.
+Tải thêm [SHA256SUMS](https://github.com/OpenViCloud/titan-cli/releases/latest/download/SHA256SUMS) vào cùng thư mục với file CLI, để kiểm tra ở bước sau.
 
 ## Kiểm tra file đã tải
 
@@ -65,8 +65,8 @@ Trên macOS hoặc Linux, file tải đúng sẽ in ra một dòng kết thúc b
 `SHA256SUMS` được ký bằng khoá phát hành của OpenViCloud, fingerprint `BB74 B8EC F2BA A232 1296  E3BA 6200 9A5A 7C77 9F46`. Nếu máy có GnuPG, tải chữ ký và khoá công khai vào cùng thư mục rồi kiểm tra:
 
 ```bash
-curl -fsSLO https://github.com/OpenViCloud/cli/releases/latest/download/SHA256SUMS.sig
-curl -fsSLO https://raw.githubusercontent.com/OpenViCloud/cli/main/openvicloud-release.asc
+curl -fsSLO https://github.com/OpenViCloud/titan-cli/releases/latest/download/SHA256SUMS.sig
+curl -fsSLO https://raw.githubusercontent.com/OpenViCloud/titan-cli/main/openvicloud-release.asc
 gpg --import openvicloud-release.asc
 gpg --verify SHA256SUMS.sig SHA256SUMS
 ```

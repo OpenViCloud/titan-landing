@@ -12,8 +12,8 @@ import { fileURLToPath } from 'node:url';
 // (docs/features/cli/design.md#install-script).
 
 const scriptPath = fileURLToPath(new URL('../../public/install.sh', import.meta.url));
-const release = 'https://github.com/OpenViCloud/cli/releases/latest/download';
-const guide = 'https://github.com/OpenViCloud/cli#install';
+const release = 'https://github.com/OpenViCloud/titan-cli/releases/latest/download';
+const guide = 'https://github.com/OpenViCloud/titan-cli#install';
 const downloads = [
   'openvicloud-darwin-amd64', 'openvicloud-darwin-arm64', 'openvicloud-linux-amd64', 'openvicloud-linux-arm64',
   'openvicloud-windows-amd64.exe', 'openvicloud-windows-arm64.exe',
