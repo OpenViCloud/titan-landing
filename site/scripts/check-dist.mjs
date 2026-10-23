@@ -35,7 +35,7 @@ export function distProblems({ distDir, docsDir, requireDocs }) {
     if (/credentials/i.test(relative(distDir, file))) problems.push(`credential-like file: ${relative(distDir, file)}`);
   }
 
-  // The Docker build has only site/ in its context and no docs to compare against; CI passes the docs it downloaded.
+  // Only a machine that can read titan-ops (private) passes its docs/; CI and the Docker build have none to compare.
   let docsCompared = 0;
   if (docsDir !== undefined && existsSync(docsDir)) {
     const docHashes = new Map();

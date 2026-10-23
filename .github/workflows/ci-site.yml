@@ -42,13 +42,9 @@ jobs:
       - name: Build
         run: npm run build
 
-      # The internal docs live in OpenViCloud/titan-ops (public); the copy check compares the dist against its main.
-      - name: Dist holds no internal docs
-        run: |
-          mkdir -p "$RUNNER_TEMP/titan"
-          curl -fsSL https://codeload.github.com/OpenViCloud/titan-ops/tar.gz/main | tar -xz -C "$RUNNER_TEMP/titan" --strip-components=1 --wildcards '*/docs/*'
-          node scripts/check-dist.mjs --require-docs --docs-dir "$RUNNER_TEMP/titan/docs"
-
+      # The image build runs check-dist without docs: required pages, no credential files. Its comparison with the
+      # internal docs needs OpenViCloud/titan-ops, which is private and which CI does not read, so it runs before a
+      # merge on a machine that can read it (README, Test).
       # Served by the real nginx config: real 404s and the noindex header, which a build alone cannot show. The image
       # runs with no env of its own: the install script no longer carries the site's address.
       - name: Serve the image and probe it

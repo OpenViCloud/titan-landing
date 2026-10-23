@@ -21,6 +21,14 @@ Node 22.
 (cd site && npm test && npm run build)
 ```
 
+Before merging a change, check that the build holds no copy of the internal docs. It needs a checkout of
+[OpenViCloud/titan-ops](https://github.com/OpenViCloud/titan-ops), which is private, so it runs on a machine that can
+read it and not in CI (the path absolute or relative to `site/`):
+
+```sh
+(cd site && npm run build && node scripts/check-dist.mjs --require-docs --docs-dir <titan-ops checkout>/docs)
+```
+
 `site/` checks that the bold labels of its docs are labels the portal shows. It reads `portal-labels/` (the portal's
 words) and the API contract `api/openapi-v1.json`, both copies made at a pinned commit:
 

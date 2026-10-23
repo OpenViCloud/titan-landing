@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, symlinkSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -31,6 +31,14 @@ test('a dist file with the content of a doc is named', () => {
   const docsDir = tree({ 'features/vm/design.md': '# VM design' });
   const result = distProblems({ distDir: dist({ 'notes/design.txt': '# VM design' }), docsDir, requireDocs: true });
   assert.deepEqual(result.problems, ['notes/design.txt is a copy of docs/features/vm/design.md']);
+});
+
+test('a missing required page and a credential-like file fail without any docs', () => {
+  const distDir = dist({ 'docs/credentials.local.md': 'password' });
+  rmSync(join(distDir, '404.html'));
+  const result = distProblems({ distDir, docsDir: undefined, requireDocs: false });
+  assert.deepEqual(result.problems, ['missing 404.html', 'credential-like file: docs/credentials.local.md']);
+  assert.equal(result.docsCompared, 0);
 });
 
 test('requiring docs with nothing to compare against fails (the check can fail)', () => {
