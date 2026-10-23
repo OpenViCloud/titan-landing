@@ -101,7 +101,7 @@ test('every link in the docs points to a page or landing anchor that exists', ()
 
 // The CLI downloads are one set of files for both languages (docs/features/cli/design.md#cli-download).
 // The CLI is downloaded from its own repository's latest release (docs/features/cli/design.md#cli-download).
-const cliRelease = 'https://github.com/OpenViCloud/cli/releases/latest/download/';
+const cliRelease = 'https://github.com/OpenViCloud/titan-cli/releases/latest/download/';
 
 test('English docs link to English pages and Vietnamese docs to Vietnamese pages', () => {
   const wrong = [];
@@ -110,14 +110,14 @@ test('English docs link to English pages and Vietnamese docs to Vietnamese pages
   assert.deepEqual(wrong, []);
 });
 
-// What each CLI page links to, and every asset a CLI release carries (.goreleaser.yaml of OpenViCloud/cli): a link
+// What each CLI page links to, and every asset a CLI release carries (.goreleaser.yaml of OpenViCloud/titan-cli): a link
 // to any other name is a 404.
 const linkedFiles = ['SHA256SUMS', 'openvicloud-darwin-amd64', 'openvicloud-darwin-arm64', 'openvicloud-linux-amd64',
   'openvicloud-linux-arm64', 'openvicloud-windows-amd64.exe', 'openvicloud-windows-arm64.exe'];
 const releaseAssets = [...linkedFiles, 'SHA256SUMS.sig'].map((name) => `${cliRelease}${name}`);
 
 function releaseLinks(file) {
-  return [...readFileSync(file, 'utf8').matchAll(/\]\((https:\/\/github\.com\/OpenViCloud\/cli\/releases\/latest\/download\/[^)\s]*)\)/g)].map((match) => match[1]);
+  return [...readFileSync(file, 'utf8').matchAll(/\]\((https:\/\/github\.com\/OpenViCloud\/titan-cli\/releases\/latest\/download\/[^)\s]*)\)/g)].map((match) => match[1]);
 }
 
 test('every download link in the docs names an asset of the CLI release', () => {

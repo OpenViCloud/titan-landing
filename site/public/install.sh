@@ -3,7 +3,7 @@
 #
 #   curl -fsSL <site>/install.sh | sh
 #
-# The binary comes from the latest release of OpenViCloud/cli, the same on every site
+# The binary comes from the latest release of OpenViCloud/titan-cli, the same on every site
 # (docs/features/cli/design.md#install-script). Everything runs from main, called on the last line, so a download cut
 # short runs nothing.
 
@@ -13,8 +13,8 @@ fail() {
 }
 
 main() {
-  release='https://github.com/OpenViCloud/cli/releases/latest/download'
-  guide='https://github.com/OpenViCloud/cli#install'
+  release='https://github.com/OpenViCloud/titan-cli/releases/latest/download'
+  guide='https://github.com/OpenViCloud/titan-cli#install'
 
   system=$(uname -s)
   case "$system" in
