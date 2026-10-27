@@ -1,6 +1,6 @@
 ---
 title: Tạo và xoá network
-description: Tạo network riêng cho VM trên portal, chọn tên, zone, dải CIDR, và xoá network khi không dùng nữa.
+description: Tạo network riêng cho VM trên portal, chọn tên, cluster, dải CIDR, và xoá network khi không dùng nữa.
 ---
 
 Network là mạng riêng nối các VM của bạn với nhau. Mỗi VM cần một network, nên bạn tạo network trước rồi mới [tạo VM](/vi/docs/guides/vm/).
@@ -10,7 +10,7 @@ Network là mạng riêng nối các VM của bạn với nhau. Mỗi VM cần m
 1. Mở trang **Mạng** ở thanh bên trái.
 2. Bấm **Tạo mạng**.
 3. Điền **Tên**. Tên dài tối đa 100 ký tự, chỉ gồm chữ, số, dấu gạch ngang (`-`) và gạch dưới (`_`), và phải bắt đầu bằng chữ hoặc số.
-4. Chọn **Zone**. Nếu bỏ trống, portal báo "Chọn một zone" và không gửi gì.
+4. Chọn **Cluster**. Nếu bỏ trống, portal báo "Chọn một cluster" và không gửi gì.
 5. Điền **CIDR** nếu bạn muốn chọn dải địa chỉ, ví dụ `10.0.0.0/24`. Ô này không bắt buộc. Nếu để trống, hệ thống tự chọn một dải và hiện nó ở cột **CIDR** khi network tạo xong.
 6. Đánh dấu **Bật IPv6 công khai** nếu bạn muốn VM trên network này truy cập được từ Internet qua IPv6. Đọc [IPv6 công khai](/vi/docs/guides/public-ipv6/) trước khi đánh dấu.
 7. Bấm **Tạo mạng**.
@@ -29,9 +29,9 @@ Nếu bạn tự chọn CIDR, dải đó không được chồng lên dải củ
 
 Địa chỉ IPv4 trong network chỉ để các VM trên cùng network nói chuyện với nhau. Network không có đường ra Internet qua IPv4. Xem [giới hạn hiện tại](/vi/docs/known-limitations/).
 
-## Zone
+## Cluster
 
-Network nằm trong zone bạn chọn lúc tạo. Khi tạo VM, portal chỉ liệt kê các network đã **Created** trong zone của VM.
+Network nằm trong cluster bạn chọn lúc tạo. Khi tạo VM, portal chỉ liệt kê các network đã **Created** trong cluster của VM.
 
 ## Hạn mức
 
@@ -45,6 +45,6 @@ Mặc định, một tài khoản mới được tạo 1 network. Khi đã đủ
 
 Khi network còn VM hoặc còn [load balancer](/vi/docs/guides/load-balancer/) chưa xoá xong, nút **Xoá** bị tắt; nếu lý do là load balancer, rê chuột lên nút sẽ thấy "Xoá các load balancer của mạng này trước". Nếu server vẫn từ chối, portal báo "Không xoá được: mạng vẫn còn máy ảo hoặc load balancer" (mã `NETWORK_NOT_EMPTY`). Thứ tự xoá: load balancer, rồi VM, rồi network.
 
-Sau khi xác nhận, portal báo "Đã xoá mạng", nhưng network vẫn nằm trong bảng với trạng thái **Deleting** cho tới khi xoá xong, rồi mới biến mất. Các firewall rule của network bị xoá cùng network. Nếu OpenViCloud không xoá được network, dòng đó trở về trạng thái trước và hiện lý do bằng chữ đỏ dưới dòng zone; bấm **Xoá** lần nữa để thử lại.
+Sau khi xác nhận, portal báo "Đã xoá mạng", nhưng network vẫn nằm trong bảng với trạng thái **Deleting** cho tới khi xoá xong, rồi mới biến mất. Các firewall rule của network bị xoá cùng network. Nếu OpenViCloud không xoá được network, dòng đó trở về trạng thái trước và hiện lý do bằng chữ đỏ dưới dòng cluster; bấm **Xoá** lần nữa để thử lại.
 
 Nút **Xoá** cũng tắt khi network còn đang **Creating** hoặc **Deleting**. Network có trạng thái **Failed** hoặc **Not found** vẫn xoá được.

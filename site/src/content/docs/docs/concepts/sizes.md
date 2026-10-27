@@ -24,12 +24,12 @@ If the size you chose no longer exists, OpenViCloud refuses with the error `VM_O
 
 A template tells which operating system the VM runs. The **Template** field shows the template name and the operating system, as `<name> — <operating system>`.
 
-The template list depends on the [zone](/docs/concepts/zone/) you choose. You must choose the zone first, then you can choose a template.
+The template list depends on the [cluster](/docs/concepts/cluster/) you choose. You must choose the cluster first, then you can choose a template.
 
 Two errors can happen when you choose a template:
 
-- `TEMPLATE_NOT_SYNCED`: the template is not in this zone yet. The portal shows *Selected template is not available in this zone yet — pick another*.
-- `TEMPLATE_UNAVAILABLE`: the template cannot be used in this zone for now. The portal shows *Selected template is not available right now — pick another*.
+- `TEMPLATE_NOT_SYNCED`: the template is not in this cluster yet. The portal shows *Selected template is not available in this cluster yet — pick another*.
+- `TEMPLATE_UNAVAILABLE`: the template cannot be used in this cluster for now. The portal shows *Selected template is not available right now — pick another*.
 
 ## Volumes
 
@@ -37,7 +37,7 @@ A volume is a disk you create separately and then attach to a VM. OpenViCloud ha
 
 In the create volume form:
 
-1. Choose a **Zone**.
+1. Choose a **Cluster**.
 2. In the **Volume Offering** field, choose `Standard — Custom size`.
 3. Enter the size in the **Size (GB)** field. This field is required and must be greater than 0.
 

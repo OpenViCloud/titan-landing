@@ -10,7 +10,7 @@ Provider Terraform `openvicloud` quản lý tài nguyên trong [tài khoản](/v
 | Loại | Tên |
 |---|---|
 | Resource | `openvicloud_network`, `openvicloud_firewall_rule`, `openvicloud_ssh_key`, `openvicloud_vm`, `openvicloud_volume`, `openvicloud_volume_attachment`, `openvicloud_load_balancer` |
-| Data source | `openvicloud_zones`, `openvicloud_templates`, `openvicloud_vm_offerings`, `openvicloud_volume_offerings` |
+| Data source | `openvicloud_clusters`, `openvicloud_templates`, `openvicloud_vm_offerings`, `openvicloud_volume_offerings` |
 
 Snapshot và hoá đơn không nằm trong provider; hãy dùng portal.
 
@@ -25,10 +25,10 @@ export OPENVICLOUD_TOKEN=ovc_...
 
 Provider mặc định gọi API staging của OpenViCloud. Đặt `OPENVICLOUD_API_URL` để trỏ sang nơi khác.
 
-3. Chọn một zone và một hệ điều hành. CLI liệt kê được cả hai:
+3. Chọn một cluster và một hệ điều hành. CLI liệt kê được cả hai:
 
 ```bash
-openvicloud zone list
+openvicloud cluster list
 openvicloud template list
 ```
 
@@ -45,7 +45,7 @@ terraform {
 
 provider "openvicloud" {}
 
-variable "zone_id" {
+variable "cluster_id" {
   type = string
 }
 
@@ -55,7 +55,7 @@ variable "template_id" {
 
 resource "openvicloud_network" "web" {
   name    = "web"
-  zone_id = var.zone_id
+  cluster_id = var.cluster_id
 }
 
 resource "openvicloud_ssh_key" "me" {
@@ -65,7 +65,7 @@ resource "openvicloud_ssh_key" "me" {
 
 resource "openvicloud_vm" "web" {
   name           = "web-1"
-  zone_id        = var.zone_id
+  cluster_id        = var.cluster_id
   network_id     = openvicloud_network.web.id
   template_id    = var.template_id
   vm_offering_id = "s"
@@ -76,7 +76,7 @@ resource "openvicloud_vm" "web" {
 và các giá trị bạn đã chọn vào `terraform.tfvars`:
 
 ```hcl
-zone_id     = "<zone>"
+cluster_id     = "<cluster>"
 template_id = "<template>"
 ```
 

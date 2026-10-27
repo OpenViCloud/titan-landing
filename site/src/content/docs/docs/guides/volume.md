@@ -9,7 +9,7 @@ A volume is a separate data disk, independent of any VM. All actions are under *
 
 1. Click **Create Volume**.
 2. Fill in **Name**, at most 100 characters.
-3. Choose a **Zone**. A volume can only be attached to a VM in the same zone.
+3. Choose a **Cluster**. A volume can only be attached to a VM in the same cluster.
 4. Choose a **Volume Offering**. There is only one type today: **Standard — Custom size**.
 5. Fill in **Size (GB)**, greater than 0.
 6. Click **Create volume**.
@@ -21,7 +21,7 @@ Each account has at most 10 volumes by default. When you reach it, the portal sh
 ## Attach a volume to a VM
 
 1. Click **Attach** on the volume's row. This button is available when the volume is **Available**.
-2. Choose a VM in the **Attach volume** dialog. The list only has VMs in the same zone, in the Running, Ready, Stopped or Frozen state, and not stopping or being deleted.
+2. Choose a VM in the **Attach volume** dialog. The list only has VMs in the same cluster, in the Running, Ready, Stopped or Frozen state, and not stopping or being deleted.
 3. Click **Attach**.
 
 The volume moves to **Attaching**, then **Attached**. The **Attached to** column shows the VM's name. Each volume is attached to only one VM at a time.
@@ -56,7 +56,7 @@ Each volume has at most 3 snapshots by default. When you reach it, the portal sh
 2. Enter a name for the new volume.
 3. Click **Restore**.
 
-The new volume has the same zone, offering and size as the original volume. The original volume and the snapshot stay as they are. The new volume counts toward the volume limit. If you have reached the limit, the restore is refused and the portal shows "Failed to restore snapshot."
+The new volume has the same cluster, offering and size as the original volume. The original volume and the snapshot stay as they are. The new volume counts toward the volume limit. If you have reached the limit, the restore is refused and the portal shows "Failed to restore snapshot."
 
 **Delete a snapshot.** Click **Delete** on the snapshot, then click **Confirm**. If an action on the snapshot has not finished, the portal shows "Cannot delete yet: a request is still waiting on this snapshot. Try again in a minute."
 

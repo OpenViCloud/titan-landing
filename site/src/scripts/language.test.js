@@ -30,7 +30,7 @@ test('the counterpart of a page keeps the slug', () => {
   assert.equal(counterpartPath('/docs/', 'vi'), '/vi/docs/');
   assert.equal(counterpartPath('/docs/guides/vm/', 'vi'), '/vi/docs/guides/vm/');
   assert.equal(counterpartPath('/vi/', 'en'), '/');
-  assert.equal(counterpartPath('/vi/docs/concepts/zone/', 'en'), '/docs/concepts/zone/');
+  assert.equal(counterpartPath('/vi/docs/concepts/cluster/', 'en'), '/docs/concepts/cluster/');
 });
 
 test('only the landing and the docs have a counterpart', () => {

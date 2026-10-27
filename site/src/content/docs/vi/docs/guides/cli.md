@@ -3,7 +3,7 @@ title: Công cụ dòng lệnh
 description: Tải, kiểm tra và cài đặt CLI openvicloud, đăng nhập, tạo và quản lý VM và SSH key, và mở phiên SSH.
 ---
 
-`openvicloud` là CLI (công cụ dòng lệnh) của OpenViCloud. CLI cho phép đăng nhập, xem [tài khoản](/vi/docs/guides/account/) của bạn (CLI gọi nó là "tenant"), xem zone, template và size để chọn, tạo và quản lý VM và SSH key, và mở phiên SSH tới một VM. Network, volume, snapshot, firewall rule và load balancer, cũng như trả hoá đơn hay nạp ví, vẫn làm trên portal.
+`openvicloud` là CLI (công cụ dòng lệnh) của OpenViCloud. CLI cho phép đăng nhập, xem [tài khoản](/vi/docs/guides/account/) của bạn (CLI gọi nó là "tenant"), xem cluster, template và size để chọn, tạo và quản lý VM và SSH key, và mở phiên SSH tới một VM. Network, volume, snapshot, firewall rule và load balancer, cũng như trả hoá đơn hay nạp ví, vẫn làm trên portal.
 
 ## Cài bằng một lệnh
 
@@ -155,7 +155,7 @@ Khi `OPENVICLOUD_TOKEN` có giá trị, mọi lệnh — kể cả `vm ssh` — 
 
 - `openvicloud auth login` / `logout` / `status`
 - `openvicloud tenant get` — hiện thông tin tenant của bạn: ID, tên, trạng thái, số VM tối đa, số network tối đa, và ngày tạo.
-- `openvicloud zone list` / `template list [--zone <zone>]` / `size list` — những gì bạn chọn khi tạo VM. `size list` hiện số vCPU, bộ nhớ và giá mỗi giờ (VND) của từng size.
+- `openvicloud cluster list` / `template list [--cluster <cluster>]` / `size list` — những gì bạn chọn khi tạo VM. `size list` hiện số vCPU, bộ nhớ và giá mỗi giờ (VND) của từng size.
 - `openvicloud vm list` / `get` / `create` / `rename` / `start` / `stop` / `delete` — xem [tạo và quản lý VM](#tạo-và-quản-lý-vm).
 - `openvicloud ssh-key add` / `list` / `delete` — xem [SSH key](#ssh-key).
 - `openvicloud vm ssh <tên hoặc id VM>` — mở phiên SSH tới một VM.
@@ -171,25 +171,25 @@ Mọi việc khác — network, volume, snapshot, firewall rule, load balancer, 
 Xem những gì có để chọn, rồi tạo VM:
 
 ```bash
-openvicloud zone list
-openvicloud template list --zone <zone>
+openvicloud cluster list
+openvicloud template list --cluster <cluster>
 openvicloud size list
-openvicloud vm create web-1 --zone <zone> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop
 ```
 
-Bắt buộc có `--zone`, `--network`, `--template` và `--size`. Network phải có sẵn (tạo trên portal). Network, template, size và SSH key cho theo tên hoặc ID. `--ssh-key` lặp được để thêm nhiều key; không có key thì bạn không đăng nhập được vào VM. `--disk-size <GB>` đặt dung lượng đĩa. Tên nào không khớp, CLI báo tên đó và không tạo gì.
+Bắt buộc có `--cluster`, `--network`, `--template` và `--size`. Network phải có sẵn (tạo trên portal). Network, template, size và SSH key cho theo tên hoặc ID. `--ssh-key` lặp được để thêm nhiều key; không có key thì bạn không đăng nhập được vào VM. `--disk-size <GB>` đặt dung lượng đĩa. Tên nào không khớp, CLI báo tên đó và không tạo gì.
 
 Lệnh tạo in ID của VM mới. VM được tạo tiếp ở phía sau; thêm `--wait` để chờ tới khi VM Running hoặc Ready rồi in VM ra:
 
 ```bash
-openvicloud vm create web-1 --zone <zone> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait
 ```
 
 Nếu mạng rớt lúc đang gửi lệnh tạo, CLI gửi lại, tổng cộng tối đa ba lần gửi. Mọi lần gửi mang cùng một khoá yêu cầu, nên bạn vẫn chỉ có một VM.
 
 Các lệnh VM khác nhận tên hoặc ID của VM:
 
-- `openvicloud vm list` — các VM của bạn (trừ VM đã xoá): tên, ID, zone, trạng thái, yêu cầu đang chờ, địa chỉ IPv4.
+- `openvicloud vm list` — các VM của bạn (trừ VM đã xoá): tên, ID, cluster, trạng thái, yêu cầu đang chờ, địa chỉ IPv4.
 - `openvicloud vm get <vm>` — chi tiết một VM, kể cả lý do nếu tạo VM thất bại.
 - `openvicloud vm stop <vm>` / `vm start <vm>` — dừng một VM, hoặc bật VM đã dừng (`start` cũng tiếp tục một VM Frozen). VM đã dừng không bị tính tiền máy.
 - `openvicloud vm rename <vm> <tên mới>`

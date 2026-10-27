@@ -21,15 +21,15 @@ When a request is refused, OpenViCloud returns a JSON body with a `code` field, 
 
 These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are returned with a body of `code` and `message`; unlike the other codes on this page, there is no `title` field to read.
 
-## Zones, sizes and templates
+## Clusters, sizes and templates
 
 | Code | HTTP | Meaning | What to do |
 |----|------|---------|----------------|
-| `ZONE_NOT_FOUND` | 404 | The zone you chose does not exist. | Choose a zone from the list. |
+| `CLUSTER_NOT_FOUND` | 404 | The cluster you chose does not exist. | Choose a cluster from the list. |
 | `VM_OFFERING_NOT_FOUND` | 404 | The VM size you chose does not exist. | Choose another size. |
 | `TEMPLATE_NOT_FOUND` | 404 | The template you chose does not exist. | Choose another template. |
-| `TEMPLATE_NOT_SYNCED` | 422 | The template is not in the VM's zone yet. | Choose another template from that zone's list. |
-| `TEMPLATE_UNAVAILABLE` | 422 | The template cannot be used in this zone for now. | Choose another template, or try again later. |
+| `TEMPLATE_NOT_SYNCED` | 422 | The template is not in the VM's cluster yet. | Choose another template from that cluster's list. |
+| `TEMPLATE_UNAVAILABLE` | 422 | The template cannot be used in this cluster for now. | Choose another template, or try again later. |
 
 ## VMs, VM snapshots and SSH sessions
 
@@ -56,7 +56,7 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `NETWORK_CIDR_OVERLAP` | 422 | The CIDR range you entered overlaps a network you already have. | Choose another CIDR range. |
 | `NETWORK_NOT_FOUND` | 404 | The network does not exist, or does not belong to your account. | Reload the network list. |
 | `NETWORK_NOT_ACTIVE` | 422 | The network is not created yet, so a VM cannot be attached to it. | Wait for the network to be created, then create the VM. |
-| `NETWORK_ZONE_MISMATCH` | 422 | The network is in a different zone from the VM. | Choose a network in the same [zone](/docs/concepts/zone/). |
+| `NETWORK_CLUSTER_MISMATCH` | 422 | The network is in a different cluster from the VM. | Choose a network in the same [cluster](/docs/concepts/cluster/). |
 | `NETWORK_NOT_EMPTY` | 422 | The network still has VMs, or still has load balancers that are not deleted, so it cannot be deleted. | Delete the VMs and load balancers on the network first. |
 | `NETWORK_INVALID_STATE` | 422 | The network is in a state that does not allow this action, for example it is not created yet. | Wait for the network to be created, then try again. |
 | `FIREWALL_QUOTA_EXCEEDED` | 422 | The network already has the maximum number of firewall rules. | Delete some rules on that network. |
@@ -65,8 +65,8 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `FIREWALL_RULE_INVALID_STATE` | 422 | The rule is in a state where it cannot be deleted. | Reload the page to see the rule's new state. |
 | `FIREWALL_RULE_NOT_FOUND` | 404 | The rule does not exist, or belongs to another network. | Reload the rule list. |
 | `IPV6_QUOTA_EXCEEDED` | 422 | You have used up the number of networks with public IPv6 enabled. | Delete a network that has public IPv6, or create this network without it. |
-| `IPV6_NOT_AVAILABLE` | 422 | The zone has no public IPv6 available, or no free address range is left in that zone. | Choose another zone, or create the network without public IPv6. |
-| `IPV6_ALLOCATION_CONFLICT` | 409 | Two networks in the same zone requested public IPv6 at the same instant and were given the same address range. | Try creating the network again. |
+| `IPV6_NOT_AVAILABLE` | 422 | The cluster has no public IPv6 available, or no free address range is left in that cluster. | Choose another cluster, or create the network without public IPv6. |
+| `IPV6_ALLOCATION_CONFLICT` | 409 | Two networks in the same cluster requested public IPv6 at the same instant and were given the same address range. | Try creating the network again. |
 
 ## Volumes and volume snapshots
 
@@ -77,7 +77,7 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `VOLUME_NOT_FOUND` | 404 | The volume does not exist, or does not belong to your account. | Reload the volume list. |
 | `VOLUME_INVALID_STATE` | 422 | The volume is in a state that does not allow this action, for example deleting a volume still attached to a VM, or attaching, detaching or deleting a volume that a machine outside the portal is using. | Wait for the volume to finish its current action, or detach the volume from the VM first. |
 | `VOLUME_HAS_SNAPSHOTS` | 422 | The volume still has snapshots, so it cannot be deleted. | Delete the volume's snapshots first. |
-| `VOLUME_ZONE_MISMATCH` | 422 | The volume and the VM are in two different zones. | Choose a VM in the same [zone](/docs/concepts/zone/) as the volume. |
+| `VOLUME_CLUSTER_MISMATCH` | 422 | The volume and the VM are in two different clusters. | Choose a VM in the same [cluster](/docs/concepts/cluster/) as the volume. |
 | `VOLUME_SNAPSHOT_QUOTA_EXCEEDED` | 422 | The volume already has the maximum number of snapshots. | Delete some of that volume's snapshots. |
 | `VOLUME_SNAPSHOT_NOT_FOUND` | 404 | The snapshot does not exist, or does not belong to this volume. | Reload the snapshot list. |
 | `VOLUME_SNAPSHOT_INVALID_STATE` | 422 | The snapshot is not ready to be restored or deleted. | Wait for the snapshot to be created, then try again. |

@@ -1,6 +1,6 @@
 ---
 title: Create and delete networks
-description: Create a private network for your VMs in the portal, choose its name, zone and CIDR range, and delete the network when you no longer need it.
+description: Create a private network for your VMs in the portal, choose its name, cluster and CIDR range, and delete the network when you no longer need it.
 ---
 
 A network is a private network that connects your VMs to each other. Each VM needs a network, so you create the network first and then [create the VM](/docs/guides/vm/).
@@ -10,7 +10,7 @@ A network is a private network that connects your VMs to each other. Each VM nee
 1. Open the **Networks** page in the left sidebar.
 2. Click **Create Network**.
 3. Fill in **Name**. The name is at most 100 characters, uses only letters, digits, hyphens (`-`) and underscores (`_`), and must start with a letter or a digit.
-4. Choose a **Zone**. If you leave it empty, the portal shows "Choose a zone" and sends nothing.
+4. Choose a **Cluster**. If you leave it empty, the portal shows "Choose a cluster" and sends nothing.
 5. Fill in **CIDR** if you want to choose the address range, for example `10.0.0.0/24`. This field is optional. If you leave it empty, the system picks a range and shows it in the **CIDR** column when the network is created.
 6. Tick **Enable public IPv6** if you want VMs on this network reachable from the Internet over IPv6. See [public IPv6](/docs/guides/public-ipv6/) before you tick it.
 7. Click **Create Network**.
@@ -29,9 +29,9 @@ If you choose a CIDR yourself, it must not overlap the range of another network 
 
 IPv4 addresses in a network only let VMs on the same network talk to each other. The network has no route to the Internet over IPv4. See [known limitations](/docs/known-limitations/).
 
-## Zone
+## Cluster
 
-A network lives in the zone you choose when you create it. When you create a VM, the portal only lists **Created** networks in the VM's zone.
+A network lives in the cluster you choose when you create it. When you create a VM, the portal only lists **Created** networks in the VM's cluster.
 
 ## Quota
 
@@ -45,6 +45,6 @@ By default, a new account can create 1 network. When you reach it, the portal sh
 
 While the network still has VMs or a [load balancer](/docs/guides/load-balancer/) that has not finished deleting, the **Delete** button is disabled; when the reason is a load balancer, hovering over the button shows "Delete the load balancers of this network first". If the server still refuses, the portal shows "Cannot delete: the network still has VMs or load balancers" (code `NETWORK_NOT_EMPTY`). Delete in this order: load balancers, then VMs, then the network.
 
-After you confirm, the portal shows "Network deleted", but the network stays in the table with the state **Deleting** until the deletion is finished, and only then disappears. The network's firewall rules are deleted with the network. If OpenViCloud cannot delete the network, the row goes back to its previous state and shows the reason in red under the zone line; click **Delete** again to retry.
+After you confirm, the portal shows "Network deleted", but the network stays in the table with the state **Deleting** until the deletion is finished, and only then disappears. The network's firewall rules are deleted with the network. If OpenViCloud cannot delete the network, the row goes back to its previous state and shows the reason in red under the cluster line; click **Delete** again to retry.
 
 The **Delete** button is also disabled while the network is **Creating** or **Deleting**. A network in the **Failed** or **Not found** state can still be deleted.

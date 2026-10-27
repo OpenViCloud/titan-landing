@@ -7,20 +7,20 @@ Mọi thao tác với VM nằm ở trang **Máy ảo** trên thanh bên trái. �
 
 ## Trước khi tạo VM
 
-Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng zone. Network đó phải ở trạng thái **Created**. Portal chỉ liệt kê network đã sẵn sàng của zone bạn chọn. VM chỉ có địa chỉ IPv6 công khai khi network của nó được tạo có bật IPv6 công khai — xem [IPv6 công khai](/vi/docs/guides/public-ipv6/).
+Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Network đó phải ở trạng thái **Created**. Portal chỉ liệt kê network đã sẵn sàng của cluster bạn chọn. VM chỉ có địa chỉ IPv6 công khai khi network của nó được tạo có bật IPv6 công khai — xem [IPv6 công khai](/vi/docs/guides/public-ipv6/).
 
 ## Tạo VM
 
 1. Bấm **Tạo VM**.
 2. Điền **Tên**. Tên dài tối đa 64 ký tự, chỉ gồm chữ, số và dấu gạch ngang (`-`), và phải bắt đầu bằng chữ hoặc số. Tên phải khác tên các VM bạn đang có. Tên của VM đã xoá thì dùng lại được.
-3. Chọn **Zone**.
-4. Chọn **Mạng**. Ô này chỉ hiện network thuộc zone vừa chọn.
-5. Chọn **Template**, tức hệ điều hành. Ô này chỉ hiện template đã có ở zone đó.
+3. Chọn **Cluster**.
+4. Chọn **Mạng**. Ô này chỉ hiện network thuộc cluster vừa chọn.
+5. Chọn **Template**, tức hệ điều hành. Ô này chỉ hiện template đã có ở cluster đó.
 6. Chọn **Cấu hình**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) hoặc Extra Large (8 vCPU, 16 GB).
 7. Ở mục **SSH key**, đánh dấu key muốn thêm vào VM này. Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước. Key đã chọn được thêm cho user `ubuntu`.
 8. Bấm **Tạo VM**.
 
-Hãy điền đủ các ô phía trên SSH key. Nếu **Zone**, **Mạng**, **Template** hay **Cấu hình** còn trống lúc bấm **Tạo VM**, portal báo "Chọn zone, mạng, template và cấu hình." và không gửi gì.
+Hãy điền đủ các ô phía trên SSH key. Nếu **Cluster**, **Mạng**, **Template** hay **Cấu hình** còn trống lúc bấm **Tạo VM**, portal báo "Chọn cluster, mạng, template và cấu hình." và không gửi gì.
 
 VM mới hiện trong danh sách với trạng thái **Creating**. Khi VM chạy, trạng thái chuyển sang **Running** hoặc **Ready**, và ô **IPv4 riêng** hiện địa chỉ của VM trong network. Cột **IPv6 công khai** hiện địa chỉ của VM nếu network của nó có IPv6 công khai, hoặc "—" nếu không; ở trang riêng của VM, ô này hiện "Chưa bật" thay vì "—" khi network không có IPv6 công khai. Nếu tạo không thành, trạng thái là **Failed** kèm một dòng giải thích.
 
@@ -30,11 +30,11 @@ VM mới hiện trong danh sách với trạng thái **Creating**. Khi VM chạy
 |---|---|---|
 | Đã có VM trùng tên này | `VM_NAME_TAKEN` | Bạn đã có VM khác cùng tên. |
 | Đã vượt hạn mức VM | `VM_QUOTA_EXCEEDED` | Bạn đã đủ số VM được phép. Mặc định là 10 VM mỗi tài khoản. |
-| Zone đã chọn không còn khả dụng — chọn zone khác | `ZONE_NOT_FOUND` | Zone bạn chọn không còn tồn tại. |
-| Mạng này ở zone khác — chọn một mạng trong zone này | `NETWORK_ZONE_MISMATCH` | Network và VM phải cùng zone. |
+| Cluster đã chọn không còn khả dụng — chọn cluster khác | `CLUSTER_NOT_FOUND` | Cluster bạn chọn không còn tồn tại. |
+| Mạng này ở cluster khác — chọn một mạng trong cluster này | `NETWORK_CLUSTER_MISMATCH` | Network và VM phải cùng cluster. |
 | Cấu hình đã chọn không còn khả dụng — chọn cấu hình khác | `VM_OFFERING_NOT_FOUND` | Cấu hình bạn chọn không còn tồn tại. |
-| Template đã chọn chưa có ở zone này — chọn template khác | `TEMPLATE_NOT_SYNCED` | Template chưa có ở zone này. |
-| Template đã chọn hiện không khả dụng — chọn template khác | `TEMPLATE_UNAVAILABLE` | Template tạm thời không dùng được ở zone này. |
+| Template đã chọn chưa có ở cluster này — chọn template khác | `TEMPLATE_NOT_SYNCED` | Template chưa có ở cluster này. |
+| Template đã chọn hiện không khả dụng — chọn template khác | `TEMPLATE_UNAVAILABLE` | Template tạm thời không dùng được ở cluster này. |
 | Một SSH key đã chọn không còn nữa — hãy chọn lại | `SSH_KEY_NOT_FOUND` | Một key bạn chọn đã bị xoá trong lúc đó. |
 | Tài khoản đang bị tạm ngưng — liên hệ hỗ trợ để tạo tài nguyên | `TENANT_SUSPENDED` | Tài khoản của bạn đang bị tạm ngưng. |
 | Tài khoản đang chờ quản trị viên duyệt — bạn có thể xem nhưng chưa tạo được tài nguyên | `TENANT_PENDING_APPROVAL` | Tài khoản của bạn chưa được duyệt. |

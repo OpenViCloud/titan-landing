@@ -9,7 +9,7 @@ Volume là ổ đĩa dữ liệu riêng, tách khỏi VM. Mọi thao tác nằm 
 
 1. Bấm **Tạo ổ đĩa**.
 2. Điền **Tên**, tối đa 100 ký tự.
-3. Chọn **Zone**. Volume chỉ gắn được vào VM cùng zone.
+3. Chọn **Cluster**. Volume chỉ gắn được vào VM cùng cluster.
 4. Chọn **Cấu hình ổ đĩa**. Hiện chỉ có một loại: **Standard — Dung lượng tuỳ chọn**.
 5. Điền **Dung lượng (GB)**, lớn hơn 0.
 6. Bấm **Tạo ổ đĩa**.
@@ -21,7 +21,7 @@ Mỗi tài khoản có tối đa 10 volume theo mặc định. Khi đã đủ, p
 ## Gắn volume vào VM
 
 1. Bấm **Gắn** trên hàng của volume. Nút này có khi volume ở trạng thái **Available**.
-2. Chọn VM trong hộp thoại **Gắn ổ đĩa**. Danh sách chỉ có VM cùng zone, ở trạng thái Running, Ready, Stopped hoặc Frozen, và không đang stop hay đang xoá.
+2. Chọn VM trong hộp thoại **Gắn ổ đĩa**. Danh sách chỉ có VM cùng cluster, ở trạng thái Running, Ready, Stopped hoặc Frozen, và không đang stop hay đang xoá.
 3. Bấm **Gắn**.
 
 Volume chuyển sang **Attaching**, rồi **Attached**. Cột **Gắn vào** hiện tên VM. Mỗi volume chỉ gắn vào một VM tại một thời điểm.
@@ -56,7 +56,7 @@ Mỗi volume có tối đa 3 snapshot theo mặc định. Khi đã đủ, portal
 2. Điền tên cho volume mới.
 3. Bấm **Khôi phục**.
 
-Volume mới có cùng zone, cùng offering và cùng dung lượng với volume gốc. Volume gốc và snapshot giữ nguyên. Volume mới tính vào giới hạn số volume. Khi bạn đã đủ giới hạn, restore bị từ chối và portal báo "Không khôi phục được snapshot."
+Volume mới có cùng cluster, cùng offering và cùng dung lượng với volume gốc. Volume gốc và snapshot giữ nguyên. Volume mới tính vào giới hạn số volume. Khi bạn đã đủ giới hạn, restore bị từ chối và portal báo "Không khôi phục được snapshot."
 
 **Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Khi snapshot đang có thao tác chưa xong, portal báo "Chưa xoá được: còn một yêu cầu đang chờ trên snapshot này. Vui lòng thử lại sau một phút."
 

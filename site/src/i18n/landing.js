@@ -41,13 +41,13 @@ const en = {
       [
         'resource "openvicloud_network" "web" {',
         '  name    = "web"',
-        '  zone_id = var.zone_id',
+        '  cluster_id = var.cluster_id',
         '}',
       ],
       [
         'resource "openvicloud_vm" "web" {',
         '  name           = "web-1"',
-        '  zone_id        = var.zone_id',
+        '  cluster_id        = var.cluster_id',
         '  network_id     = openvicloud_network.web.id',
         '  template_id    = var.template_id',
         '  vm_offering_id = "s"',
@@ -83,7 +83,7 @@ const en = {
   features: [
     { icon: 'vm', title: 'VMs billed by the hour', body: 'Pick a plan from the pricing table. Stop a VM and its compute stops being billed.' },
     { icon: 'network', title: 'Private networks', body: 'Each network is yours alone. VMs in the same network reach each other over IPv4. Create it with public IPv6 and each VM gets an address the Internet can reach.' },
-    { icon: 'volume', title: 'Extra volumes', body: 'Create a disk of your own, attach it to a VM, detach it and attach it to another VM in the same zone.' },
+    { icon: 'volume', title: 'Extra volumes', body: 'Create a disk of your own, attach it to a VM, detach it and attach it to another VM in the same cluster.' },
     { icon: 'snapshot', title: 'Snapshots and restore', body: 'Take a VM snapshot and revert to it when you need to. A volume snapshot restores into a new volume.' },
     { icon: 'invoice', title: 'Clear VND invoices', body: 'Usage adds up to a monthly invoice covering VMs, volumes and snapshots. You pay it from your wallet balance.' },
     { icon: 'quota', title: 'Clear limits per account', body: 'Each account has a limit on VMs, networks, volumes and snapshots. Going over a limit gives a clear error.' },
@@ -103,7 +103,7 @@ const en = {
     panelLabel: 'Illustration of a terminal session with openvicloud',
     commands: [
       'openvicloud auth login',
-      'openvicloud vm create web-1 --zone <zone> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait',
+      'openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait',
       'openvicloud vm ssh web-1 -- uptime',
     ],
     caption: 'Illustration',
@@ -113,7 +113,7 @@ const en = {
   stepLabel: 'Step',
   steps: [
     { title: 'Create an account', body: 'With GitHub or email.', href: '/docs/guides/sign-up/', link: 'Sign-up guide' },
-    { title: 'Create a network', body: 'Pick a zone. Choose the IPv4 range yourself or let the system pick one.', href: '/docs/guides/network/', link: 'Network guide' },
+    { title: 'Create a network', body: 'Pick a cluster. Choose the IPv4 range yourself or let the system pick one.', href: '/docs/guides/network/', link: 'Network guide' },
     { title: 'Create a VM', body: 'Pick an operating system and a plan. The VM runs in the network you just made.', href: '/docs/guides/vm/', link: 'VM guide' },
   ],
   limitsHeading: 'What we cannot do yet',
@@ -184,13 +184,13 @@ const vi = {
       [
         'resource "openvicloud_network" "web" {',
         '  name    = "web"',
-        '  zone_id = var.zone_id',
+        '  cluster_id = var.cluster_id',
         '}',
       ],
       [
         'resource "openvicloud_vm" "web" {',
         '  name           = "web-1"',
-        '  zone_id        = var.zone_id',
+        '  cluster_id        = var.cluster_id',
         '  network_id     = openvicloud_network.web.id',
         '  template_id    = var.template_id',
         '  vm_offering_id = "s"',
@@ -226,7 +226,7 @@ const vi = {
   features: [
     { icon: 'vm', title: 'VM tính theo giờ', body: 'Chọn cấu hình ở bảng giá. Tắt VM là ngừng tính tiền máy.' },
     { icon: 'network', title: 'Network riêng', body: 'Mỗi network là một mạng của riêng bạn. VM trong cùng network thấy nhau qua IPv4. Tạo network có IPv6 công khai thì mỗi VM nhận một địa chỉ truy cập được từ Internet.' },
-    { icon: 'volume', title: 'Volume gắn thêm', body: 'Tạo ổ đĩa riêng, gắn vào VM, gỡ ra rồi gắn sang VM khác cùng zone.' },
+    { icon: 'volume', title: 'Volume gắn thêm', body: 'Tạo ổ đĩa riêng, gắn vào VM, gỡ ra rồi gắn sang VM khác cùng cluster.' },
     { icon: 'snapshot', title: 'Snapshot và khôi phục', body: 'Chụp snapshot VM rồi revert khi cần. Snapshot volume khôi phục ra một volume mới.' },
     { icon: 'invoice', title: 'Hoá đơn VND rõ ràng', body: 'Mức dùng gom thành hoá đơn tháng, gồm VM, volume và snapshot. Trả bằng số dư ví.' },
     { icon: 'quota', title: 'Giới hạn rõ cho từng tài khoản', body: 'Mỗi tài khoản có giới hạn số VM, network, volume và snapshot. Vượt giới hạn thì báo lỗi rõ ràng.' },
@@ -246,7 +246,7 @@ const vi = {
     panelLabel: 'Minh hoạ một phiên terminal với openvicloud',
     commands: [
       'openvicloud auth login',
-      'openvicloud vm create web-1 --zone <zone> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait',
+      'openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait',
       'openvicloud vm ssh web-1 -- uptime',
     ],
     caption: 'Minh hoạ',
@@ -256,7 +256,7 @@ const vi = {
   stepLabel: 'Bước',
   steps: [
     { title: 'Đăng ký tài khoản', body: 'Bằng GitHub hoặc email.', href: '/vi/docs/guides/sign-up/', link: 'Hướng dẫn đăng ký' },
-    { title: 'Tạo network', body: 'Chọn zone. Dải địa chỉ IPv4 bạn tự chọn hoặc để hệ thống chọn.', href: '/vi/docs/guides/network/', link: 'Hướng dẫn network' },
+    { title: 'Tạo network', body: 'Chọn cluster. Dải địa chỉ IPv4 bạn tự chọn hoặc để hệ thống chọn.', href: '/vi/docs/guides/network/', link: 'Hướng dẫn network' },
     { title: 'Tạo VM', body: 'Chọn hệ điều hành và cấu hình. VM chạy trong network vừa tạo.', href: '/vi/docs/guides/vm/', link: 'Hướng dẫn tạo VM' },
   ],
   limitsHeading: 'Điều chúng tôi chưa làm được',

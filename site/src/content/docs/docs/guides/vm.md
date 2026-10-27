@@ -7,20 +7,20 @@ All VM actions are on the **Virtual Machines** page in the left sidebar. What ea
 
 ## Before you create a VM
 
-Each VM needs a [network](/docs/guides/network/) in the same zone. That network must be in the **Created** state. The portal only lists ready networks in the zone you choose. A VM gets a public IPv6 address only when its network was created with public IPv6 enabled — see [public IPv6](/docs/guides/public-ipv6/).
+Each VM needs a [network](/docs/guides/network/) in the same cluster. That network must be in the **Created** state. The portal only lists ready networks in the cluster you choose. A VM gets a public IPv6 address only when its network was created with public IPv6 enabled — see [public IPv6](/docs/guides/public-ipv6/).
 
 ## Create a VM
 
 1. Click **Create VM**.
 2. Fill in **Name**. The name is at most 64 characters, uses only letters, digits and hyphens (`-`), and must start with a letter or a digit. It must differ from the names of the VMs you have. The name of a deleted VM can be used again.
-3. Choose a **Zone**.
-4. Choose a **Network**. This field only shows networks in the zone you just chose.
-5. Choose a **Template**, which is the operating system. This field only shows templates available in that zone.
+3. Choose a **Cluster**.
+4. Choose a **Network**. This field only shows networks in the cluster you just chose.
+5. Choose a **Template**, which is the operating system. This field only shows templates available in that cluster.
 6. Choose a **Size**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) or Extra Large (8 vCPU, 16 GB).
 7. Under **SSH keys**, tick the keys to add to this VM. See [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first. Picked keys are added for the user `ubuntu`.
 8. Click **Create VM**.
 
-Fill in every field above SSH keys. If **Zone**, **Network**, **Template** or **Size** is still empty when you click **Create VM**, the portal shows "Choose a zone, network, template and size." and sends nothing.
+Fill in every field above SSH keys. If **Cluster**, **Network**, **Template** or **Size** is still empty when you click **Create VM**, the portal shows "Choose a cluster, network, template and size." and sends nothing.
 
 The new VM appears in the list with the state **Creating**. When the VM runs, the state changes to **Running** or **Ready**, and the **Private IPv4** field shows the VM's address in the network. The **Public IPv6** column shows the VM's address if its network has public IPv6, or "—" otherwise; on the VM's own page this field shows "Not enabled" instead when the network has no public IPv6. If creation fails, the state is **Failed** with a line explaining why.
 
@@ -30,11 +30,11 @@ The new VM appears in the list with the state **Creating**. When the VM runs, th
 |---|---|---|
 | A VM with this name already exists | `VM_NAME_TAKEN` | You already have another VM with the same name. |
 | VM quota exceeded | `VM_QUOTA_EXCEEDED` | You have reached the number of VMs allowed. The default is 10 VMs per account. |
-| Selected zone is no longer available — pick another | `ZONE_NOT_FOUND` | The zone you chose no longer exists. |
-| That network is in another zone — pick a network in this zone | `NETWORK_ZONE_MISMATCH` | The network and the VM must be in the same zone. |
+| Selected cluster is no longer available — pick another | `CLUSTER_NOT_FOUND` | The cluster you chose no longer exists. |
+| That network is in another cluster — pick a network in this cluster | `NETWORK_CLUSTER_MISMATCH` | The network and the VM must be in the same cluster. |
 | Selected size is no longer available — pick another | `VM_OFFERING_NOT_FOUND` | The size you chose no longer exists. |
-| Selected template is not available in this zone yet — pick another | `TEMPLATE_NOT_SYNCED` | The template is not in this zone yet. |
-| Selected template is not available right now — pick another | `TEMPLATE_UNAVAILABLE` | The template cannot be used in this zone for now. |
+| Selected template is not available in this cluster yet — pick another | `TEMPLATE_NOT_SYNCED` | The template is not in this cluster yet. |
+| Selected template is not available right now — pick another | `TEMPLATE_UNAVAILABLE` | The template cannot be used in this cluster for now. |
 | A picked SSH key no longer exists — pick again | `SSH_KEY_NOT_FOUND` | One of the SSH keys you picked was deleted meanwhile. |
 | Your account is suspended — contact support to create resources | `TENANT_SUSPENDED` | Your account is suspended. |
 | Your account is awaiting admin approval — you can browse but can’t create resources yet | `TENANT_PENDING_APPROVAL` | Your account has not been approved yet. |
