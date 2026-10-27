@@ -11,7 +11,7 @@ Bạn cần một tài khoản để dùng OpenViCloud. Trang này giải thích
 2. Chọn một trong hai cách:
    - **Đăng nhập bằng GitHub.** OpenViCloud dùng email từ tài khoản GitHub của bạn.
    - **Đăng ký bằng email và mật khẩu** qua form đăng ký trên trang đăng nhập.
-3. Lần đầu bạn vào portal, OpenViCloud tự tạo tài khoản cho bạn.
+3. Lần đầu bạn vào portal, OpenViCloud tự tạo tài khoản cho bạn, đặt tên theo tên đăng nhập của bạn. Nếu tên đó đã thuộc một tài khoản khác, tài khoản không được tạo và portal không tải được tài khoản của bạn ([`TENANT_NAME_TAKEN`](/vi/docs/concepts/error-codes/)).
 
 Mỗi người dùng chỉ thuộc một tài khoản.
 

@@ -16,7 +16,7 @@ Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON c�
 | `REQUEST_IN_PROGRESS` | 409 | Hai yêu cầu giống hệt nhau tới cùng lúc, ví dụ bấm đúp nút xoá. Yêu cầu đầu tiên vẫn được thực hiện. | Không cần làm gì. Tải lại trang để xem kết quả. |
 | `TENANT_PENDING_APPROVAL` | 403 | Tài khoản của bạn đang chờ duyệt. Bạn chưa tạo hay thay đổi được gì. | Chờ OpenViCloud duyệt. |
 | `TENANT_SUSPENDED` | 403 | Tài khoản của bạn đang bị tạm khoá. Bạn không thay đổi được gì. | — |
-| `TENANT_NAME_TAKEN` | 409 | Tên tài khoản của bạn (tên đăng nhập, không có thì email) đã thuộc một tài khoản khác, nên tài khoản của bạn không được tạo. | Liên hệ OpenViCloud. |
+| `TENANT_NAME_TAKEN` | 409 | Tên tài khoản của bạn (tên đăng nhập, không có thì email) đã thuộc một tài khoản khác, nên tài khoản của bạn không được tạo. | — |
 | `NOT_A_MEMBER` | 403 | Bạn không thuộc tài khoản nào. | Đăng nhập bằng tài khoản đã có, hoặc [đăng ký](/vi/docs/guides/sign-up/). |
 | `INTERNAL_ERROR` | 500 | Lỗi phía hệ thống. | Thử lại sau ít phút. |
 
