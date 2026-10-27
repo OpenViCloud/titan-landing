@@ -49,7 +49,10 @@ function tokens(line: string) {
           <span class="brand-mark" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2.5" width="12" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="2" y="9" width="12" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.6"/><circle cx="4.8" cy="4.75" r="0.9" fill="currentColor"/><circle cx="4.8" cy="11.25" r="0.9" fill="currentColor"/></svg>
           </span>
-          OpenViCloud
+          <span class="brand-name">
+            OpenViCloud
+            <span class="brand-beta">{t.beta}</span>
+          </span>
         </a>
         <nav aria-label={t.navLabel}>
           <a href="#pricing">{t.nav.pricing}</a>
@@ -463,6 +466,8 @@ function tokens(line: string) {
       .header-row { display: flex; align-items: center; gap: 1.5rem; min-height: 4rem; }
       .brand { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; font-weight: 800; font-size: 1.125rem; letter-spacing: -0.02em; }
       .brand-mark { width: 1.75rem; height: 1.75rem; border-radius: 0.5rem; background: var(--color-accent); color: var(--color-accent-foreground); display: grid; place-items: center; }
+      .brand-name { display: flex; align-items: center; gap: 0.625rem; }
+      .brand-beta { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent); background: var(--color-accent-soft); border: 1px solid hsl(38 95% 58% / 0.35); padding: 0.125rem 0.5rem; border-radius: 999px; }
       .site-header nav { display: flex; align-items: center; gap: 1.375rem; margin-left: auto; font-size: 0.9375rem; }
       .site-header nav a { white-space: nowrap; }
       .site-header nav a:not(.button) { text-decoration: none; color: var(--color-muted-foreground); }
@@ -647,6 +652,9 @@ function tokens(line: string) {
         .steps { grid-template-columns: 1fr; }
       }
       @media (max-width: 35rem) {
+        /* The label goes under the name: beside it, the header no longer fits 375px. */
+        .brand-name { flex-direction: column; align-items: flex-start; gap: 0.125rem; line-height: 1.1; }
+        .brand-beta { font-size: 0.625rem; padding: 0 0.375rem; }
         .plans, .features { grid-template-columns: 1fr; }
         .block { padding-top: 3.5rem; padding-bottom: 3.5rem; }
         .block-tight { padding-top: 0; }

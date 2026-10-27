@@ -47,6 +47,18 @@ def install_script_checks(base):
     return results
 
 
+# docs/features/public-site/design.md#landing-spec
+def beta_label_checks(base):
+    results = []
+    for path in ("/", "/vi/"):
+        status, _, page = fetch(base + path)
+        start = page.find('class="brand"')
+        brand = page[start:page.find("</a>", start)] if start != -1 else ""
+        shown = '<span class="brand-beta">Beta</span>' in brand
+        results.append((f"{path} brand carries the Beta label", status == 200 and shown, f"status={status} label in brand link={shown}"))
+    return results
+
+
 def main():
     base = sys.argv[1].rstrip("/")
     results = []
@@ -82,6 +94,7 @@ def main():
     results.append(("config.json served", status == 200 and "apiBaseUrl" in config, f"status={status}"))
     results.append(("config.json not cached", headers.get("Cache-Control") == "no-store", f"Cache-Control={headers.get('Cache-Control')}"))
 
+    results.extend(beta_label_checks(base))
     results.extend(cli_download_checks(base))
     results.extend(install_script_checks(base))
 
