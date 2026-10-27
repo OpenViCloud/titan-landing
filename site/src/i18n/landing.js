@@ -113,7 +113,7 @@ const en = {
   startSub: 'Three steps, each with its own guide.',
   stepLabel: 'Step',
   steps: [
-    { title: 'Create an account', body: 'With GitHub or email.', href: '/docs/guides/sign-up/', link: 'Sign-up guide' },
+    { title: 'Create an account', body: 'With GitHub or email, then wait for approval.', href: '/docs/guides/sign-up/', link: 'Sign-up guide' },
     { title: 'Create a network', body: 'Pick a cluster. Choose the IPv4 range yourself or let the system pick one.', href: '/docs/guides/network/', link: 'Network guide' },
     { title: 'Create a VM', body: 'Pick an operating system and a plan. The VM runs in the network you just made.', href: '/docs/guides/vm/', link: 'VM guide' },
   ],
@@ -135,7 +135,7 @@ const en = {
     { q: 'How many resources can one account create?', a: 'By default 10 VMs, 1 network, 10 volumes, 3 snapshots per VM, 3 snapshots per volume, 20 firewall rules per network, 10 networks with public IPv6, 20 SSH keys and 5 load balancers.' },
   ],
   ctaHeading: 'Create your first VM',
-  ctaBody: 'Sign up with GitHub or email, then follow the three guides.',
+  ctaBody: 'Sign up with GitHub or email, wait for approval, then follow the three guides.',
   footerLabel: 'Footer',
   footer: { docs: 'Docs', pricing: 'Pricing', limits: 'Current limitations', faq: 'FAQ' },
   script: {
@@ -257,7 +257,7 @@ const vi = {
   startSub: 'Ba bước, mỗi bước có một trang hướng dẫn.',
   stepLabel: 'Bước',
   steps: [
-    { title: 'Đăng ký tài khoản', body: 'Bằng GitHub hoặc email.', href: '/vi/docs/guides/sign-up/', link: 'Hướng dẫn đăng ký' },
+    { title: 'Đăng ký tài khoản', body: 'Bằng GitHub hoặc email, rồi chờ duyệt.', href: '/vi/docs/guides/sign-up/', link: 'Hướng dẫn đăng ký' },
     { title: 'Tạo network', body: 'Chọn cluster. Dải địa chỉ IPv4 bạn tự chọn hoặc để hệ thống chọn.', href: '/vi/docs/guides/network/', link: 'Hướng dẫn network' },
     { title: 'Tạo VM', body: 'Chọn hệ điều hành và cấu hình. VM chạy trong network vừa tạo.', href: '/vi/docs/guides/vm/', link: 'Hướng dẫn tạo VM' },
   ],
@@ -279,7 +279,7 @@ const vi = {
     { q: 'Một tài khoản được tạo bao nhiêu tài nguyên?', a: 'Mặc định 10 VM, 1 network, 10 volume, 3 snapshot mỗi VM, 3 snapshot mỗi volume, 20 firewall rule mỗi network, 10 network có IPv6 công khai, 20 SSH key và 5 load balancer.' },
   ],
   ctaHeading: 'Tạo VM đầu tiên của bạn',
-  ctaBody: 'Đăng ký bằng GitHub hoặc email, rồi làm theo ba bước hướng dẫn.',
+  ctaBody: 'Đăng ký bằng GitHub hoặc email, chờ duyệt, rồi làm theo ba bước hướng dẫn.',
   footerLabel: 'Chân trang',
   footer: { docs: 'Tài liệu', pricing: 'Bảng giá', limits: 'Giới hạn hiện tại', faq: 'Hỏi đáp' },
   script: {

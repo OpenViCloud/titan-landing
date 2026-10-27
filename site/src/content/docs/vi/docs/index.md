@@ -9,7 +9,7 @@ OpenViCloud cho bạn tạo máy chủ ảo (VM), network riêng và volume, tí
 
 ## Bắt đầu nhanh
 
-1. [Đăng ký tài khoản](/vi/docs/guides/sign-up/). Tài khoản tạo bằng GitHub được duyệt ngay; tài khoản tạo bằng email chờ duyệt.
+1. [Đăng ký tài khoản](/vi/docs/guides/sign-up/). Tài khoản chờ quản trị viên duyệt, dù bạn tạo bằng GitHub hay bằng email.
 2. [Tạo một network](/vi/docs/guides/network/).
 3. [Thêm SSH key](/vi/docs/guides/ssh-keys/), rồi [tạo VM](/vi/docs/guides/vm/) trong network đó.
 

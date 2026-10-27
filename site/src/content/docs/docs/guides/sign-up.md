@@ -11,7 +11,7 @@ You need an account to use OpenViCloud. This page explains how to sign up, when 
 2. Choose one of two ways:
    - **Sign in with GitHub.** OpenViCloud uses the email from your GitHub account.
    - **Sign up with email and password** using the registration form on the sign-in page.
-3. The first time you enter the portal, OpenViCloud creates an account for you.
+3. The first time you enter the portal, OpenViCloud creates an account for you, named after your username. If that name already belongs to another account, no account is made and the portal cannot load your account ([`TENANT_NAME_TAKEN`](/docs/concepts/error-codes/)).
 
 Each user belongs to exactly one account.
 
@@ -19,7 +19,7 @@ Each user belongs to exactly one account.
 
 Every new account starts in the `PendingApproval` state (waiting for approval).
 
-- **Signed in with GitHub:** the account is approved immediately and moves to `Active`, because OpenViCloud trusts the email that GitHub provides.
+- **Signed in with GitHub:** the account stays in `PendingApproval` until an administrator approves it.
 - **Signed up with email and password:** the account stays in `PendingApproval` until an administrator approves it.
 
 When your account is approved, your wallet is opened at the same time.

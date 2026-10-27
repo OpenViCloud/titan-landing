@@ -9,7 +9,7 @@ Read the [known limitations](/docs/known-limitations/) before you start.
 
 ## Quick start
 
-1. [Sign up](/docs/guides/sign-up/). An account made with GitHub is approved at once; an account made with email waits for approval.
+1. [Sign up](/docs/guides/sign-up/). An account waits for an administrator's approval, whether you made it with GitHub or with email.
 2. [Create a network](/docs/guides/network/).
 3. [Add an SSH key](/docs/guides/ssh-keys/), then [create a VM](/docs/guides/vm/) in that network.
 

@@ -16,6 +16,7 @@ When a request is refused, OpenViCloud returns a JSON body with a `code` field, 
 | `REQUEST_IN_PROGRESS` | 409 | Two identical requests arrived at the same time, for example a double click on the delete button. The first request is still carried out. | Nothing to do. Reload the page to see the result. |
 | `TENANT_PENDING_APPROVAL` | 403 | Your account is waiting for approval. You cannot create or change anything yet. | Wait for OpenViCloud to approve it. |
 | `TENANT_SUSPENDED` | 403 | Your account is suspended. You cannot change anything. | — |
+| `TENANT_NAME_TAKEN` | 409 | The name a new account gets (your username, or your email when there is none) already belongs to another account, so no account was made for you. | — |
 | `NOT_A_MEMBER` | 403 | You do not belong to any account. | Sign in with an account that has one, or [sign up](/docs/guides/sign-up/). |
 | `INTERNAL_ERROR` | 500 | A system error. | Try again in a few minutes. |
 
