@@ -47,8 +47,7 @@ def install_script_checks(base):
     return results
 
 
-# The header of both landings says the service is a beta, inside the brand link
-# (docs/features/public-site/design.md#landing-spec).
+# docs/features/public-site/design.md#landing-spec
 def beta_label_checks(base):
     results = []
     for path in ("/", "/vi/"):
