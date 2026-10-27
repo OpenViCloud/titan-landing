@@ -39,6 +39,7 @@ export default defineConfig({
             { label: 'Billing', translations: { vi: 'Hoá đơn' }, slug: 'docs/guides/billing' },
             { label: 'Your account', translations: { vi: 'Tài khoản' }, slug: 'docs/guides/account' },
             { label: 'Command-line tool', translations: { vi: 'Dòng lệnh' }, slug: 'docs/guides/cli' },
+            { label: 'Terraform', slug: 'docs/guides/terraform' },
           ],
         },
         {

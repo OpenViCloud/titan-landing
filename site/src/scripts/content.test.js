@@ -173,6 +173,30 @@ test('every command on the landing CLI panel is a line of a code block of the CL
   }
 });
 
+const terraformPage = { en: join(enDir, 'guides', 'terraform.md'), vi: join(viDir, 'guides', 'terraform.md') };
+
+// A hero line that is on neither page of the same language: the guides list only what main has.
+export function linesOnNoPage(heroLines, pages) {
+  const shown = new Set(pages.flatMap((page) => codeLines(page)));
+  return heroLines.filter((line) => line.trim() !== '' && !shown.has(line.trim()));
+}
+
+test('the hero line check finds a line the guides do not show (the check can fail)', () => {
+  const page = 'Text\n\n```hcl\nresource "openvicloud_vm" "web" {\n```\n';
+  assert.deepEqual(linesOnNoPage(['resource "openvicloud_vm" "web" {', '  size = "xl"'], [page]), ['  size = "xl"']);
+});
+
+// The hero panel shows a Terraform file and two commands, all copied from the Terraform and CLI guides
+// (docs/features/public-site/design.md#landing-page).
+test('every line of the hero panel is a line of a code block of the Terraform or CLI guide in the same language', () => {
+  for (const lang of ['en', 'vi']) {
+    const { terraform, commands } = copy[lang].panel;
+    assert.ok(terraform.flat().length >= 10 && commands.length >= 1, lang);
+    const pages = [readFileSync(terraformPage[lang], 'utf8'), readFileSync(cliPage[lang], 'utf8')];
+    assert.deepEqual(linesOnNoPage([...terraform.flat(), ...commands], pages), [], lang);
+  }
+});
+
 test('the CLI page shows the one-line install the landing shows, on the staging site', () => {
   for (const lang of ['en', 'vi']) {
     const line = copy[lang].cli.installCommand.replace('{site}', 'https://site-staging.openvicloud.com');
