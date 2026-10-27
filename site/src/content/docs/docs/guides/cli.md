@@ -3,7 +3,7 @@ title: Command-line tool
 description: Download, verify and install the openvicloud CLI, log in, create and manage VMs and SSH keys, and open an SSH session.
 ---
 
-`openvicloud` is the command-line client of OpenViCloud. It can log you in, show your [account](/docs/guides/account/) (which the CLI calls a tenant), list the zones, templates and sizes you can pick, create and manage VMs and SSH keys, and open an SSH session to a VM. Networks, volumes, snapshots, firewall rules and load balancers, and paying invoices or topping up your wallet, are done on the portal.
+`openvicloud` is the command-line client of OpenViCloud. It can log you in, show your [account](/docs/guides/account/) (which the CLI calls a tenant), list the clusters, templates and sizes you can pick, create and manage VMs and SSH keys, and open an SSH session to a VM. Networks, volumes, snapshots, firewall rules and load balancers, and paying invoices or topping up your wallet, are done on the portal.
 
 ## Install with one command
 
@@ -155,7 +155,7 @@ While `OPENVICLOUD_TOKEN` is set, every command — `vm ssh` included — uses t
 
 - `openvicloud auth login` / `logout` / `status`
 - `openvicloud tenant get` — shows your tenant: ID, name, status, max VMs, max networks, and when it was created.
-- `openvicloud zone list` / `template list [--zone <zone>]` / `size list` — what you can pick when you create a VM. `size list` shows each size's vCPUs, memory and price per hour in VND.
+- `openvicloud cluster list` / `template list [--cluster <cluster>]` / `size list` — what you can pick when you create a VM. `size list` shows each size's vCPUs, memory and price per hour in VND.
 - `openvicloud vm list` / `get` / `create` / `rename` / `start` / `stop` / `delete` — see [create and manage VMs](#create-and-manage-vms).
 - `openvicloud ssh-key add` / `list` / `delete` — see [SSH keys](#ssh-keys).
 - `openvicloud vm ssh <vm name or id>` — opens an SSH session to a VM.
@@ -171,25 +171,25 @@ Everything else — networks, volumes, snapshots, firewall rules, load balancers
 Find what to pick, then create the VM:
 
 ```bash
-openvicloud zone list
-openvicloud template list --zone <zone>
+openvicloud cluster list
+openvicloud template list --cluster <cluster>
 openvicloud size list
-openvicloud vm create web-1 --zone <zone> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop
 ```
 
-`--zone`, `--network`, `--template` and `--size` are required. The network must already exist (create it on the portal). Network, template, size and SSH key can be given by name or by ID. `--ssh-key` can be repeated to add several keys; without one you cannot log in to the VM. `--disk-size <GB>` sets the disk size. If a name does not match, the CLI says which one and creates nothing.
+`--cluster`, `--network`, `--template` and `--size` are required. The network must already exist (create it on the portal). Network, template, size and SSH key can be given by name or by ID. `--ssh-key` can be repeated to add several keys; without one you cannot log in to the VM. `--disk-size <GB>` sets the disk size. If a name does not match, the CLI says which one and creates nothing.
 
 The create prints the new VM's ID. The VM is then created in the background; add `--wait` to wait until it is Running or Ready and print it:
 
 ```bash
-openvicloud vm create web-1 --zone <zone> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait
 ```
 
 If the network drops while the create is being sent, the CLI sends it again, up to three sends in all. Each send carries the same request key, so you still get one VM.
 
 Other VM commands take the VM's name or ID:
 
-- `openvicloud vm list` — your VMs (not deleted ones): name, ID, zone, state, the request it is waiting for, IPv4 address.
+- `openvicloud vm list` — your VMs (not deleted ones): name, ID, cluster, state, the request it is waiting for, IPv4 address.
 - `openvicloud vm get <vm>` — one VM in detail, including the reason if its creation failed.
 - `openvicloud vm stop <vm>` / `vm start <vm>` — stop a VM, or start a stopped one (`start` also resumes a Frozen VM). A stopped VM is not billed for compute.
 - `openvicloud vm rename <vm> <new name>`

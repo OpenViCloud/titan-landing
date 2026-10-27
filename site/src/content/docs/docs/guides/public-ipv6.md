@@ -30,8 +30,8 @@ The default network quota is only 1, so in practice you will reach the network q
 | Message in the portal | Error code | Meaning |
 |---|---|---|
 | Public IPv6 quota exceeded — delete a network with public IPv6 first | `IPV6_QUOTA_EXCEEDED` | You already have as many networks with public IPv6 enabled as your account allows (10 by default). |
-| Public IPv6 is not available in this zone | `IPV6_NOT_AVAILABLE` | The zone has no public IPv6 configured, or every `/64` block of the zone (255 total) is already taken. |
-| Another network took the same IPv6 range at the same moment — submit again | `IPV6_ALLOCATION_CONFLICT` | Two networks requested public IPv6 in the same zone at the same time and picked the same `/64`. Submit the form again. |
+| Public IPv6 is not available in this cluster | `IPV6_NOT_AVAILABLE` | The cluster has no public IPv6 configured, or every `/64` block of the cluster (255 total) is already taken. |
+| Another network took the same IPv6 range at the same moment — submit again | `IPV6_ALLOCATION_CONFLICT` | Two networks requested public IPv6 in the same cluster at the same time and picked the same `/64`. Submit the form again. |
 
 A network's `/64` is held until its deletion is finished, not just requested.
 

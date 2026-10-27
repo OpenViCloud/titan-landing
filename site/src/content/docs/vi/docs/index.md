@@ -29,7 +29,7 @@ OpenViCloud cho bạn tạo máy chủ ảo (VM), network riêng và volume, tí
 
 ## Khái niệm
 
-- [Zone](/vi/docs/concepts/zone/)
+- [Cluster](/vi/docs/concepts/cluster/)
 - [Cấu hình VM và volume](/vi/docs/concepts/sizes/)
 - [Giới hạn tài khoản](/vi/docs/concepts/quotas/)
 - [Trạng thái VM](/vi/docs/concepts/vm-states/)

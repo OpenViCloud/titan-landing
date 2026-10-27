@@ -46,7 +46,7 @@ export default defineConfig({
           label: 'Concepts',
           translations: { vi: 'Khái niệm' },
           items: [
-            { label: 'Zone', slug: 'docs/concepts/zone' },
+            { label: 'Cluster', slug: 'docs/concepts/cluster' },
             { label: 'Sizes', translations: { vi: 'Cấu hình' }, slug: 'docs/concepts/sizes' },
             { label: 'Account limits', translations: { vi: 'Giới hạn tài khoản' }, slug: 'docs/concepts/quotas' },
             { label: 'VM states', translations: { vi: 'Trạng thái VM' }, slug: 'docs/concepts/vm-states' },

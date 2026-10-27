@@ -21,15 +21,15 @@ Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON c�
 
 Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) trả về nội dung chỉ có `code` và `message`; khác các mã còn lại trên trang này, không có trường `title` để đọc.
 
-## Zone, size và template
+## Cluster, size và template
 
 | Mã | HTTP | Ý nghĩa | Bạn nên làm gì |
 |----|------|---------|----------------|
-| `ZONE_NOT_FOUND` | 404 | Zone bạn chọn không tồn tại. | Chọn một zone trong danh sách. |
+| `CLUSTER_NOT_FOUND` | 404 | Cluster bạn chọn không tồn tại. | Chọn một cluster trong danh sách. |
 | `VM_OFFERING_NOT_FOUND` | 404 | Size VM bạn chọn không tồn tại. | Chọn một size khác. |
 | `TEMPLATE_NOT_FOUND` | 404 | Template bạn chọn không tồn tại. | Chọn một template khác. |
-| `TEMPLATE_NOT_SYNCED` | 422 | Template chưa có ở zone của VM. | Chọn template khác trong danh sách của zone đó. |
-| `TEMPLATE_UNAVAILABLE` | 422 | Template tạm thời không dùng được ở zone này. | Chọn template khác, hoặc thử lại sau. |
+| `TEMPLATE_NOT_SYNCED` | 422 | Template chưa có ở cluster của VM. | Chọn template khác trong danh sách của cluster đó. |
+| `TEMPLATE_UNAVAILABLE` | 422 | Template tạm thời không dùng được ở cluster này. | Chọn template khác, hoặc thử lại sau. |
 
 ## VM, snapshot VM và phiên SSH
 
@@ -56,7 +56,7 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `NETWORK_CIDR_OVERLAP` | 422 | Dải CIDR bạn nhập trùng với một network bạn đang có. | Chọn dải CIDR khác. |
 | `NETWORK_NOT_FOUND` | 404 | Network không tồn tại, hoặc không thuộc tài khoản của bạn. | Tải lại danh sách network. |
 | `NETWORK_NOT_ACTIVE` | 422 | Network chưa tạo xong nên chưa gắn VM vào được. | Chờ network tạo xong rồi tạo VM. |
-| `NETWORK_ZONE_MISMATCH` | 422 | Network nằm ở zone khác với zone của VM. | Chọn network cùng [zone](/vi/docs/concepts/zone/). |
+| `NETWORK_CLUSTER_MISMATCH` | 422 | Network nằm ở cluster khác với cluster của VM. | Chọn network cùng [cluster](/vi/docs/concepts/cluster/). |
 | `NETWORK_NOT_EMPTY` | 422 | Network vẫn còn VM, hoặc còn load balancer chưa xoá xong, nên chưa xoá được. | Xoá các VM và load balancer trên network trước. |
 | `NETWORK_INVALID_STATE` | 422 | Network đang ở trạng thái không cho phép thao tác này, ví dụ chưa tạo xong. | Chờ network tạo xong rồi thử lại. |
 | `FIREWALL_QUOTA_EXCEEDED` | 422 | Network đã có đủ số firewall rule tối đa. | Xoá bớt rule trên network đó. |
@@ -65,8 +65,8 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `FIREWALL_RULE_INVALID_STATE` | 422 | Rule đang ở trạng thái không xoá được. | Tải lại trang để xem trạng thái mới của rule. |
 | `FIREWALL_RULE_NOT_FOUND` | 404 | Rule không tồn tại, hoặc thuộc network khác. | Tải lại danh sách rule. |
 | `IPV6_QUOTA_EXCEEDED` | 422 | Bạn đã dùng hết số network được bật IPv6 công khai. | Xoá một network đang bật IPv6, hoặc tạo network này không bật IPv6. |
-| `IPV6_NOT_AVAILABLE` | 422 | Zone không có IPv6 công khai, hoặc đã hết dải địa chỉ trống ở zone đó. | Chọn zone khác, hoặc tạo network không bật IPv6 công khai. |
-| `IPV6_ALLOCATION_CONFLICT` | 409 | Hai network cùng zone xin IPv6 công khai cùng lúc và được cấp trùng một dải địa chỉ. | Thử tạo network lại. |
+| `IPV6_NOT_AVAILABLE` | 422 | Cluster không có IPv6 công khai, hoặc đã hết dải địa chỉ trống ở cluster đó. | Chọn cluster khác, hoặc tạo network không bật IPv6 công khai. |
+| `IPV6_ALLOCATION_CONFLICT` | 409 | Hai network cùng cluster xin IPv6 công khai cùng lúc và được cấp trùng một dải địa chỉ. | Thử tạo network lại. |
 
 ## Volume và snapshot volume
 
@@ -77,7 +77,7 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `VOLUME_NOT_FOUND` | 404 | Volume không tồn tại, hoặc không thuộc tài khoản của bạn. | Tải lại danh sách volume. |
 | `VOLUME_INVALID_STATE` | 422 | Volume đang ở trạng thái không cho phép thao tác này, ví dụ xoá một volume còn gắn vào VM, hoặc gắn, gỡ, xoá một volume mà máy ngoài portal đang dùng. | Chờ volume xong việc đang làm, hoặc tháo volume khỏi VM trước. |
 | `VOLUME_HAS_SNAPSHOTS` | 422 | Volume còn snapshot nên chưa xoá được. | Xoá các snapshot của volume trước. |
-| `VOLUME_ZONE_MISMATCH` | 422 | Volume và VM nằm ở hai zone khác nhau. | Chọn VM cùng [zone](/vi/docs/concepts/zone/) với volume. |
+| `VOLUME_CLUSTER_MISMATCH` | 422 | Volume và VM nằm ở hai cluster khác nhau. | Chọn VM cùng [cluster](/vi/docs/concepts/cluster/) với volume. |
 | `VOLUME_SNAPSHOT_QUOTA_EXCEEDED` | 422 | Volume đã có đủ số snapshot tối đa. | Xoá bớt snapshot của volume đó. |
 | `VOLUME_SNAPSHOT_NOT_FOUND` | 404 | Snapshot không tồn tại, hoặc không thuộc volume này. | Tải lại danh sách snapshot. |
 | `VOLUME_SNAPSHOT_INVALID_STATE` | 422 | Snapshot chưa sẵn sàng để khôi phục hoặc xoá. | Chờ snapshot tạo xong rồi thử lại. |

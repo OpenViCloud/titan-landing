@@ -29,7 +29,7 @@ Read the [known limitations](/docs/known-limitations/) before you start.
 
 ## Concepts
 
-- [Zones](/docs/concepts/zone/)
+- [Clusters](/docs/concepts/cluster/)
 - [VM and volume sizes](/docs/concepts/sizes/)
 - [Account quotas](/docs/concepts/quotas/)
 - [VM states](/docs/concepts/vm-states/)

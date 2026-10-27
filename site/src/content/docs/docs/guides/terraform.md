@@ -10,7 +10,7 @@ The `openvicloud` Terraform provider manages the resources of your [account](/do
 | Kind | Name |
 |---|---|
 | Resource | `openvicloud_network`, `openvicloud_firewall_rule`, `openvicloud_ssh_key`, `openvicloud_vm`, `openvicloud_volume`, `openvicloud_volume_attachment`, `openvicloud_load_balancer` |
-| Data source | `openvicloud_zones`, `openvicloud_templates`, `openvicloud_vm_offerings`, `openvicloud_volume_offerings` |
+| Data source | `openvicloud_clusters`, `openvicloud_templates`, `openvicloud_vm_offerings`, `openvicloud_volume_offerings` |
 
 Snapshots and invoices are not in the provider; use the portal.
 
@@ -25,10 +25,10 @@ export OPENVICLOUD_TOKEN=ovc_...
 
 The provider talks to the OpenViCloud staging API by default. Set `OPENVICLOUD_API_URL` to point it elsewhere.
 
-3. Pick a zone and an operating system. The CLI lists both:
+3. Pick a cluster and an operating system. The CLI lists both:
 
 ```bash
-openvicloud zone list
+openvicloud cluster list
 openvicloud template list
 ```
 
@@ -45,7 +45,7 @@ terraform {
 
 provider "openvicloud" {}
 
-variable "zone_id" {
+variable "cluster_id" {
   type = string
 }
 
@@ -55,7 +55,7 @@ variable "template_id" {
 
 resource "openvicloud_network" "web" {
   name    = "web"
-  zone_id = var.zone_id
+  cluster_id = var.cluster_id
 }
 
 resource "openvicloud_ssh_key" "me" {
@@ -65,7 +65,7 @@ resource "openvicloud_ssh_key" "me" {
 
 resource "openvicloud_vm" "web" {
   name           = "web-1"
-  zone_id        = var.zone_id
+  cluster_id        = var.cluster_id
   network_id     = openvicloud_network.web.id
   template_id    = var.template_id
   vm_offering_id = "s"
@@ -76,7 +76,7 @@ resource "openvicloud_vm" "web" {
 and the values you picked in `terraform.tfvars`:
 
 ```hcl
-zone_id     = "<zone>"
+cluster_id     = "<cluster>"
 template_id = "<template>"
 ```
 

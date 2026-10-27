@@ -24,12 +24,12 @@ Nếu size bạn chọn không còn tồn tại, OpenViCloud từ chối với l
 
 Template cho biết VM chạy hệ điều hành gì. Ô **Template** hiện tên template và hệ điều hành, theo dạng `<tên> — <hệ điều hành>`.
 
-Danh sách template phụ thuộc vào [zone](/vi/docs/concepts/zone/) bạn chọn. Bạn phải chọn zone trước, rồi mới chọn được template.
+Danh sách template phụ thuộc vào [cluster](/vi/docs/concepts/cluster/) bạn chọn. Bạn phải chọn cluster trước, rồi mới chọn được template.
 
 Hai lỗi có thể gặp khi chọn template:
 
-- `TEMPLATE_NOT_SYNCED`: template chưa có ở zone này. Portal báo *Template đã chọn chưa có ở zone này — chọn template khác*.
-- `TEMPLATE_UNAVAILABLE`: template tạm thời không dùng được ở zone này. Portal báo *Template đã chọn hiện không khả dụng — chọn template khác*.
+- `TEMPLATE_NOT_SYNCED`: template chưa có ở cluster này. Portal báo *Template đã chọn chưa có ở cluster này — chọn template khác*.
+- `TEMPLATE_UNAVAILABLE`: template tạm thời không dùng được ở cluster này. Portal báo *Template đã chọn hiện không khả dụng — chọn template khác*.
 
 ## Volume
 
@@ -37,7 +37,7 @@ Volume là ổ đĩa bạn tạo riêng rồi gắn vào VM. OpenViCloud có m�
 
 Trong form tạo volume:
 
-1. Chọn **Zone**.
+1. Chọn **Cluster**.
 2. Ở ô **Cấu hình ổ đĩa**, chọn `Standard — Dung lượng tuỳ chọn`.
 3. Nhập dung lượng vào ô **Dung lượng (GB)**. Ô này bắt buộc và phải lớn hơn 0.
 
