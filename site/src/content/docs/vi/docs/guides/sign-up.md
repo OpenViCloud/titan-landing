@@ -19,7 +19,7 @@ Mỗi người dùng chỉ thuộc một tài khoản.
 
 Mọi tài khoản mới bắt đầu ở trạng thái `PendingApproval` (chờ duyệt).
 
-- **Đăng nhập bằng GitHub:** tài khoản được duyệt ngay, chuyển sang `Active`, vì OpenViCloud tin email do GitHub cung cấp.
+- **Đăng nhập bằng GitHub:** tài khoản ở lại `PendingApproval` cho tới khi quản trị viên duyệt.
 - **Đăng ký bằng email và mật khẩu:** tài khoản ở lại `PendingApproval` cho tới khi quản trị viên duyệt.
 
 Khi tài khoản được duyệt, ví của bạn được mở cùng lúc.

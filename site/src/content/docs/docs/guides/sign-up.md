@@ -19,7 +19,7 @@ Each user belongs to exactly one account.
 
 Every new account starts in the `PendingApproval` state (waiting for approval).
 
-- **Signed in with GitHub:** the account is approved immediately and moves to `Active`, because OpenViCloud trusts the email that GitHub provides.
+- **Signed in with GitHub:** the account stays in `PendingApproval` until an administrator approves it.
 - **Signed up with email and password:** the account stays in `PendingApproval` until an administrator approves it.
 
 When your account is approved, your wallet is opened at the same time.
