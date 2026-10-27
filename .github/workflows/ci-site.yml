@@ -94,7 +94,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: site
-          platforms: linux/arm64
+          platforms: linux/arm64,linux/amd64
           push: false
           labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
           cache-from: type=gha,scope=titan-landing
@@ -133,7 +133,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: site
-          platforms: linux/arm64
+          platforms: linux/arm64,linux/amd64
           push: true
           labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
           tags: ghcr.io/openvicloud/titan-landing:${{ env.SHORT_SHA }}
