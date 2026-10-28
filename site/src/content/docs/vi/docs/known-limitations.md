@@ -21,6 +21,6 @@ Portal có nút **Tường lửa** trên mỗi network để thêm rule. Mỗi r
 
 Điều này cũng có nghĩa là trên một network có bật IPv6 công khai, mọi cổng của mọi VM trên network đó đều mở ra Internet.
 
-## Nạp ví qua chuyển khoản chưa dùng được
+## Chưa nạp tiền được trên portal
 
-Mã QR và số tài khoản trong hộp thoại **Nạp tiền** hiện chưa trỏ tới tài khoản ngân hàng thật của OpenViCloud. Đừng chuyển tiền theo mã QR hay số tài khoản này.
+Trong giai đoạn beta, portal chưa có cách nạp tiền vào ví. OpenViCloud cộng tiền vào ví của bạn; liên hệ OpenViCloud khi cần thêm.

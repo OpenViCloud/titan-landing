@@ -1,7 +1,7 @@
 """Probe a running site: the checks only a served image can answer
 (docs/features/public-site/user-stories.md#us-site-02 AC-1, AC-2, AC-4, AC-6; docs/features/cli/user-stories.md#us-cli-14).
 
-Usage: python3 probe.py <base-url>   e.g. http://localhost:8080, https://site-staging.openvicloud.com
+Usage: python3 probe.py <base-url>   e.g. http://localhost:8080, https://openvicloud.com
 Prints one line per check and a final PROBE_RESULT=PASS|FAIL line; exit code 1 on any failure.
 """
 import sys
@@ -43,7 +43,7 @@ def install_script_checks(base):
     expected = f"release='{CLI_RELEASE}'"
     results.append(("install.sh downloads from the CLI release", expected in script, f"{expected} present={expected in script}"))
     results.append(("install.sh not cached", headers.get("Cache-Control") == "no-cache", f"Cache-Control={headers.get('Cache-Control')}"))
-    results.append(("install.sh noindex header", headers.get("X-Robots-Tag") == "noindex", f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
+    results.append(("install.sh indexable", headers.get("X-Robots-Tag") is None, f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
     return results
 
 
@@ -67,11 +67,11 @@ def main():
     results.append(("home 200", status == 200, f"status={status}"))
     is_landing = "OpenViCloud" in home and 'id="pricing"' in home and '<html lang="en"' in home
     results.append(("home is the English landing", is_landing, f"title, pricing anchor and lang=en present={is_landing}"))
-    results.append(("home noindex header", headers.get("X-Robots-Tag") == "noindex", f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
+    results.append(("home indexable", headers.get("X-Robots-Tag") is None and 'name="robots"' not in home, f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
 
     status, headers, docs = fetch(base + "/docs/")
     results.append(("docs 200", status == 200, f"status={status}"))
-    results.append(("docs noindex header", headers.get("X-Robots-Tag") == "noindex", f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
+    results.append(("docs indexable", headers.get("X-Robots-Tag") is None and 'name="robots"' not in docs, f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
 
     status, headers, home_vi = fetch(base + "/vi/")
     is_landing_vi = 'id="pricing"' in home_vi and '<html lang="vi"' in home_vi
@@ -84,11 +84,10 @@ def main():
     results.append(("missing page 404", status == 404, f"status={status}"))
     landing_anchor = 'id="pricing"' in missing
     results.append(("missing page is not the landing", not landing_anchor, f"landing pricing anchor present={landing_anchor}"))
-    results.append(("404 noindex header", headers.get("X-Robots-Tag") == "noindex", f"X-Robots-Tag={headers.get('X-Robots-Tag')}"))
     results.append(("404 not cached", headers.get("Cache-Control") == "no-cache", f"Cache-Control={headers.get('Cache-Control')}"))
 
     status, _, robots = fetch(base + "/robots.txt")
-    results.append(("robots disallows all", status == 200 and "Disallow: /" in robots, f"status={status}"))
+    results.append(("robots allows all", status == 200 and "Allow: /" in robots and "Disallow: /" not in robots, f"status={status}"))
 
     status, headers, config = fetch(base + "/config.json")
     results.append(("config.json served", status == 200 and "apiBaseUrl" in config, f"status={status}"))

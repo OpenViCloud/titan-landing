@@ -26,7 +26,7 @@ const notLabels = {
     topics: ['Create a snapshot.', 'Delete a snapshot.', 'Restore.', 'Revert.', 'Snapshot', 'VM and network', 'Volume and VM',
       'VMs, networks, firewall rules, load balancers', 'Every port is open by default.'],
     // Emphasis inside a sentence.
-    emphasis: ['allow', 'networks', 'new', 'not', 'paying invoices', 'size', 'template', 'topping up the wallet', 'whole',
+    emphasis: ['allow', 'networks', 'new', 'not', 'paying invoices', 'size', 'template', 'whole',
       'you cannot create any', '×'],
   },
   vi: {
@@ -35,7 +35,7 @@ const notLabels = {
     composed: ['Tôi đã đọc và đồng ý với Điều khoản dịch vụ.'],
     topics: ['Tạo snapshot.', 'Xoá snapshot.', 'Restore.', 'Revert.', 'Volume', 'VM và network', 'Volume và VM',
       'VM, network, firewall rule, load balancer', 'Mọi cổng đều mở theo mặc định.'],
-    emphasis: ['cho phép', 'cho phép (allow)', 'chưa', 'không được tạo cái nào', 'mới', 'network', 'nạp ví', 'size', 'template',
+    emphasis: ['cho phép', 'cho phép (allow)', 'chưa', 'không được tạo cái nào', 'mới', 'network', 'size', 'template',
       'trả hoá đơn', 'trọn', '×'],
   },
 };

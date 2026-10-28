@@ -35,7 +35,7 @@ openvicloud vm list
 Gọi thẳng API thì gửi token làm bearer token:
 
 ```bash
-curl -H "Authorization: Bearer $OPENVICLOUD_TOKEN" https://api-titan-staging.openvicloud.com/v1/tenant/vms
+curl -H "Authorization: Bearer $OPENVICLOUD_TOKEN" https://api.openvicloud.com/v1/tenant/vms
 ```
 
 Request mang token bị từ chối với HTTP `401` khi token đã bị xoá, đã hết hạn, hoặc gõ sai. Nếu tài khoản bị suspend hoặc còn chờ duyệt, token chỉ đọc được, không thay đổi được gì — y như khi đăng nhập trình duyệt.

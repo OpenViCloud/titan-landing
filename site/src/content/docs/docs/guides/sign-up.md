@@ -48,7 +48,7 @@ Acceptance is recorded per user, not per account. When a new version of the term
 
 An administrator can move an account to `Suspended`. A rejected sign-up also has this state.
 
-While suspended, every action that changes something is refused with the code `TENANT_SUSPENDED`. This includes creating, deleting, starting and stopping resources, **topping up the wallet** and **paying invoices**. If you still owe acceptance of the terms, accepting them is also blocked while suspended.
+While suspended, every action that changes something is refused with the code `TENANT_SUSPENDED`. This includes creating, deleting, starting and stopping resources, and **paying invoices**. If you still owe acceptance of the terms, accepting them is also blocked while suspended.
 
 Suspension does not turn off your resources. Running VMs keep running and are still billed as usual.
 
