@@ -21,6 +21,6 @@ The portal has a **Firewall** button on each network for adding rules. Each rule
 
 This also means that on a network with public IPv6 enabled, every port of every VM on that network is open to the Internet.
 
-## Topping up the wallet by bank transfer does not work yet
+## You cannot buy credit in the portal yet
 
-The QR code and the account number in the **Buy credit** dialog do not point to a real OpenViCloud bank account yet. Do not transfer money to this QR code or account number.
+During the beta the portal has no way to buy credit. OpenViCloud adds credit to your wallet; contact OpenViCloud when you need more.

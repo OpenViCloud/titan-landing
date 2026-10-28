@@ -39,7 +39,7 @@ Open the **Invoices** page to see the list. Each row has the period (**Period**)
 | `Processing` | You just clicked pay; the money is being taken from your wallet. |
 | `Settled` | Paid from the wallet. |
 | `Paid` | Paid outside the wallet, or the invoice total is 0. |
-| `Payment failed` | The payment from the wallet did not succeed. Your wallet was not charged. Top up if needed, then click **Pay from wallet** again. |
+| `Payment failed` | The payment from the wallet did not succeed. Your wallet was not charged. If your wallet is short, ask OpenViCloud to add credit, then click **Pay from wallet** again. |
 
 ## Pay an invoice from the wallet
 
@@ -48,12 +48,12 @@ Open the **Invoices** page to see the list. Each row has the period (**Period**)
 3. Click the **Pay** button with the amount to confirm.
 4. The dialog shows **Payment accepted — processing.** The invoice moves to `Processing`, then to `Settled` when the money has been taken. The page updates by itself. A **Spend** line appears in your wallet statement.
 
-Your wallet must hold enough to pay the **whole** invoice. OpenViCloud does not take partial payments. If your wallet is short, the **Pay from wallet** button is disabled: on the **Invoices** list, hover it to see how much is missing; on the invoice detail page, the missing amount is shown next to the button. If your wallet stops being enough at the moment you click, you get the code `INVOICE_WALLET_INSUFFICIENT` (the portal shows **Your wallet no longer covers this invoice. Top up and try again.**) and nothing is taken.
+Your wallet must hold enough to pay the **whole** invoice. OpenViCloud does not take partial payments. If your wallet is short, the **Pay from wallet** button is disabled: on the **Invoices** list, hover it to see how much is missing; on the invoice detail page, the missing amount is shown next to the button. If your wallet stops being enough at the moment you click, you get the code `INVOICE_WALLET_INSUFFICIENT` (the portal shows **Your wallet no longer covers this invoice. Contact OpenViCloud to add credit, then try again.**) and nothing is taken.
 
 ## No automatic charges
 
 Money only leaves your wallet when you click to pay a specific invoice.
 
 - Issuing an invoice does not charge your wallet.
-- Topping up the wallet does not pay invoices automatically.
+- Credit added to your wallet does not pay invoices automatically.
 - An overdue invoice is only a reminder. The **Wallet** page shows a notice when you have an overdue invoice. Running resources are not affected, and you can still create new resources.

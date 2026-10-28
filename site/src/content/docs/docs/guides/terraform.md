@@ -23,7 +23,7 @@ Snapshots and invoices are not in the provider; use the portal.
 export OPENVICLOUD_TOKEN=ovc_...
 ```
 
-The provider talks to the OpenViCloud staging API by default. Set `OPENVICLOUD_API_URL` to point it elsewhere.
+The provider talks to the OpenViCloud API (`https://api.openvicloud.com`) by default. Set `OPENVICLOUD_API_URL` to point it elsewhere.
 
 3. Pick a cluster and an operating system. The CLI lists both:
 

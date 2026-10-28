@@ -124,7 +124,7 @@ const en = {
     { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For an address the Internet can reach, create the network with public IPv6.' },
     { title: 'No SSH button or console in the portal', body: 'Log in with your SSH key through the command-line tool. There is no password field or console screen.', href: '/docs/guides/cli/', link: 'Command-line tool guide' },
     { title: 'Firewall rules do not block more traffic yet', body: 'A network allows all traffic by default, and rules are only allow rules. On a network with public IPv6, every port of its VMs is open to the Internet.' },
-    { title: 'Topping up the wallet by bank transfer does not work yet', body: 'Do not send money to the QR code or account number shown in the portal.' },
+    { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. Contact OpenViCloud when you need more.' },
   ],
   faqHeading: 'Frequently asked questions',
   faq: [
@@ -268,7 +268,7 @@ const vi = {
     { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ truy cập được từ Internet, hãy tạo network có IPv6 công khai.' },
     { title: 'Portal không có nút SSH hay console', body: 'Đăng nhập bằng SSH key qua công cụ dòng lệnh. Chưa có ô mật khẩu hay màn hình console.', href: '/vi/docs/guides/cli/', link: 'Hướng dẫn công cụ dòng lệnh' },
     { title: 'Rule firewall chưa chặn thêm traffic', body: 'Network mặc định cho phép mọi traffic, rule hiện chỉ là rule cho phép. Trên network có IPv6 công khai, mọi cổng của VM đều mở ra Internet.' },
-    { title: 'Nạp ví qua chuyển khoản chưa dùng được', body: 'Đừng chuyển tiền theo mã QR hay số tài khoản trong portal.' },
+    { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Liên hệ OpenViCloud khi cần thêm.' },
   ],
   faqHeading: 'Câu hỏi thường gặp',
   faq: [

@@ -35,7 +35,7 @@ openvicloud vm list
 Against the API, send it as a bearer token:
 
 ```bash
-curl -H "Authorization: Bearer $OPENVICLOUD_TOKEN" https://api-titan-staging.openvicloud.com/v1/tenant/vms
+curl -H "Authorization: Bearer $OPENVICLOUD_TOKEN" https://api.openvicloud.com/v1/tenant/vms
 ```
 
 A request with a token is refused with HTTP `401` when the token was deleted, has expired, or is mistyped. If your account is suspended or still waiting for approval, a token can read but not change anything, exactly like a browser login.

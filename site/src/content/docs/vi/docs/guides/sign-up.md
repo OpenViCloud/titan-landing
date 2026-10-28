@@ -48,7 +48,7 @@ Việc đồng ý được ghi cho từng người dùng, không phải cho cả
 
 Quản trị viên có thể chuyển tài khoản sang `Suspended`. Một đăng ký bị từ chối cũng có trạng thái này.
 
-Khi bị tạm ngưng, mọi thao tác thay đổi đều bị từ chối với mã `TENANT_SUSPENDED`. Điều này gồm cả tạo, xoá, bật, tắt tài nguyên, **nạp ví** và **trả hoá đơn**. Nếu bạn vẫn còn nợ việc đồng ý điều khoản, việc đồng ý cũng bị chặn trong lúc tạm ngưng.
+Khi bị tạm ngưng, mọi thao tác thay đổi đều bị từ chối với mã `TENANT_SUSPENDED`. Điều này gồm cả tạo, xoá, bật, tắt tài nguyên và **trả hoá đơn**. Nếu bạn vẫn còn nợ việc đồng ý điều khoản, việc đồng ý cũng bị chặn trong lúc tạm ngưng.
 
 Tạm ngưng không tự tắt tài nguyên của bạn. VM đang chạy vẫn chạy và vẫn được tính phí như bình thường.
 

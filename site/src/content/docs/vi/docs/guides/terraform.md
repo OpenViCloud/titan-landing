@@ -23,7 +23,7 @@ Snapshot và hoá đơn không nằm trong provider; hãy dùng portal.
 export OPENVICLOUD_TOKEN=ovc_...
 ```
 
-Provider mặc định gọi API staging của OpenViCloud. Đặt `OPENVICLOUD_API_URL` để trỏ sang nơi khác.
+Provider mặc định gọi API của OpenViCloud (`https://api.openvicloud.com`). Đặt `OPENVICLOUD_API_URL` để trỏ sang nơi khác.
 
 3. Chọn một cluster và một hệ điều hành. CLI liệt kê được cả hai:
 

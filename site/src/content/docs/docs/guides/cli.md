@@ -3,14 +3,14 @@ title: Command-line tool
 description: Download, verify and install the openvicloud CLI, log in, create and manage VMs and SSH keys, and open an SSH session.
 ---
 
-`openvicloud` is the command-line client of OpenViCloud. It can log you in, show your [account](/docs/guides/account/) (which the CLI calls a tenant), list the clusters, templates and sizes you can pick, create and manage VMs and SSH keys, and open an SSH session to a VM. Networks, volumes, snapshots, firewall rules and load balancers, and paying invoices or topping up your wallet, are done on the portal.
+`openvicloud` is the command-line client of OpenViCloud. It can log you in, show your [account](/docs/guides/account/) (which the CLI calls a tenant), list the clusters, templates and sizes you can pick, create and manage VMs and SSH keys, and open an SSH session to a VM. Networks, volumes, snapshots, firewall rules and load balancers, and paying invoices, are done on the portal.
 
 ## Install with one command
 
 On macOS or Linux, run:
 
 ```bash
-curl -fsSL https://site-staging.openvicloud.com/install.sh | sh
+curl -fsSL https://openvicloud.com/install.sh | sh
 ```
 
 The script picks the file for your operating system and processor, downloads it with `SHA256SUMS` from the CLI's latest release on GitHub, and installs nothing if the file does not match its line in `SHA256SUMS`. It puts `openvicloud` in `/usr/local/bin` when it can write there, otherwise in `~/.local/bin`, and never asks for `sudo`. Then it runs `openvicloud version`, and if the folder it installed into is not on your `PATH`, it prints the line to add to your shell profile.
@@ -164,7 +164,7 @@ While `OPENVICLOUD_TOKEN` is set, every command — `vm ssh` included — uses t
 
 Every command accepts the `-o, --output table` (the default) or `-o, --output json` flag. Commands that print a result (lists, `get`, `tenant get`, `auth status`, `version`, and the ID a create returns) print it in that format; with `json` it is the object the API returned, prices with every digit. Commands that only send a request (`start`, `stop`, `delete`, `rename`) print a line saying the request was sent, which is not part of the output; with `--wait`, `start` and `stop` then print the VM in that format.
 
-Everything else — networks, volumes, snapshots, firewall rules, load balancers, and paying invoices or topping up your wallet — is done on the portal.
+Everything else — networks, volumes, snapshots, firewall rules, load balancers, and paying invoices — is done on the portal.
 
 ## Create and manage VMs
 

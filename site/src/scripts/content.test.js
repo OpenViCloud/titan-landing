@@ -197,9 +197,9 @@ test('every line of the hero panel is a line of a code block of the Terraform or
   }
 });
 
-test('the CLI page shows the one-line install the landing shows, on the staging site', () => {
+test('the CLI page shows the one-line install the landing shows, on the production site', () => {
   for (const lang of ['en', 'vi']) {
-    const line = copy[lang].cli.installCommand.replace('{site}', 'https://site-staging.openvicloud.com');
+    const line = copy[lang].cli.installCommand.replace('{site}', 'https://openvicloud.com');
     assert.ok(codeLines(readFileSync(cliPage[lang], 'utf8')).includes(line), `${lang}: ${line}`);
   }
 });

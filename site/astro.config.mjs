@@ -19,7 +19,6 @@ export default defineConfig({
         './src/styles/starlight.css',
       ],
       components: { Head: './src/components/Head.astro' },
-      head: [{ tag: 'meta', attrs: { name: 'robots', content: 'noindex' } }],
       sidebar: [
         { label: 'Overview', translations: { vi: 'Tổng quan' }, slug: 'docs' },
         { label: 'Known limitations', translations: { vi: 'Giới hạn hiện tại' }, slug: 'docs/known-limitations' },

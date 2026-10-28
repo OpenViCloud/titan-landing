@@ -3,14 +3,14 @@ title: Công cụ dòng lệnh
 description: Tải, kiểm tra và cài đặt CLI openvicloud, đăng nhập, tạo và quản lý VM và SSH key, và mở phiên SSH.
 ---
 
-`openvicloud` là CLI (công cụ dòng lệnh) của OpenViCloud. CLI cho phép đăng nhập, xem [tài khoản](/vi/docs/guides/account/) của bạn (CLI gọi nó là "tenant"), xem cluster, template và size để chọn, tạo và quản lý VM và SSH key, và mở phiên SSH tới một VM. Network, volume, snapshot, firewall rule và load balancer, cũng như trả hoá đơn hay nạp ví, vẫn làm trên portal.
+`openvicloud` là CLI (công cụ dòng lệnh) của OpenViCloud. CLI cho phép đăng nhập, xem [tài khoản](/vi/docs/guides/account/) của bạn (CLI gọi nó là "tenant"), xem cluster, template và size để chọn, tạo và quản lý VM và SSH key, và mở phiên SSH tới một VM. Network, volume, snapshot, firewall rule và load balancer, cũng như trả hoá đơn, vẫn làm trên portal.
 
 ## Cài bằng một lệnh
 
 Trên macOS hoặc Linux, chạy:
 
 ```bash
-curl -fsSL https://site-staging.openvicloud.com/install.sh | sh
+curl -fsSL https://openvicloud.com/install.sh | sh
 ```
 
 Script chọn file theo hệ điều hành và kiến trúc máy của bạn, tải nó cùng `SHA256SUMS` từ bản phát hành mới nhất của CLI trên GitHub, và không cài gì nếu file không khớp dòng của nó trong `SHA256SUMS`. Script đặt `openvicloud` vào `/usr/local/bin` khi ghi được vào đó, nếu không thì vào `~/.local/bin`, và không bao giờ hỏi `sudo`. Sau đó script chạy `openvicloud version`, và nếu thư mục đã cài không nằm trong `PATH`, script in dòng cần thêm vào file cấu hình shell của bạn.
@@ -164,7 +164,7 @@ Khi `OPENVICLOUD_TOKEN` có giá trị, mọi lệnh — kể cả `vm ssh` — 
 
 Mọi lệnh đều nhận cờ `-o, --output table` (mặc định) hoặc `-o, --output json`. Lệnh in kết quả (các lệnh `list`, `get`, `tenant get`, `auth status`, `version`, và ID mà lệnh tạo trả về) in theo định dạng đó; với `json` là nguyên đối tượng API trả về, giá giữ đủ mọi chữ số. Lệnh chỉ gửi yêu cầu (`start`, `stop`, `delete`, `rename`) in một dòng báo đã gửi, dòng này không thuộc kết quả; có `--wait` thì `start` và `stop` sau đó in VM theo định dạng đó.
 
-Mọi việc khác — network, volume, snapshot, firewall rule, load balancer, trả hoá đơn hay nạp ví — vẫn làm trên portal.
+Mọi việc khác — network, volume, snapshot, firewall rule, load balancer, trả hoá đơn — vẫn làm trên portal.
 
 ## Tạo và quản lý VM
 
