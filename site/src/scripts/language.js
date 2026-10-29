@@ -1,4 +1,4 @@
-// Which language a visitor reads (docs/features/public-site/design.md#site-language): English at /, Vietnamese
+// Which language a visitor reads (titan-ops features/public-site/design.md#site-language): English at /, Vietnamese
 // under /vi/, same slugs. A choice made with a language switch is saved per browser and wins; with no choice
 // saved, a first visit from Vietnam goes to the Vietnamese page. The pure functions are tested in node; boot()
 // is the browser part.

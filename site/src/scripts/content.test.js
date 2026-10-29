@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { copy } from '../i18n/landing.js';
 
 // The docs exist once per language with the same English slugs, and every link inside the site goes to a page
-// or a landing anchor that exists (docs/features/public-site/design.md#site-language). Nothing else checks these
+// or a landing anchor that exists (titan-ops features/public-site/design.md#site-language). Nothing else checks these
 // links: docs/check-links.py only follows links to repo markdown files.
 
 const srcDir = fileURLToPath(new URL('..', import.meta.url));
@@ -99,8 +99,8 @@ test('every link in the docs points to a page or landing anchor that exists', ()
   assert.deepEqual(brokenLinks(links, known, landingAnchors), []);
 });
 
-// The CLI downloads are one set of files for both languages (docs/features/cli/design.md#cli-download).
-// The CLI is downloaded from its own repository's latest release (docs/features/cli/design.md#cli-download).
+// The CLI downloads are one set of files for both languages (titan-ops features/cli/design.md#cli-download).
+// The CLI is downloaded from its own repository's latest release (titan-ops features/cli/design.md#cli-download).
 const cliRelease = 'https://github.com/OpenViCloud/titan-cli/releases/latest/download/';
 
 test('English docs link to English pages and Vietnamese docs to Vietnamese pages', () => {
@@ -163,7 +163,7 @@ test('the command check finds a command the CLI page does not show (the check ca
 });
 
 // The landing's CLI panel copies commands from the CLI page, which lists only what main has
-// (docs/features/cli/design.md#cli-download).
+// (titan-ops features/cli/design.md#cli-download).
 test('every command on the landing CLI panel is a line of a code block of the CLI page in the same language', () => {
   for (const lang of ['en', 'vi']) {
     const commands = copy[lang].cli.commands;
@@ -187,7 +187,7 @@ test('the hero line check finds a line the guides do not show (the check can fai
 });
 
 // The hero panel shows a Terraform file and two commands, all copied from the Terraform and CLI guides
-// (docs/features/public-site/design.md#landing-page).
+// (titan-ops features/public-site/design.md#landing-spec).
 test('every line of the hero panel is a line of a code block of the Terraform or CLI guide in the same language', () => {
   for (const lang of ['en', 'vi']) {
     const { terraform, commands } = copy[lang].panel;

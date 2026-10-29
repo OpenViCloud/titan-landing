@@ -1,5 +1,5 @@
 ---
-// The landing page in one language (docs/features/public-site/design.md#site-language). pages/index.astro renders
+// The landing page in one language (titan-ops features/public-site/design.md#site-language). pages/index.astro renders
 // it in English, pages/vi/index.astro in Vietnamese; every word comes from src/i18n/landing.js.
 import '@fontsource/be-vietnam-pro/400.css';
 import '@fontsource/be-vietnam-pro/500.css';
@@ -405,7 +405,7 @@ function tokens(line: string) {
       }
 
       // The install line names the site the page came from: the same site serves install.sh with its own address
-      // (docs/features/cli/design.md#install-script). The copy button needs the clipboard, so it stays hidden without it.
+      // (titan-ops features/cli/design.md#install-script). The copy button needs the clipboard, so it stays hidden without it.
       function showInstallCommand() {
         const command = document.querySelector('[data-install-command]');
         const line = command.dataset.template.replace('{site}', window.location.origin);

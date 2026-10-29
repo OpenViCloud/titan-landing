@@ -1,6 +1,6 @@
-// Every word of the landing page, once per language (docs/features/public-site/design.md#site-language).
+// Every word of the landing page, once per language (titan-ops features/public-site/design.md#site-language).
 // en and vi must keep the same keys and list lengths: src/scripts/i18n.test.js compares them.
-// Each sentence about behaviour must match the code on main (docs/features/public-site/design.md#docs-scope).
+// Each sentence about behaviour must match the code on main (titan-ops features/public-site/design.md#docs-scope).
 
 const en = {
   lang: 'en',

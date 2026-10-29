@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 // public/install.sh run by a real `sh` from stdin, as `curl … | sh` runs it, with `uname` and `curl` replaced by
 // scripts in PATH: the test picks the machine and serves the CLI's release from a folder
-// (docs/features/cli/design.md#install-script).
+// (titan-ops features/cli/design.md#install-script).
 
 const scriptPath = fileURLToPath(new URL('../../public/install.sh', import.meta.url));
 const release = 'https://github.com/OpenViCloud/titan-cli/releases/latest/download';

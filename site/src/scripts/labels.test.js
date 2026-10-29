@@ -5,7 +5,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // Bold text in the customer docs names what the customer sees on screen, so it must be text the portal shows
-// (docs/features/public-site/design.md#docs-labels). A portal label renamed without the docs is caught here.
+// (titan-ops features/public-site/design.md#docs-labels). A portal label renamed without the docs is caught here.
 // The portal lives in OpenViCloud/titan-cloud-console; portal-labels/ is a copy of its words at the commit in
 // portal-labels/SOURCE (scripts/sync-portal-labels.sh).
 

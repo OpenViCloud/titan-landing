@@ -1,4 +1,4 @@
-/* Site brand, shared by the landing and the docs (docs/features/public-site/design.md#landing-spec).
+/* Site brand, shared by the landing and the docs (titan-ops features/public-site/design.md#landing-spec).
    The portal keeps its own black-and-white palette. */
 :root {
   --color-background: hsl(225 18% 5%);

@@ -4,7 +4,7 @@
 #   curl -fsSL <site>/install.sh | sh
 #
 # The binary comes from the latest release of OpenViCloud/titan-cli, the same on every site
-# (docs/features/cli/design.md#install-script). Everything runs from main, called on the last line, so a download cut
+# (titan-ops features/cli/design.md#install-script). Everything runs from main, called on the last line, so a download cut
 # short runs nothing.
 
 fail() {
