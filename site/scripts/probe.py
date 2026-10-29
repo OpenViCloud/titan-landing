@@ -1,5 +1,5 @@
 """Probe a running site: the checks only a served image can answer
-(docs/features/public-site/user-stories.md#us-site-02 AC-1, AC-2, AC-4, AC-6; docs/features/cli/user-stories.md#us-cli-14).
+(titan-ops features/public-site/user-stories.md#us-site-02 AC-1, AC-2, AC-4, AC-6; titan-ops features/cli/user-stories.md#us-cli-14).
 
 Usage: python3 probe.py <base-url>   e.g. http://localhost:8080, https://openvicloud.com
 Prints one line per check and a final PROBE_RESULT=PASS|FAIL line; exit code 1 on any failure.
@@ -26,7 +26,7 @@ def fetch(url):
 
 
 # The CLI is not served by the site: the install script and the CLI guide take it from the latest release of
-# OpenViCloud/titan-cli (docs/features/cli/design.md#cli-download).
+# OpenViCloud/titan-cli (titan-ops features/cli/design.md#cli-download).
 CLI_RELEASE = "https://github.com/OpenViCloud/titan-cli/releases/latest/download"
 
 
@@ -37,7 +37,7 @@ def cli_download_checks(base):
 
 def install_script_checks(base):
     # The same script on every site: it names the CLI's release, not the site it came from
-    # (docs/features/cli/design.md#install-script).
+    # (titan-ops features/cli/design.md#install-script).
     status, headers, script = fetch(base + "/install.sh")
     results = [("install.sh 200", status == 200, f"status={status}")]
     expected = f"release='{CLI_RELEASE}'"
@@ -47,7 +47,7 @@ def install_script_checks(base):
     return results
 
 
-# docs/features/public-site/design.md#landing-spec
+# titan-ops features/public-site/design.md#landing-spec
 def beta_label_checks(base):
     results = []
     for path in ("/", "/vi/"):

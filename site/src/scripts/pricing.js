@@ -1,4 +1,4 @@
-// Turns the two anonymous price lists into plan cards (docs/features/public-site/design.md#live-pricing).
+// Turns the two anonymous price lists into plan cards (titan-ops features/public-site/design.md#live-pricing).
 // Returns null whenever the data can't be trusted, so the page shows the fallback sentence
 // instead of "0 ₫", an empty cell or NaN.
 

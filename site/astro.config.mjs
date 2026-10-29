@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-// English at the root, Vietnamese under /vi/, same slugs (docs/features/public-site/design.md#site-language).
+// English at the root, Vietnamese under /vi/, same slugs (titan-ops features/public-site/design.md#site-language).
 export default defineConfig({
   integrations: [
     starlight({

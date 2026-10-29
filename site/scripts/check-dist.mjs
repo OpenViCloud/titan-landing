@@ -1,5 +1,5 @@
 // The site must never ship the internal docs of OpenViCloud/titan-ops
-// (docs/features/public-site/user-stories.md#us-site-02 AC-3). Customer pages are written under site/src/content/; a
+// (titan-ops features/public-site/user-stories.md#us-site-02 AC-3). Customer pages are written under site/src/content/; a
 // stray copy of titan-ops's docs/ would publish internal design notes, and credentials.local.md files hold real test
 // passwords.
 // Usage: node scripts/check-dist.mjs [--docs-dir <titan-ops docs/>] [--require-docs]

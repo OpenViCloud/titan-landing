@@ -58,7 +58,7 @@ jobs:
           python3 scripts/probe.py http://localhost:8080
 
       # The one-line install as a customer runs it, on this Linux amd64 runner: what it installed must be the CLI's
-      # latest release, read from the GitHub API (docs/features/cli/design.md#install-script).
+      # latest release, read from the GitHub API (titan-ops features/cli/design.md#install-script).
       - name: Install the CLI with the one-line command
         env:
           GH_TOKEN: ${{ github.token }}
