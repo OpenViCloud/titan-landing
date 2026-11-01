@@ -67,7 +67,6 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `FIREWALL_RULE_NOT_FOUND` | 404 | The rule does not exist, or belongs to another network. | Reload the rule list. |
 | `IPV6_QUOTA_EXCEEDED` | 422 | You have used up the number of networks with public IPv6 enabled. | Delete a network that has public IPv6, or create this network without it. |
 | `IPV6_NOT_AVAILABLE` | 422 | The cluster has no public IPv6 available, or no free address range is left in that cluster. | Choose another cluster, or create the network without public IPv6. |
-| `IPV6_ALLOCATION_CONFLICT` | 409 | Two networks in the same cluster requested public IPv6 at the same instant and were given the same address range. | Try creating the network again. |
 
 ## Volumes and volume snapshots
 

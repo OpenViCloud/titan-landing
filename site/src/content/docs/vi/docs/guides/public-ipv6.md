@@ -31,7 +31,6 @@ Hạn mức network mặc định chỉ là 1, nên trên thực tế bạn sẽ
 |---|---|---|
 | Đã vượt hạn mức IPv6 công khai — xoá bớt một mạng có IPv6 công khai trước | `IPV6_QUOTA_EXCEEDED` | Bạn đã có đủ số network bật IPv6 công khai mà tài khoản được phép (mặc định 10). |
 | Cluster này chưa có IPv6 công khai | `IPV6_NOT_AVAILABLE` | Cluster chưa cấu hình IPv6 công khai, hoặc mọi dải `/64` của cluster (255 dải) đã dùng hết. |
-| Một mạng khác vừa lấy cùng dải IPv6 — hãy gửi lại | `IPV6_ALLOCATION_CONFLICT` | Hai network cùng xin IPv6 công khai trong cùng cluster tại cùng thời điểm và chọn trùng dải `/64`. Gửi lại form. |
 
 Dải `/64` của một network được giữ tới khi việc xoá network đó xong, không chỉ khi bạn bấm xoá.
 

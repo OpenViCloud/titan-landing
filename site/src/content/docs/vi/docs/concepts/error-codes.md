@@ -67,7 +67,6 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `FIREWALL_RULE_NOT_FOUND` | 404 | Rule không tồn tại, hoặc thuộc network khác. | Tải lại danh sách rule. |
 | `IPV6_QUOTA_EXCEEDED` | 422 | Bạn đã dùng hết số network được bật IPv6 công khai. | Xoá một network đang bật IPv6, hoặc tạo network này không bật IPv6. |
 | `IPV6_NOT_AVAILABLE` | 422 | Cluster không có IPv6 công khai, hoặc đã hết dải địa chỉ trống ở cluster đó. | Chọn cluster khác, hoặc tạo network không bật IPv6 công khai. |
-| `IPV6_ALLOCATION_CONFLICT` | 409 | Hai network cùng cluster xin IPv6 công khai cùng lúc và được cấp trùng một dải địa chỉ. | Thử tạo network lại. |
 
 ## Volume và snapshot volume
 
