@@ -14,7 +14,7 @@ A volume is a separate data disk, independent of any VM. All actions are under *
 5. Fill in **Size (GB)**, greater than 0.
 6. Click **Create volume**.
 
-The new volume shows **Creating**, then **Available** once it exists on the infrastructure. If creation fails, the volume shows **Failed** with a line explaining why; click **Delete** to remove it. If an attach, detach or delete does not go through, the volume goes back to how it was, with a line explaining why; so does a snapshot whose delete does not go through.
+The new volume shows **Creating**, then **Available** once it exists on the infrastructure. If creation fails, a line explains why: the volume shows **Failed** (click **Delete** to remove it), or **Available** if the disk was made before the failure. If an attach, detach or delete does not go through, the volume goes back to how it was, with a line explaining why; so does a snapshot whose delete does not go through.
 
 Each account has at most 10 volumes by default. When you reach it, the portal shows "Volume quota exceeded (max 10)." (code `VOLUME_QUOTA_EXCEEDED`). Volumes you have clicked delete on, **Failed** volumes and **Not found** volumes do not count.
 
@@ -46,7 +46,7 @@ When you [delete a VM](/docs/guides/vm/), volumes attached to that VM are detach
 
 Click **Snapshots** on the volume's row to open the snapshot list.
 
-**Create a snapshot.** Click **New Snapshot**, enter a name (at most 100 characters), then click **Create**. This button is available when the volume is **Available** or **Attached** and no action is running. The new snapshot is in the **Creating** state, then moves to **Available**.
+**Create a snapshot.** Click **New Snapshot**, enter a name (at most 100 characters), then click **Create**. This button is available when the volume is **Available** or **Attached** and no action is running. The new snapshot is in the **Creating** state, then moves to **Available**. If creating it does not go through, a line next to the snapshot explains why.
 
 Each volume has at most 3 snapshots by default. When you reach it, the portal shows "Snapshot quota exceeded (max 3 per volume)." (code `VOLUME_SNAPSHOT_QUOTA_EXCEEDED`). Snapshots you have clicked delete on do not count.
 
