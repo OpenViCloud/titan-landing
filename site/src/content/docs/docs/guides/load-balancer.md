@@ -51,7 +51,7 @@ Click **Edit** on a load balancer's row, then **Save**. Editing replaces the who
 
 ## States
 
-A load balancer can be **Creating**, **Updating**, **Deleting**, **Active**, **Not found** or **Failed**. The list polls every 5 seconds while a load balancer is still changing, then stops.
+A load balancer can be **Creating**, **Updating**, **Deleting**, **Active**, **Not found** or **Failed**. The list polls every 5 seconds while a load balancer is still changing, then stops. If a change or a delete does not go through, the load balancer stays as it was, with a line explaining why.
 
 ## Delete a load balancer
 
