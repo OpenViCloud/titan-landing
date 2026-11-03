@@ -51,7 +51,7 @@ Bấm **Sửa** trên dòng của load balancer, rồi bấm **Lưu**. Sửa s�
 
 ## Trạng thái
 
-Load balancer có thể ở **Creating**, **Updating**, **Deleting**, **Active**, **Not found** hoặc **Failed**. Danh sách poll lại mỗi 5 giây khi còn load balancer nào đang thay đổi, rồi dừng.
+Load balancer có thể ở **Creating**, **Updating**, **Deleting**, **Active**, **Not found** hoặc **Failed**. Danh sách poll lại mỗi 5 giây khi còn load balancer nào đang thay đổi, rồi dừng. Nếu sửa hay xoá không thành công, load balancer giữ như trước, kèm một dòng nói lý do.
 
 ## Xoá load balancer
 

@@ -13,7 +13,7 @@ When a request is refused, OpenViCloud returns a JSON body with a `code` field, 
 | `IDEMPOTENCY_KEY_REQUIRED` | 400 | An API request that creates a resource is missing the `Idempotency-Key` header. | Add the `Idempotency-Key` header with a new value for each create. |
 | `IDEMPOTENCY_KEY_REUSED` | 422 | You reused an old `Idempotency-Key` for a request with different content. | Use a new key. |
 | `IDEMPOTENCY_IN_PROGRESS` | 409 | A request with the same `Idempotency-Key` is being processed. | Wait a moment, then send exactly that request again, with the same key. |
-| `REQUEST_IN_PROGRESS` | 409 | Two identical requests arrived at the same time, for example a double click on the delete button of a load balancer. The first request is still carried out. A VM, a VM snapshot, a network, a firewall rule, a volume or a volume snapshot answers a repeat like the first request instead. | Nothing to do. Reload the page to see the result. |
+| `REQUEST_IN_PROGRESS` | 409 | Two identical writes reached the platform at the same moment. No request you send returns it today: a request repeated while the first one still waits (a double click on **Delete**, for example) is answered like the first request. | Nothing to do. Reload the page to see the result. |
 | `TENANT_PENDING_APPROVAL` | 403 | Your account is waiting for approval. You cannot create or change anything yet. | Wait for OpenViCloud to approve it. |
 | `TENANT_SUSPENDED` | 403 | Your account is suspended. You cannot change anything. | — |
 | `TENANT_NAME_TAKEN` | 409 | The name a new account gets (your username, or your email when there is none) already belongs to another account, so no account was made for you. | — |
