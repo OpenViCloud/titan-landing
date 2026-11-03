@@ -15,7 +15,7 @@ Network là mạng riêng nối các VM của bạn với nhau. Mỗi VM cần m
 6. Đánh dấu **Bật IPv6 công khai** nếu bạn muốn VM trên network này truy cập được từ Internet qua IPv6. Đọc [IPv6 công khai](/vi/docs/guides/public-ipv6/) trước khi đánh dấu.
 7. Bấm **Tạo mạng**.
 
-Network mới hiện trong bảng với trạng thái **Creating**. Bảng poll lại mỗi 5 giây khi còn dòng nào đang thay đổi, rồi dừng. Tạo xong, network có thể hiện **Pending** một lúc trong khi hạ tầng hoàn tất. Khi trạng thái thành **Created**, bạn tạo được VM và firewall rule trên network đó. Nếu tạo không thành, dòng đó hiện **Failed**, **Errored**, **Unavailable** hoặc **Not found**.
+Network mới hiện trong bảng với trạng thái **Creating**. Bảng poll lại mỗi 5 giây khi còn dòng nào đang thay đổi, rồi dừng. Hết **Creating**, network có thể hiện **Pending** một lúc trong khi hạ tầng hoàn tất việc dựng nó. Khi trạng thái thành **Created**, bạn tạo được VM và firewall rule trên network đó. Nếu tạo không thành, dòng đó hiện **Failed**, **Errored**, **Unavailable** hoặc **Not found**.
 
 ## Tên network
 
