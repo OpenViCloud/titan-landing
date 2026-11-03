@@ -74,7 +74,7 @@ Bấm **Quản lý** trên hàng của VM, rồi mở tab **Snapshot**.
 
 **Revert.** Nút **Quay về** có trên snapshot ở trạng thái **Available** khi không có thao tác nào đang chạy trên nó. Snapshot hiện **Reverting** tới khi xong. Revert đưa ổ đĩa của VM về lúc chụp snapshot và chỉ đụng tới ổ đĩa — size của VM và các volume đang gắn không đổi. Revert không tự tắt hay bật VM. Việc này chỉ chạy được khi VM ở trạng thái Running, Ready, Stopped hoặc Frozen, và không có lệnh stop hay xoá đang chờ; nếu không, portal báo "Không quay về được snapshot."
 
-**Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Nút này có khi không có thao tác nào đang chạy trên snapshot; snapshot **Failed** hoặc **Not found** cũng xoá được.
+**Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Nút này có khi không có thao tác nào đang chạy trên snapshot; snapshot **Failed** hoặc **Not found** cũng xoá được. Nếu quay về hay xoá không thành công, snapshot giữ như trước, kèm một dòng nói lý do.
 
 ## VM được tính tiền khi nào
 

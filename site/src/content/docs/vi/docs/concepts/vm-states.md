@@ -47,7 +47,7 @@ Một số lưu ý:
 - Nút **Tắt** tắt VM ngay lập tức, giống như rút điện. Hãy tắt các ứng dụng quan trọng bên trong VM trước khi bấm.
 - Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping` hoặc `Deleting`, hoặc khi VM ở `Error`.
 - Khi VM còn đang `Creating` và chưa tồn tại, nút **Xoá** bị tắt. Nếu danh sách đã cũ vài giây và bạn vẫn bấm được, portal báo *Chưa xoá được: VM vẫn đang được khởi tạo. Thử lại sau một phút.* Hãy thử lại sau khoảng một phút.
-- Bấm **Xoá** khi một snapshot của VM đang được tạo hoặc đang khôi phục sẽ bị từ chối với lỗi `VM_SNAPSHOT_IN_PROGRESS`.
+- Bấm **Xoá** khi một snapshot của VM đang được tạo hoặc đang quay về sẽ bị từ chối với lỗi `VM_SNAPSHOT_IN_PROGRESS`.
 - Nếu bạn bấm Tắt, Bật hoặc Tiếp tục ở trạng thái không hợp lệ, portal báo *VM không ở trạng thái phù hợp cho thao tác này* (mã lỗi `VM_INVALID_STATUS`).
 
 ## Khi VM không ở trạng thái bạn yêu cầu

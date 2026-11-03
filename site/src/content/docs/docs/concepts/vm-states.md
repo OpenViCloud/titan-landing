@@ -47,7 +47,7 @@ Some notes:
 - **Stop** turns the VM off immediately, like pulling the plug. Shut down important applications inside the VM before you click it.
 - You cannot create a snapshot or attach a volume while the VM is `Stopping` or `Deleting`, or when the VM is in `Error`.
 - While the VM is still `Creating` and does not exist yet, **Delete** is disabled. If the list is a few seconds old and the click goes through, the portal shows *Cannot delete yet: the VM is still being set up. Try again in a minute.* Try again after about a minute.
-- Clicking **Delete** while a snapshot of the VM is being created or restored is refused with the error `VM_SNAPSHOT_IN_PROGRESS`.
+- Clicking **Delete** while a snapshot of the VM is being created or reverted is refused with the error `VM_SNAPSHOT_IN_PROGRESS`.
 - If you click Stop, Start or Resume in a state that does not allow it, the portal shows *VM is not in a valid state for this action* (error code `VM_INVALID_STATUS`).
 
 ## When the VM is not in the state you requested
