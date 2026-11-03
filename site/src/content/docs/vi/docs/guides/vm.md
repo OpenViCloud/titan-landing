@@ -63,7 +63,7 @@ Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM
 Bạn chưa xoá được VM trong ba trường hợp:
 
 - VM vừa tạo và chưa sẵn sàng. Nút **Xoá** bị tắt khi VM đang **Creating** và chưa tồn tại; nếu danh sách đã cũ vài giây và bạn vẫn bấm được, portal báo "Chưa xoá được: VM vẫn đang được khởi tạo. Thử lại sau một phút."
-- Một snapshot của VM đang được tạo hoặc revert: "Chưa xoá được: VM đang có thao tác snapshot" (mã `VM_SNAPSHOT_IN_PROGRESS`). Chờ snapshot xong rồi xoá lại.
+- Một snapshot của VM đang được tạo hoặc đang quay về: "Chưa xoá được: VM đang có thao tác snapshot" (mã `VM_SNAPSHOT_IN_PROGRESS`). Chờ snapshot xong rồi xoá lại.
 - Một load balancer đang gửi traffic tới VM này: "Chưa xoá được: một load balancer đang gửi traffic tới máy ảo này — gỡ nó khỏi load balancer trước" (mã `VM_IS_LOAD_BALANCER_BACKEND`). Xem [load balancer](/vi/docs/guides/load-balancer/).
 
 ## Snapshot VM
@@ -74,13 +74,13 @@ Bấm **Quản lý** trên hàng của VM, rồi mở tab **Snapshot**.
 
 **Revert.** Nút **Quay về** có trên snapshot ở trạng thái **Available** khi không có thao tác nào đang chạy trên nó. Snapshot hiện **Reverting** tới khi xong. Revert đưa ổ đĩa của VM về lúc chụp snapshot và chỉ đụng tới ổ đĩa — size của VM và các volume đang gắn không đổi. Revert không tự tắt hay bật VM. Việc này chỉ chạy được khi VM ở trạng thái Running, Ready, Stopped hoặc Frozen, và không có lệnh stop hay xoá đang chờ; nếu không, portal báo "Không quay về được snapshot."
 
-**Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Nút này có khi không có thao tác nào đang chạy trên snapshot; snapshot **Failed** hoặc **Not found** cũng xoá được.
+**Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Nút này có khi không có thao tác nào đang chạy trên snapshot; snapshot **Failed** hoặc **Not found** cũng xoá được. Nếu quay về hay xoá không thành công, snapshot giữ như trước, kèm một dòng nói lý do.
 
 ## VM được tính tiền khi nào
 
 - Tiền compute tính theo giờ, theo giá của size. VM bị tính khi ở trạng thái Running, Ready, Frozen hoặc Error.
 - VM ở trạng thái **Stopped** không bị tính tiền compute.
-- Mỗi snapshot có trên hạ tầng bị tính một mức giá cố định theo giờ, không phụ thuộc dung lượng, tới khi việc xoá xong. Snapshot đang revert vẫn bị tính.
+- Mỗi snapshot có trên hạ tầng bị tính một mức giá cố định theo giờ, không phụ thuộc dung lượng, tới khi việc xoá xong. Snapshot đang quay về vẫn bị tính.
 - Volume tính tiền riêng, xem trang [volume](/vi/docs/guides/volume/).
 
 Giá theo giờ của từng size VM có ở [bảng giá](/vi/#pricing).

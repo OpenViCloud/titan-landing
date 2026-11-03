@@ -74,7 +74,7 @@ Click **Manage** on the VM's row, then open the **Snapshots** tab.
 
 **Revert.** The **Revert** button is on a snapshot in the **Available** state when no action is running on it. The snapshot shows **Reverting** until it finishes. Revert brings the VM's disk back to when the snapshot was taken and only touches the disk — the VM's size and the attached volumes do not change. Revert does not stop or start the VM. This only works when the VM is Running, Ready, Stopped or Frozen, with no stop or delete waiting; otherwise the portal shows "Failed to revert snapshot."
 
-**Delete a snapshot.** Click **Delete** on the snapshot, then click **Confirm**. This button is available when no action is running on the snapshot; a **Failed** or **Not found** snapshot can also be deleted.
+**Delete a snapshot.** Click **Delete** on the snapshot, then click **Confirm**. This button is available when no action is running on the snapshot; a **Failed** or **Not found** snapshot can also be deleted. If a revert or a delete does not go through, the snapshot stays as it was, with a line explaining why.
 
 ## When a VM is billed
 

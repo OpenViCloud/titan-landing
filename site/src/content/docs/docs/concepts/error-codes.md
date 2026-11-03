@@ -13,7 +13,7 @@ When a request is refused, OpenViCloud returns a JSON body with a `code` field, 
 | `IDEMPOTENCY_KEY_REQUIRED` | 400 | An API request that creates a resource is missing the `Idempotency-Key` header. | Add the `Idempotency-Key` header with a new value for each create. |
 | `IDEMPOTENCY_KEY_REUSED` | 422 | You reused an old `Idempotency-Key` for a request with different content. | Use a new key. |
 | `IDEMPOTENCY_IN_PROGRESS` | 409 | A request with the same `Idempotency-Key` is being processed. | Wait a moment, then send exactly that request again, with the same key. |
-| `REQUEST_IN_PROGRESS` | 409 | Two identical requests arrived at the same time, for example a double click on the delete button of a VM snapshot or a load balancer, or on the **Revert** button of a VM snapshot. The first request is still carried out. A VM, a network, a firewall rule, a volume or a volume snapshot answers a repeat like the first request instead. | Nothing to do. Reload the page to see the result. |
+| `REQUEST_IN_PROGRESS` | 409 | Two identical requests arrived at the same time, for example a double click on the delete button of a load balancer. The first request is still carried out. A VM, a VM snapshot, a network, a firewall rule, a volume or a volume snapshot answers a repeat like the first request instead. | Nothing to do. Reload the page to see the result. |
 | `TENANT_PENDING_APPROVAL` | 403 | Your account is waiting for approval. You cannot create or change anything yet. | Wait for OpenViCloud to approve it. |
 | `TENANT_SUSPENDED` | 403 | Your account is suspended. You cannot change anything. | — |
 | `TENANT_NAME_TAKEN` | 409 | The name a new account gets (your username, or your email when there is none) already belongs to another account, so no account was made for you. | — |
@@ -45,8 +45,8 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | You tried to delete a VM that a load balancer not yet deleted still sends traffic to. | Remove the VM from the load balancer first. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | The VM already has the maximum number of snapshots. | Delete some of that VM's snapshots. |
 | `VM_SNAPSHOT_NOT_FOUND` | 404 | The snapshot does not exist, or does not belong to this VM. | Reload the snapshot list. |
-| `VM_SNAPSHOT_INVALID_STATE` | 422 | The snapshot is not ready to be restored or deleted. | Wait for the action running on the snapshot to finish, then try again. |
-| `VM_SNAPSHOT_IN_PROGRESS` | 422 | The VM cannot be deleted because one of its snapshots is being created or restored. | Wait for that to finish, then delete again. |
+| `VM_SNAPSHOT_INVALID_STATE` | 422 | The snapshot is not ready to be reverted or deleted. | Wait for the action running on the snapshot to finish, then try again. |
+| `VM_SNAPSHOT_IN_PROGRESS` | 422 | The VM cannot be deleted because one of its snapshots is being created or reverted. | Wait for that to finish, then delete again. |
 
 ## Networks, firewall and IPv6
 
