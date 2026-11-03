@@ -14,7 +14,7 @@ Volume là ổ đĩa dữ liệu riêng, tách khỏi VM. Mọi thao tác nằm 
 5. Điền **Dung lượng (GB)**, lớn hơn 0.
 6. Bấm **Tạo ổ đĩa**.
 
-Volume mới hiện **Creating**, rồi **Available** khi đã có trên hạ tầng. Nếu tạo không thành công, volume hiện **Failed**; bạn bấm **Xoá** để bỏ nó đi.
+Volume mới hiện **Creating**, rồi **Available** khi đã có trên hạ tầng. Nếu tạo không thành công, volume hiện **Failed** kèm một dòng nói lý do; bạn bấm **Xoá** để bỏ nó đi. Nếu gắn, gỡ hay xoá không thành công, volume trở lại như trước, kèm một dòng nói lý do; snapshot xoá không thành công cũng vậy.
 
 Mỗi tài khoản có tối đa 10 volume theo mặc định. Khi đã đủ, portal báo "Đã vượt hạn mức ổ đĩa (tối đa 10)." (mã `VOLUME_QUOTA_EXCEEDED`). Volume bạn đã bấm xoá, volume **Failed** và volume **Not found** thì không tính.
 

@@ -14,7 +14,7 @@ A volume is a separate data disk, independent of any VM. All actions are under *
 5. Fill in **Size (GB)**, greater than 0.
 6. Click **Create volume**.
 
-The new volume shows **Creating**, then **Available** once it exists on the infrastructure. If creation fails, the volume shows **Failed**; click **Delete** to remove it.
+The new volume shows **Creating**, then **Available** once it exists on the infrastructure. If creation fails, the volume shows **Failed** with a line explaining why; click **Delete** to remove it. If an attach, detach or delete does not go through, the volume goes back to how it was, with a line explaining why; so does a snapshot whose delete does not go through.
 
 Each account has at most 10 volumes by default. When you reach it, the portal shows "Volume quota exceeded (max 10)." (code `VOLUME_QUOTA_EXCEEDED`). Volumes you have clicked delete on, **Failed** volumes and **Not found** volumes do not count.
 
