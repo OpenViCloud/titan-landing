@@ -46,7 +46,7 @@ When you [delete a VM](/docs/guides/vm/), volumes attached to that VM are detach
 
 Click **Snapshots** on the volume's row to open the snapshot list.
 
-**Create a snapshot.** Click **New Snapshot**, enter a name (at most 100 characters), then click **Create**. This button is available when the volume is **Available** or **Attached** and no action is running. The new snapshot is in the **Creating** state, then moves to **Available**. If creating it does not go through, a line next to the snapshot explains why.
+**Create a snapshot.** Click **New Snapshot**, enter a name (at most 100 characters), then click **Create**. This button is available when the volume is **Available** or **Attached** and no action is running. The new snapshot is in the **Creating** state, then moves to **Available**. If creating it does not go through, a line next to the snapshot explains why: the snapshot shows **Failed**, or **Available** if it was made before the failure.
 
 Each volume has at most 3 snapshots by default. When you reach it, the portal shows "Snapshot quota exceeded (max 3 per volume)." (code `VOLUME_SNAPSHOT_QUOTA_EXCEEDED`). Snapshots you have clicked delete on do not count.
 

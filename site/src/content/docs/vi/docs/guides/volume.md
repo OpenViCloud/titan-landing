@@ -46,7 +46,7 @@ Khi bạn [xoá một VM](/vi/docs/guides/vm/), volume đang gắn vào VM đó 
 
 Bấm **Snapshot** trên hàng của volume để mở danh sách snapshot.
 
-**Tạo snapshot.** Bấm **Tạo snapshot**, điền tên (tối đa 100 ký tự), rồi bấm **Tạo**. Nút này có khi volume ở trạng thái **Available** hoặc **Attached** và không có thao tác nào đang chạy. Snapshot mới ở trạng thái **Creating**, rồi chuyển sang **Available**. Nếu tạo không thành công, một dòng cạnh snapshot nói lý do.
+**Tạo snapshot.** Bấm **Tạo snapshot**, điền tên (tối đa 100 ký tự), rồi bấm **Tạo**. Nút này có khi volume ở trạng thái **Available** hoặc **Attached** và không có thao tác nào đang chạy. Snapshot mới ở trạng thái **Creating**, rồi chuyển sang **Available**. Nếu tạo không thành công, một dòng cạnh snapshot nói lý do: snapshot hiện **Failed**, hoặc **Available** nếu nó đã được tạo trước khi lỗi.
 
 Mỗi volume có tối đa 3 snapshot theo mặc định. Khi đã đủ, portal báo "Đã vượt hạn mức snapshot (tối đa 3 mỗi ổ đĩa)." (mã `VOLUME_SNAPSHOT_QUOTA_EXCEEDED`). Snapshot bạn đã bấm xoá thì không tính.
 
