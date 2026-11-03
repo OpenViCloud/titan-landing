@@ -13,7 +13,7 @@ Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON c�
 | `IDEMPOTENCY_KEY_REQUIRED` | 400 | Yêu cầu tạo tài nguyên qua API thiếu header `Idempotency-Key`. | Thêm header `Idempotency-Key` với một giá trị mới cho mỗi lần tạo. |
 | `IDEMPOTENCY_KEY_REUSED` | 422 | Bạn dùng lại một `Idempotency-Key` cũ cho một yêu cầu có nội dung khác. | Dùng một key mới. |
 | `IDEMPOTENCY_IN_PROGRESS` | 409 | Một yêu cầu cùng `Idempotency-Key` đang được xử lý. | Chờ một chút rồi gửi lại đúng yêu cầu đó, với cùng key. |
-| `REQUEST_IN_PROGRESS` | 409 | Hai yêu cầu giống hệt nhau tới cùng lúc, ví dụ bấm đúp nút xoá của firewall rule, snapshot VM hay load balancer, hoặc nút **Quay về** của snapshot VM. Yêu cầu đầu tiên vẫn được thực hiện. VM, network, volume và snapshot của volume thì trả lời lần lặp như lần đầu. | Không cần làm gì. Tải lại trang để xem kết quả. |
+| `REQUEST_IN_PROGRESS` | 409 | Hai yêu cầu giống hệt nhau tới cùng lúc, ví dụ bấm đúp nút xoá của snapshot VM hay load balancer, hoặc nút **Quay về** của snapshot VM. Yêu cầu đầu tiên vẫn được thực hiện. VM, network, firewall rule, volume và snapshot của volume thì trả lời lần lặp như lần đầu. | Không cần làm gì. Tải lại trang để xem kết quả. |
 | `TENANT_PENDING_APPROVAL` | 403 | Tài khoản của bạn đang chờ duyệt. Bạn chưa tạo hay thay đổi được gì. | Chờ OpenViCloud duyệt. |
 | `TENANT_SUSPENDED` | 403 | Tài khoản của bạn đang bị tạm khoá. Bạn không thay đổi được gì. | — |
 | `TENANT_NAME_TAKEN` | 409 | Tên tài khoản của bạn (tên đăng nhập, không có thì email) đã thuộc một tài khoản khác, nên tài khoản của bạn không được tạo. | — |
