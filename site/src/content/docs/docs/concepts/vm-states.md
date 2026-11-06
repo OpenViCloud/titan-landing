@@ -28,6 +28,7 @@ When you have just clicked a button, the VM shows a changing state until the act
 | `Starting` | The VM is being turned on. |
 | `Stopping` | The VM is being turned off. |
 | `Deleting` | The VM is being deleted. |
+| `Snapshotting` | A snapshot of the VM is being created or reverted. |
 
 During that time, the action column has a greyed-out button, for example `Stopping…`, and you cannot click **Stop** or **Start**. The list refreshes by itself until the VM reaches its new state.
 
@@ -38,16 +39,17 @@ During that time, the action column has a greyed-out button, for example `Stoppi
 | **Stop** | `Running`, `Ready`, `Frozen`, `Error` |
 | **Start** | `Stopped` |
 | **Resume** | `Frozen` (the **Start** button is renamed **Resume**) |
-| Create snapshot, attach volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
+| Create snapshot | `Running`, `Ready`, `Stopped`, `Frozen` |
+| Attach volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
 | SSH session ([log in to a VM](/docs/guides/ssh-keys/)) | `Running` or `Ready` |
-| **Delete** | Any state, except `Creating` and `Deleting` |
+| **Delete** | Any state, except `Creating`, `Deleting` and `Snapshotting` |
 
 Some notes:
 
 - **Stop** turns the VM off immediately, like pulling the plug. Shut down important applications inside the VM before you click it.
-- You cannot create a snapshot or attach a volume while the VM is `Stopping` or `Deleting`, or when the VM is in `Error`.
+- You cannot create a snapshot or attach a volume while the VM is `Stopping`, `Deleting` or `Snapshotting`, or when the VM is in `Error`. You cannot create a snapshot while the VM is `Starting`; wait until it has started.
+- While a snapshot of the VM is being created or reverted, the VM shows `Snapshotting`. You cannot start, stop or delete it, and you cannot open an SSH session to it, until the snapshot is done.
 - While the VM is `Creating`, **Delete** is disabled. Wait until it is no longer `Creating`, then delete it.
-- Clicking **Delete** while a snapshot of the VM is being created or reverted is refused with the error `VM_SNAPSHOT_IN_PROGRESS`.
 - If you click Stop, Start or Resume in a state that does not allow it, the portal shows *VM is not in a valid state for this action* (error code `VM_INVALID_STATUS`).
 
 ## When the VM changes state by itself
