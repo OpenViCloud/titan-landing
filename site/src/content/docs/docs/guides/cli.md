@@ -199,7 +199,7 @@ Other VM commands take the VM's name or ID:
 
 - `create` and `start` succeed when the VM is Running or Ready, `stop` when it is Stopped, `delete` when the VM is deleted.
 - If the request ends another way — the creation failed, or the VM is in another state — the command prints why and ends with exit code 1.
-- If the time runs out, the command says which state the VM is still in and ends with exit code 1; the request itself goes on, and `openvicloud vm get <vm>` shows it.
+- If the time runs out, the command says which state the VM is still in and ends with exit code 1; `openvicloud vm get <vm>` shows how it goes on.
 
 Without `--wait`, the command returns as soon as the request is accepted. See [VM states](/docs/concepts/vm-states/) for what each state means.
 

@@ -199,7 +199,7 @@ Các lệnh VM khác nhận tên hoặc ID của VM:
 
 - `create` và `start` thành công khi VM Running hoặc Ready, `stop` khi VM Stopped, `delete` khi VM đã xoá.
 - Yêu cầu kết thúc kiểu khác — tạo thất bại, hoặc VM ở trạng thái khác — lệnh in lý do và kết thúc với mã thoát 1.
-- Hết thời gian chờ, lệnh nói VM còn ở trạng thái nào và kết thúc với mã thoát 1; yêu cầu vẫn tiếp tục, `openvicloud vm get <vm>` cho bạn xem.
+- Hết thời gian chờ, lệnh nói VM còn ở trạng thái nào và kết thúc với mã thoát 1; `openvicloud vm get <vm>` cho bạn xem VM đi tiếp ra sao.
 
 Không có `--wait`, lệnh trả về ngay khi yêu cầu được nhận. Ý nghĩa từng trạng thái ở [trạng thái VM](/vi/docs/concepts/vm-states/).
 
