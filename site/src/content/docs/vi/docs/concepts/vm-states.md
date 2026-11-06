@@ -16,7 +16,7 @@ Trang **Máy ảo** hiện trạng thái của mỗi VM bằng một badge cạn
 | `Error` | VM đang gặp lỗi. |
 | `Not found` | OpenViCloud không còn tìm thấy VM này trên hạ tầng. |
 | `Failed` | Không tạo được VM: yêu cầu dừng lại trước khi VM kịp tồn tại. Lý do hiện ngay cạnh badge, trên cùng một dòng. |
-| `Unknown` | VM đã được tạo, nhưng chưa đọc được trạng thái của nó. Danh sách tự làm mới cho tới khi hiện được trạng thái. |
+| `Unknown` | Một thao tác trên VM đã xong, nhưng chưa đọc được trạng thái của nó. Danh sách tự làm mới cho tới khi hiện được trạng thái. |
 
 ## Đang chuyển trạng thái
 
@@ -46,7 +46,7 @@ Một số lưu ý:
 
 - Nút **Tắt** tắt VM ngay lập tức, giống như rút điện. Hãy tắt các ứng dụng quan trọng bên trong VM trước khi bấm.
 - Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping` hoặc `Deleting`, hoặc khi VM ở `Error`.
-- Khi VM đang `Creating`, nút **Xoá** bị tắt. Chờ VM tạo xong rồi hãy xoá.
+- Khi VM đang `Creating`, nút **Xoá** bị tắt. Chờ VM rời `Creating` rồi hãy xoá.
 - Bấm **Xoá** khi một snapshot của VM đang được tạo hoặc đang quay về sẽ bị từ chối với lỗi `VM_SNAPSHOT_IN_PROGRESS`.
 - Nếu bạn bấm Tắt, Bật hoặc Tiếp tục ở trạng thái không hợp lệ, portal báo *VM không ở trạng thái phù hợp cho thao tác này* (mã lỗi `VM_INVALID_STATUS`).
 

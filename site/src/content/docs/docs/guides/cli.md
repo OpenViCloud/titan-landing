@@ -189,7 +189,7 @@ If the network drops while the create is being sent, the CLI sends it again, up 
 
 Other VM commands take the VM's name or ID:
 
-- `openvicloud vm list` — your VMs (not deleted ones): name, ID, cluster, state, the request it is waiting for, IPv4 address.
+- `openvicloud vm list` — your VMs (not deleted ones): name, ID, cluster, status, IPv4 address.
 - `openvicloud vm get <vm>` — one VM in detail, including the reason if its creation failed.
 - `openvicloud vm stop <vm>` / `vm start <vm>` — stop a VM, or start a stopped one (`start` also resumes a Frozen VM). A stopped VM is not billed for compute.
 - `openvicloud vm rename <vm> <new name>`
@@ -199,7 +199,7 @@ Other VM commands take the VM's name or ID:
 
 - `create` and `start` succeed when the VM is Running or Ready, `stop` when it is Stopped, `delete` when the VM is deleted.
 - If the request ends another way — the creation failed, or the VM is in another state — the command prints why and ends with exit code 1.
-- If the time runs out, the command says what the VM is still waiting for and ends with exit code 1; the request itself goes on, and `openvicloud vm get <vm>` shows it.
+- If the time runs out, the command says which state the VM is still in and ends with exit code 1; the request itself goes on, and `openvicloud vm get <vm>` shows it.
 
 Without `--wait`, the command returns as soon as the request is accepted. See [VM states](/docs/concepts/vm-states/) for what each state means.
 

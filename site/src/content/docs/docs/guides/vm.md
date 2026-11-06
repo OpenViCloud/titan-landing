@@ -62,7 +62,7 @@ Deleting a VM also deletes all of its snapshots. Volumes attached to the VM are 
 
 You cannot delete a VM yet in three cases:
 
-- The VM is still being created. The **Delete** button is disabled while the VM is **Creating**; wait until the VM has been created, then delete it.
+- The VM is still being created. The **Delete** button is disabled while the VM is **Creating**; wait until it is no longer **Creating**, then delete it.
 - A snapshot of the VM is being created or reverted: "Cannot delete: a snapshot operation is in progress for this VM" (code `VM_SNAPSHOT_IN_PROGRESS`). Wait for the snapshot to finish, then delete again.
 - A load balancer still sends traffic to this VM: "Cannot delete: a load balancer sends traffic to this VM — remove it from the load balancer first" (code `VM_IS_LOAD_BALANCER_BACKEND`). See [load balancers](/docs/guides/load-balancer/).
 

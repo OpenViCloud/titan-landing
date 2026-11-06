@@ -16,7 +16,7 @@ The **Virtual Machines** page shows each VM's state as a badge next to its name.
 | `Error` | The VM has an error. |
 | `Not found` | OpenViCloud can no longer find this VM on the infrastructure. |
 | `Failed` | The VM could not be created: the request gave up before the VM existed. The reason shows next to the badge, in the same row. |
-| `Unknown` | The VM was created, but its state could not be read yet. The list refreshes by itself until it shows the state. |
+| `Unknown` | An action on the VM ended, but its state could not be read yet. The list refreshes by itself until it shows the state. |
 
 ## Changing state
 
@@ -46,7 +46,7 @@ Some notes:
 
 - **Stop** turns the VM off immediately, like pulling the plug. Shut down important applications inside the VM before you click it.
 - You cannot create a snapshot or attach a volume while the VM is `Stopping` or `Deleting`, or when the VM is in `Error`.
-- While the VM is `Creating`, **Delete** is disabled. Wait until the VM has been created, then delete it.
+- While the VM is `Creating`, **Delete** is disabled. Wait until it is no longer `Creating`, then delete it.
 - Clicking **Delete** while a snapshot of the VM is being created or reverted is refused with the error `VM_SNAPSHOT_IN_PROGRESS`.
 - If you click Stop, Start or Resume in a state that does not allow it, the portal shows *VM is not in a valid state for this action* (error code `VM_INVALID_STATUS`).
 

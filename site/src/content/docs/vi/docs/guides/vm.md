@@ -62,7 +62,7 @@ Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM
 
 Bạn chưa xoá được VM trong ba trường hợp:
 
-- VM còn đang được tạo. Nút **Xoá** bị tắt khi VM đang **Creating**; chờ VM tạo xong rồi hãy xoá.
+- VM còn đang được tạo. Nút **Xoá** bị tắt khi VM đang **Creating**; chờ VM rời **Creating** rồi hãy xoá.
 - Một snapshot của VM đang được tạo hoặc đang quay về: "Chưa xoá được: VM đang có thao tác snapshot" (mã `VM_SNAPSHOT_IN_PROGRESS`). Chờ snapshot xong rồi xoá lại.
 - Một load balancer đang gửi traffic tới VM này: "Chưa xoá được: một load balancer đang gửi traffic tới máy ảo này — gỡ nó khỏi load balancer trước" (mã `VM_IS_LOAD_BALANCER_BACKEND`). Xem [load balancer](/vi/docs/guides/load-balancer/).
 
