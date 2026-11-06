@@ -62,7 +62,7 @@ Deleting a VM also deletes all of its snapshots. Volumes attached to the VM are 
 
 You cannot delete a VM yet in three cases:
 
-- The VM was just created and is not ready. The **Delete** button is disabled while the VM is **Creating** and does not exist yet; if the list is a few seconds old and you click it anyway, the portal shows "Cannot delete yet: the VM is still being set up. Try again in a minute."
+- The VM is still being created. The **Delete** button is disabled while the VM is **Creating**; wait until it is no longer **Creating**, then delete it.
 - A snapshot of the VM is being created or reverted: "Cannot delete: a snapshot operation is in progress for this VM" (code `VM_SNAPSHOT_IN_PROGRESS`). Wait for the snapshot to finish, then delete again.
 - A load balancer still sends traffic to this VM: "Cannot delete: a load balancer sends traffic to this VM — remove it from the load balancer first" (code `VM_IS_LOAD_BALANCER_BACKEND`). See [load balancers](/docs/guides/load-balancer/).
 
@@ -70,9 +70,9 @@ You cannot delete a VM yet in three cases:
 
 Click **Manage** on the VM's row, then open the **Snapshots** tab.
 
-**Create a snapshot.** Click **New Snapshot**, enter a name (at most 100 characters), then click **Create**. This button is available when the VM is Running, Ready, Stopped or Frozen, and the VM is not stopping or being deleted. Each VM has at most 3 snapshots by default. When you reach it, the portal shows "Snapshot quota exceeded (max 3 per VM)." (code `VM_SNAPSHOT_QUOTA_EXCEEDED`). Snapshots you have clicked delete on do not count.
+**Create a snapshot.** Click **New Snapshot**, enter a name (at most 100 characters), then click **Create**. This button is available when the VM is Running, Ready, Stopped, Frozen or Starting. Each VM has at most 3 snapshots by default. When you reach it, the portal shows "Snapshot quota exceeded (max 3 per VM)." (code `VM_SNAPSHOT_QUOTA_EXCEEDED`). Snapshots you have clicked delete on do not count.
 
-**Revert.** The **Revert** button is on a snapshot in the **Available** state when no action is running on it. The snapshot shows **Reverting** until it finishes. Revert brings the VM's disk back to when the snapshot was taken and only touches the disk — the VM's size and the attached volumes do not change. Revert does not stop or start the VM. This only works when the VM is Running, Ready, Stopped or Frozen, with no stop or delete waiting; otherwise the portal shows "Failed to revert snapshot."
+**Revert.** The **Revert** button is on a snapshot in the **Available** state when no action is running on it. The snapshot shows **Reverting** until it finishes. Revert brings the VM's disk back to when the snapshot was taken and only touches the disk — the VM's size and the attached volumes do not change. Revert does not stop or start the VM. This only works when the VM is Running, Ready, Stopped, Frozen or Starting; otherwise the portal shows "Failed to revert snapshot."
 
 **Delete a snapshot.** Click **Delete** on the snapshot, then click **Confirm**. This button is available when no action is running on the snapshot; a **Failed** or **Not found** snapshot can also be deleted. If a revert or a delete does not go through, the snapshot stays as it was, with a line explaining why.
 

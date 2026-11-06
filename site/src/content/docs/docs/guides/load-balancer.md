@@ -16,7 +16,7 @@ A load balancer attaches to one network that has [public IPv6](/docs/guides/publ
 3. Fill in **Name**, up to 100 letters, digits, hyphens and underscores, starting with a letter or a digit.
 4. Choose a **Network** — only networks with public IPv6 that are ready are listed.
 5. Add one or more **Listeners**: each has a **Protocol** (TCP or UDP), a **Port** and a **Target port**. A new listener defaults to TCP, port 80 to target port 80. Use **Add listener** to add one, or the **×** button next to a listener to remove it.
-6. Tick the **VMs** that should receive traffic. Only VMs on the chosen network that exist on the infrastructure and are not being deleted are offered — a stopped VM can still be picked. Until you choose a network, the portal shows "Select a network to pick its VMs"; if the network has no eligible VM yet, it shows "This network has no VM that can take traffic yet".
+6. Tick the **VMs** that should receive traffic. Only VMs on the chosen network that exist on the infrastructure with a known state, and are not being deleted, are offered — a stopped VM can still be picked. Until you choose a network, the portal shows "Select a network to pick its VMs"; if the network has no eligible VM yet, it shows "This network has no VM that can take traffic yet".
 7. Click **Create load balancer**.
 
 ### Limits

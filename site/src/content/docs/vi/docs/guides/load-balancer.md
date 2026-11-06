@@ -16,7 +16,7 @@ Load balancer gắn vào một network đã bật [IPv6 công khai](/vi/docs/gui
 3. Điền **Tên**, tối đa 100 chữ cái, chữ số, gạch ngang và gạch dưới, bắt đầu bằng chữ cái hoặc chữ số.
 4. Chọn một **Mạng** — chỉ hiện các network đã có IPv6 công khai và đã sẵn sàng.
 5. Thêm một hoặc nhiều **Listener**: mỗi listener có **Giao thức** (TCP hoặc UDP), một **Cổng** và một **Target port**. Listener mới mặc định TCP, cổng 80 tới target port 80. Dùng **Thêm listener** để thêm, hoặc nút **×** cạnh một listener để bỏ nó.
-6. Đánh dấu các **Máy ảo** sẽ nhận traffic. Chỉ các VM trên network đã chọn, có trên hạ tầng và không đang bị xoá mới được hiện ra — VM đang tắt vẫn chọn được. Khi chưa chọn mạng, portal báo "Chọn mạng để chọn máy ảo của nó"; nếu mạng chưa có VM phù hợp, portal báo "Mạng này chưa có máy ảo nào nhận được traffic".
+6. Đánh dấu các **Máy ảo** sẽ nhận traffic. Chỉ các VM trên network đã chọn, có trên hạ tầng với trạng thái đã biết và không đang bị xoá mới được hiện ra — VM đang tắt vẫn chọn được. Khi chưa chọn mạng, portal báo "Chọn mạng để chọn máy ảo của nó"; nếu mạng chưa có VM phù hợp, portal báo "Mạng này chưa có máy ảo nào nhận được traffic".
 7. Bấm **Tạo load balancer**.
 
 ### Giới hạn

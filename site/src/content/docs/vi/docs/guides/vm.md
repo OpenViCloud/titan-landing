@@ -62,7 +62,7 @@ Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM
 
 Bạn chưa xoá được VM trong ba trường hợp:
 
-- VM vừa tạo và chưa sẵn sàng. Nút **Xoá** bị tắt khi VM đang **Creating** và chưa tồn tại; nếu danh sách đã cũ vài giây và bạn vẫn bấm được, portal báo "Chưa xoá được: VM vẫn đang được khởi tạo. Thử lại sau một phút."
+- VM còn đang được tạo. Nút **Xoá** bị tắt khi VM đang **Creating**; chờ VM rời **Creating** rồi hãy xoá.
 - Một snapshot của VM đang được tạo hoặc đang quay về: "Chưa xoá được: VM đang có thao tác snapshot" (mã `VM_SNAPSHOT_IN_PROGRESS`). Chờ snapshot xong rồi xoá lại.
 - Một load balancer đang gửi traffic tới VM này: "Chưa xoá được: một load balancer đang gửi traffic tới máy ảo này — gỡ nó khỏi load balancer trước" (mã `VM_IS_LOAD_BALANCER_BACKEND`). Xem [load balancer](/vi/docs/guides/load-balancer/).
 
@@ -70,9 +70,9 @@ Bạn chưa xoá được VM trong ba trường hợp:
 
 Bấm **Quản lý** trên hàng của VM, rồi mở tab **Snapshot**.
 
-**Tạo snapshot.** Bấm **Tạo snapshot**, điền tên (tối đa 100 ký tự), rồi bấm **Tạo**. Nút này có khi VM ở trạng thái Running, Ready, Stopped hoặc Frozen, và VM không đang stop hay đang xoá. Mỗi VM có tối đa 3 snapshot theo mặc định. Khi đã đủ, portal báo "Đã vượt hạn mức snapshot (tối đa 3 mỗi VM)." (mã `VM_SNAPSHOT_QUOTA_EXCEEDED`). Snapshot bạn đã bấm xoá thì không tính.
+**Tạo snapshot.** Bấm **Tạo snapshot**, điền tên (tối đa 100 ký tự), rồi bấm **Tạo**. Nút này có khi VM ở trạng thái Running, Ready, Stopped, Frozen hoặc Starting. Mỗi VM có tối đa 3 snapshot theo mặc định. Khi đã đủ, portal báo "Đã vượt hạn mức snapshot (tối đa 3 mỗi VM)." (mã `VM_SNAPSHOT_QUOTA_EXCEEDED`). Snapshot bạn đã bấm xoá thì không tính.
 
-**Revert.** Nút **Quay về** có trên snapshot ở trạng thái **Available** khi không có thao tác nào đang chạy trên nó. Snapshot hiện **Reverting** tới khi xong. Revert đưa ổ đĩa của VM về lúc chụp snapshot và chỉ đụng tới ổ đĩa — size của VM và các volume đang gắn không đổi. Revert không tự tắt hay bật VM. Việc này chỉ chạy được khi VM ở trạng thái Running, Ready, Stopped hoặc Frozen, và không có lệnh stop hay xoá đang chờ; nếu không, portal báo "Không quay về được snapshot."
+**Revert.** Nút **Quay về** có trên snapshot ở trạng thái **Available** khi không có thao tác nào đang chạy trên nó. Snapshot hiện **Reverting** tới khi xong. Revert đưa ổ đĩa của VM về lúc chụp snapshot và chỉ đụng tới ổ đĩa — size của VM và các volume đang gắn không đổi. Revert không tự tắt hay bật VM. Việc này chỉ chạy được khi VM ở trạng thái Running, Ready, Stopped, Frozen hoặc Starting; nếu không, portal báo "Không quay về được snapshot."
 
 **Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Nút này có khi không có thao tác nào đang chạy trên snapshot; snapshot **Failed** hoặc **Not found** cũng xoá được. Nếu quay về hay xoá không thành công, snapshot giữ như trước, kèm một dòng nói lý do.
 

@@ -189,7 +189,7 @@ Nếu mạng rớt lúc đang gửi lệnh tạo, CLI gửi lại, tổng cộng
 
 Các lệnh VM khác nhận tên hoặc ID của VM:
 
-- `openvicloud vm list` — các VM của bạn (trừ VM đã xoá): tên, ID, cluster, trạng thái, yêu cầu đang chờ, địa chỉ IPv4.
+- `openvicloud vm list` — các VM của bạn (trừ VM đã xoá): tên, ID, cluster, trạng thái, địa chỉ IPv4.
 - `openvicloud vm get <vm>` — chi tiết một VM, kể cả lý do nếu tạo VM thất bại.
 - `openvicloud vm stop <vm>` / `vm start <vm>` — dừng một VM, hoặc bật VM đã dừng (`start` cũng tiếp tục một VM Frozen). VM đã dừng không bị tính tiền máy.
 - `openvicloud vm rename <vm> <tên mới>`
@@ -199,7 +199,7 @@ Các lệnh VM khác nhận tên hoặc ID của VM:
 
 - `create` và `start` thành công khi VM Running hoặc Ready, `stop` khi VM Stopped, `delete` khi VM đã xoá.
 - Yêu cầu kết thúc kiểu khác — tạo thất bại, hoặc VM ở trạng thái khác — lệnh in lý do và kết thúc với mã thoát 1.
-- Hết thời gian chờ, lệnh nói VM còn đang chờ gì và kết thúc với mã thoát 1; yêu cầu vẫn tiếp tục, `openvicloud vm get <vm>` cho bạn xem.
+- Hết thời gian chờ, lệnh nói VM còn ở trạng thái nào và kết thúc với mã thoát 1; `openvicloud vm get <vm>` cho bạn xem VM đi tiếp ra sao.
 
 Không có `--wait`, lệnh trả về ngay khi yêu cầu được nhận. Ý nghĩa từng trạng thái ở [trạng thái VM](/vi/docs/concepts/vm-states/).
 

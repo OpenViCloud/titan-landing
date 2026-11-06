@@ -39,7 +39,7 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `VM_QUOTA_EXCEEDED` | 422 | Bạn đã dùng hết số VM được phép. | Xoá bớt VM, xem [giới hạn](/vi/docs/concepts/quotas/). |
 | `VM_NAME_TAKEN` | 409 | Bạn đã có một VM khác cùng tên. | Chọn tên khác. |
 | `VM_NOT_FOUND` | 404 | VM không tồn tại, hoặc không thuộc tài khoản của bạn. | Tải lại danh sách VM. |
-| `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH tới một VM không ở trạng thái Running hoặc Ready, hoặc VM đang có yêu cầu dừng/xoá chờ xử lý. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
+| `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH tới một VM không ở trạng thái Running hoặc Ready. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
 | `VM_AGENT_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM còn đang khởi động. | Chờ một phút rồi thử lại. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Tài khoản của bạn đã mở đủ 5 phiên SSH. | Đóng bớt một phiên rồi thử lại. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | Bạn xoá một VM mà một load balancer chưa xoá vẫn đang gửi traffic tới. | Gỡ VM khỏi load balancer trước. |
