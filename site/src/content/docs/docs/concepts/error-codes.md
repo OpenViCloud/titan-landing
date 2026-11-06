@@ -39,14 +39,13 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `VM_QUOTA_EXCEEDED` | 422 | You have used up the number of VMs allowed. | Delete some VMs, see [quotas](/docs/concepts/quotas/). |
 | `VM_NAME_TAKEN` | 409 | You already have another VM with the same name. | Choose another name. |
 | `VM_NOT_FOUND` | 404 | The VM does not exist, or does not belong to your account. | Reload the VM list. |
-| `VM_INVALID_STATUS` | 422 | The VM is in a state that does not allow this action. This also happens when you try to open an SSH session to a VM that is not Running or Ready. | See [VM states](/docs/concepts/vm-states/), and wait for the VM to reach a suitable state. |
+| `VM_INVALID_STATUS` | 422 | The VM is in a state that does not allow this action. This also happens when you try to open an SSH session to a VM that is not Running or Ready, and when you start, stop, delete or snapshot a VM while a snapshot of it is being created or reverted. | See [VM states](/docs/concepts/vm-states/), and wait for the VM to reach a suitable state. |
 | `VM_AGENT_NOT_READY` | 422 | You opened an SSH session while the VM is still starting. | Wait a minute and try again. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Your account already has 5 SSH sessions open. | Close one, then try again. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | You tried to delete a VM that a load balancer not yet deleted still sends traffic to. | Remove the VM from the load balancer first. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | The VM already has the maximum number of snapshots. | Delete some of that VM's snapshots. |
 | `VM_SNAPSHOT_NOT_FOUND` | 404 | The snapshot does not exist, or does not belong to this VM. | Reload the snapshot list. |
 | `VM_SNAPSHOT_INVALID_STATE` | 422 | The snapshot is not ready to be reverted or deleted. | Wait for the action running on the snapshot to finish, then try again. |
-| `VM_SNAPSHOT_IN_PROGRESS` | 422 | The VM cannot be deleted because one of its snapshots is being created or reverted. | Wait for that to finish, then delete again. |
 
 ## Networks, firewall and IPv6
 

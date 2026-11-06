@@ -28,6 +28,7 @@ Khi bạn vừa bấm một nút, VM hiện trạng thái đang chuyển cho t�
 | `Starting` | VM đang được bật. |
 | `Stopping` | VM đang được tắt. |
 | `Deleting` | VM đang được xoá. |
+| `Snapshotting` | Một snapshot của VM đang được tạo hoặc đang quay về. |
 
 Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`, và bạn không bấm được **Tắt** hay **Bật**. Danh sách tự làm mới cho tới khi VM tới trạng thái mới.
 
@@ -38,16 +39,17 @@ Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`
 | **Tắt** | `Running`, `Ready`, `Frozen`, `Error` |
 | **Bật** | `Stopped` |
 | **Tiếp tục** | `Frozen` (nút **Bật** đổi tên thành **Tiếp tục**) |
-| Tạo snapshot, gắn volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
+| Tạo snapshot | `Running`, `Ready`, `Stopped`, `Frozen` |
+| Gắn volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
 | Phiên SSH ([đăng nhập vào VM](/vi/docs/guides/ssh-keys/)) | `Running` hoặc `Ready` |
-| **Xoá** | Mọi trạng thái, trừ `Creating` và `Deleting` |
+| **Xoá** | Mọi trạng thái, trừ `Creating`, `Deleting` và `Snapshotting` |
 
 Một số lưu ý:
 
 - Nút **Tắt** tắt VM ngay lập tức, giống như rút điện. Hãy tắt các ứng dụng quan trọng bên trong VM trước khi bấm.
-- Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping` hoặc `Deleting`, hoặc khi VM ở `Error`.
+- Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping`, `Deleting` hoặc `Snapshotting`, hoặc khi VM ở `Error`. Bạn không tạo snapshot được khi VM đang `Starting`; chờ VM bật xong.
+- Khi một snapshot của VM đang được tạo hoặc đang quay về, VM hiện `Snapshotting`. Bạn không bật, tắt, xoá hay mở phiên SSH tới VM được cho tới khi snapshot xong.
 - Khi VM đang `Creating`, nút **Xoá** bị tắt. Chờ VM rời `Creating` rồi hãy xoá.
-- Bấm **Xoá** khi một snapshot của VM đang được tạo hoặc đang quay về sẽ bị từ chối với lỗi `VM_SNAPSHOT_IN_PROGRESS`.
 - Nếu bạn bấm Tắt, Bật hoặc Tiếp tục ở trạng thái không hợp lệ, portal báo *VM không ở trạng thái phù hợp cho thao tác này* (mã lỗi `VM_INVALID_STATUS`).
 
 ## Khi VM tự đổi trạng thái
