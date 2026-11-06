@@ -11,12 +11,12 @@ Trang **Máy ảo** hiện trạng thái của mỗi VM bằng một badge cạn
 |--------|---------|
 | `Running` | VM đang chạy. |
 | `Ready` | VM đang chạy, và hệ điều hành bên trong đã báo sẵn sàng. |
-| `Stopped` | VM đã tắt. |
+| `Stopped` | VM đã tắt. VM mà bạn tắt hệ điều hành từ bên trong cũng hiện `Stopped`. |
 | `Frozen` | VM đang bị tạm dừng. |
 | `Error` | VM đang gặp lỗi. |
-| `Not found` | OpenViCloud không còn tìm thấy VM này trên hệ thống. |
-| `Failed` | Yêu cầu tạo VM bị từ chối. Lý do hiện ngay cạnh badge, trên cùng một dòng. |
-| `Unknown` | Portal chưa có thông tin về trạng thái của VM. |
+| `Not found` | OpenViCloud không còn tìm thấy VM này trên hạ tầng. |
+| `Failed` | Không tạo được VM: yêu cầu dừng lại trước khi VM kịp tồn tại. Lý do hiện ngay cạnh badge, trên cùng một dòng. |
+| `Unknown` | VM đã được tạo, nhưng chưa đọc được trạng thái của nó. Danh sách tự làm mới cho tới khi hiện được trạng thái. |
 
 ## Đang chuyển trạng thái
 
@@ -38,21 +38,21 @@ Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`
 | **Tắt** | `Running`, `Ready`, `Frozen`, `Error` |
 | **Bật** | `Stopped` |
 | **Tiếp tục** | `Frozen` (nút **Bật** đổi tên thành **Tiếp tục**) |
-| Tạo snapshot, gắn volume | `Running`, `Ready`, `Stopped`, `Frozen` |
-| Phiên SSH ([đăng nhập vào VM](/vi/docs/guides/ssh-keys/)) | `Running` hoặc `Ready`, và không có lệnh stop hay xoá đang chờ |
-| **Xoá** | Mọi trạng thái, trừ khi đang `Deleting` |
+| Tạo snapshot, gắn volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
+| Phiên SSH ([đăng nhập vào VM](/vi/docs/guides/ssh-keys/)) | `Running` hoặc `Ready` |
+| **Xoá** | Mọi trạng thái, trừ `Creating` và `Deleting` |
 
 Một số lưu ý:
 
 - Nút **Tắt** tắt VM ngay lập tức, giống như rút điện. Hãy tắt các ứng dụng quan trọng bên trong VM trước khi bấm.
 - Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping` hoặc `Deleting`, hoặc khi VM ở `Error`.
-- Khi VM còn đang `Creating` và chưa tồn tại, nút **Xoá** bị tắt. Nếu danh sách đã cũ vài giây và bạn vẫn bấm được, portal báo *Chưa xoá được: VM vẫn đang được khởi tạo. Thử lại sau một phút.* Hãy thử lại sau khoảng một phút.
+- Khi VM đang `Creating`, nút **Xoá** bị tắt. Chờ VM tạo xong rồi hãy xoá.
 - Bấm **Xoá** khi một snapshot của VM đang được tạo hoặc đang quay về sẽ bị từ chối với lỗi `VM_SNAPSHOT_IN_PROGRESS`.
 - Nếu bạn bấm Tắt, Bật hoặc Tiếp tục ở trạng thái không hợp lệ, portal báo *VM không ở trạng thái phù hợp cho thao tác này* (mã lỗi `VM_INVALID_STATUS`).
 
-## Khi VM không ở trạng thái bạn yêu cầu
+## Khi VM tự đổi trạng thái
 
-Đôi khi VM nằm ở một trạng thái khác với yêu cầu cuối cùng của bạn. Ví dụ: bạn tắt hệ điều hành từ bên trong VM. Khi đó, badge hiện `Stopped`, và bên cạnh có dòng `yêu cầu: Running`. Bạn bấm **Bật** để bật lại VM.
+Badge luôn hiện trạng thái VM đang ở. Ví dụ: nếu bạn tắt hệ điều hành từ bên trong VM, badge hiện `Stopped`. Bạn bấm **Bật** để bật lại VM.
 
 ## Trạng thái và chi phí
 

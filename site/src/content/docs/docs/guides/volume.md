@@ -21,7 +21,7 @@ Each account has at most 10 volumes by default. When you reach it, the portal sh
 ## Attach a volume to a VM
 
 1. Click **Attach** on the volume's row. This button is available when the volume is **Available**.
-2. Choose a VM in the **Attach volume** dialog. The list only has VMs in the same cluster, in the Running, Ready, Stopped or Frozen state, and not stopping or being deleted.
+2. Choose a VM in the **Attach volume** dialog. The list only has VMs in the same cluster, in the Running, Ready, Stopped, Frozen or Starting state.
 3. Click **Attach**.
 
 The volume moves to **Attaching**, then **Attached**. The **Attached to** column shows the VM's name. Each volume is attached to only one VM at a time.

@@ -21,7 +21,7 @@ Mỗi tài khoản có tối đa 10 volume theo mặc định. Khi đã đủ, p
 ## Gắn volume vào VM
 
 1. Bấm **Gắn** trên hàng của volume. Nút này có khi volume ở trạng thái **Available**.
-2. Chọn VM trong hộp thoại **Gắn ổ đĩa**. Danh sách chỉ có VM cùng cluster, ở trạng thái Running, Ready, Stopped hoặc Frozen, và không đang stop hay đang xoá.
+2. Chọn VM trong hộp thoại **Gắn ổ đĩa**. Danh sách chỉ có VM cùng cluster, ở trạng thái Running, Ready, Stopped, Frozen hoặc Starting.
 3. Bấm **Gắn**.
 
 Volume chuyển sang **Attaching**, rồi **Attached**. Cột **Gắn vào** hiện tên VM. Mỗi volume chỉ gắn vào một VM tại một thời điểm.
