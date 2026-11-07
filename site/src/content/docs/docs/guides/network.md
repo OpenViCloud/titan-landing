@@ -15,7 +15,7 @@ A network is a private network that connects your VMs to each other. Each VM nee
 6. Tick **Enable public IPv6** if you want VMs on this network reachable from the Internet over IPv6. See [public IPv6](/docs/guides/public-ipv6/) before you tick it.
 7. Click **Create Network**.
 
-The new network appears in the table with the state **Creating**. The table polls every 5 seconds while a row is still changing, then stops. When **Creating** ends, the network may show **Pending** for a while as the infrastructure finishes setting it up. When the state becomes **Created**, you can create VMs and firewall rules on that network. If creation fails, the row shows **Failed**, **Errored**, **Unavailable** or **Not found**.
+The new network appears in the table with the state **Creating**. The table polls every 5 seconds while a row is still changing, then stops. When **Creating** ends, the network may show **Pending** for a while as the infrastructure finishes setting it up. When the state becomes **Created**, you can create VMs and firewall rules on that network. If creation fails, the row shows **Failed**, **Errored**, **Unavailable**, **Unknown** or **Not found**.
 
 ## Network names
 
