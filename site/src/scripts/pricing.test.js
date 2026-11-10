@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { vmRows, volumeRows, startingPrice } from './pricing.js';
 
 const seedVm = [
-  { id: 's', name: 'Small', cpu: 0.5, vcpu: 1, memoryMb: 2048, pricePerHour: 161.388 },
-  { id: 'xl', name: 'Extra Large', cpu: 4, vcpu: 8, memoryMb: 16384, pricePerHour: 1268.1 },
+  { id: 's', name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 161.388 },
+  { id: 'xl', name: 'Extra Large', vcpu: 8, memoryMb: 16384, pricePerHour: 1268.1 },
 ];
 
 test('vm rows keep every decimal and read in vi-VN', () => {
@@ -38,7 +38,7 @@ test('vm rows read in English with English separators and units', () => {
 });
 
 test('volume rows read in English', () => {
-  const rows = volumeRows([{ id: 'standard', name: 'Standard', sizeGb: 0, isCustomized: true, pricePerGbPerHour: 1.57914 }], 'en');
+  const rows = volumeRows([{ id: 'standard', name: 'Standard', pricePerGbPerHour: 1.57914 }], 'en');
   assert.deepEqual(rows, [{ name: 'Standard', price: '1.57914 ₫/GB/hour', monthly: '≈ 1,153 ₫/GB/month' }]);
 });
 
@@ -47,7 +47,7 @@ test('an unknown language reads as English', () => {
 });
 
 test('volume rows show the price per GB per hour', () => {
-  const rows = volumeRows([{ id: 'standard', name: 'Standard', sizeGb: 0, isCustomized: true, pricePerGbPerHour: 1.57914 }], 'vi');
+  const rows = volumeRows([{ id: 'standard', name: 'Standard', pricePerGbPerHour: 1.57914 }], 'vi');
   assert.deepEqual(rows, [{ name: 'Standard', price: '1,57914 ₫/GB/giờ', monthly: '≈ 1.153 ₫/GB/tháng' }]);
 });
 

@@ -38,7 +38,7 @@ Volume là ổ đĩa bạn tạo riêng rồi gắn vào VM. OpenViCloud có m�
 Trong form tạo volume:
 
 1. Chọn **Cluster**.
-2. Ở ô **Cấu hình ổ đĩa**, chọn `Standard — Dung lượng tuỳ chọn`.
+2. Ở ô **Cấu hình ổ đĩa**, chọn `Standard`.
 3. Nhập dung lượng vào ô **Dung lượng (GB)**. Ô này bắt buộc và phải lớn hơn 0.
 
 Giá volume tính theo dung lượng, xem [bảng giá](/vi/#pricing).

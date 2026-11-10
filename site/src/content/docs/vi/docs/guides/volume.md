@@ -10,7 +10,7 @@ Volume là ổ đĩa dữ liệu riêng, tách khỏi VM. Mọi thao tác nằm 
 1. Bấm **Tạo ổ đĩa**.
 2. Điền **Tên**, tối đa 100 ký tự.
 3. Chọn **Cluster**. Volume chỉ gắn được vào VM cùng cluster.
-4. Chọn **Cấu hình ổ đĩa**. Hiện chỉ có một loại: **Standard — Dung lượng tuỳ chọn**.
+4. Chọn **Cấu hình ổ đĩa**. Hiện chỉ có một loại: **Standard**.
 5. Điền **Dung lượng (GB)**, lớn hơn 0.
 6. Bấm **Tạo ổ đĩa**.
 

@@ -10,7 +10,7 @@ A volume is a separate data disk, independent of any VM. All actions are under *
 1. Click **Create Volume**.
 2. Fill in **Name**, at most 100 characters.
 3. Choose a **Cluster**. A volume can only be attached to a VM in the same cluster.
-4. Choose a **Volume Offering**. There is only one type today: **Standard — Custom size**.
+4. Choose a **Volume Offering**. There is only one type today: **Standard**.
 5. Fill in **Size (GB)**, greater than 0.
 6. Click **Create volume**.
 

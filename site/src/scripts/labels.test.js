@@ -17,7 +17,7 @@ const docsDir = { en: join(docsRoot, 'docs'), vi: join(docsRoot, 'vi', 'docs') }
 const notLabels = {
   en: {
     // Operating systems and catalog names (data from the API, not portal text).
-    names: ['Linux', 'macOS', 'Windows', 'macOS and Linux', 'Standard', 'Standard — Custom size', 'Ubuntu-22.04-Standard'],
+    names: ['Linux', 'macOS', 'Windows', 'macOS and Linux', 'Standard', 'Ubuntu-22.04-Standard'],
     // The Keycloak sign-in and sign-up pages, not the portal.
     keycloak: ['Sign in with GitHub.', 'Signed in with GitHub:', 'Sign up with email and password', 'Signed up with email and password:'],
     // Built by the portal from several strings (legal.agreeBefore + agreeLink + agreeAfter).
@@ -30,7 +30,7 @@ const notLabels = {
       'you cannot create any', '×'],
   },
   vi: {
-    names: ['Linux', 'macOS', 'Windows', 'macOS và Linux', 'Standard', 'Standard — Dung lượng tuỳ chọn', 'Ubuntu-22.04-Standard'],
+    names: ['Linux', 'macOS', 'Windows', 'macOS và Linux', 'Standard', 'Ubuntu-22.04-Standard'],
     keycloak: ['Đăng nhập bằng GitHub.', 'Đăng nhập bằng GitHub:', 'Đăng ký bằng email và mật khẩu', 'Đăng ký bằng email và mật khẩu:'],
     composed: ['Tôi đã đọc và đồng ý với Điều khoản dịch vụ.'],
     topics: ['Tạo snapshot.', 'Xoá snapshot.', 'Restore.', 'Revert.', 'Volume', 'VM và network', 'Volume và VM',
