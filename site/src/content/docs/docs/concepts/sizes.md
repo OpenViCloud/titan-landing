@@ -38,7 +38,7 @@ A volume is a disk you create separately and then attach to a VM. OpenViCloud ha
 In the create volume form:
 
 1. Choose a **Cluster**.
-2. In the **Volume Offering** field, choose `Standard — Custom size`.
+2. In the **Volume Offering** field, choose `Standard`.
 3. Enter the size in the **Size (GB)** field. This field is required and must be greater than 0.
 
 The volume price depends on its size, see the [pricing table](/#pricing).
