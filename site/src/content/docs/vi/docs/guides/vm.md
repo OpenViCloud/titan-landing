@@ -76,6 +76,27 @@ Bấm **Quản lý** trên hàng của VM, rồi mở tab **Snapshot**.
 
 **Xoá snapshot.** Bấm **Xoá** trên snapshot, rồi bấm **Xác nhận**. Nút này có khi không có thao tác nào đang chạy trên snapshot; snapshot **Failed** hoặc **Not found** cũng xoá được. Nếu quay về hay xoá không thành công, snapshot giữ như trước, kèm một dòng nói lý do.
 
+## Mức sử dụng của VM
+
+Bấm **Quản lý** trên hàng của VM, rồi mở tab **Giám sát**. Tab này cho thấy VM dùng bao nhiêu CPU, bộ nhớ và ổ đĩa theo thời gian.
+
+Chọn **1 giờ**, **24 giờ** hoặc **7 ngày**; tab mở ở **1 giờ**. Số liệu được giữ 7 ngày. Ở **1 giờ** mỗi điểm là một lần đo, khoảng mỗi phút một lần; **24 giờ** lấy trung bình các lần đo của mỗi 5 phút, **7 ngày** của mỗi 30 phút. Khi tab đang mở, portal đọc lại mỗi phút.
+
+Tab có ba thẻ:
+
+- **CPU**: phần vCPU của VM đang dùng, tính theo phần trăm. VM có nhiều vCPU thì 100% là mọi vCPU đều bận.
+- **Bộ nhớ**: bộ nhớ đã dùng trên tổng bộ nhớ của VM, ví dụ "1,2 GiB trên 3,8 GiB".
+- **Ổ đĩa**: dung lượng đã dùng trên filesystem gốc (`/`) của VM so với cỡ của nó, kèm biểu đồ tốc độ VM đọc và ghi ổ đĩa.
+
+Tiêu đề mỗi thẻ hiện giá trị mới nhất. Khoảng nào không có lần đo thì đường đứt ở đó, không nối thẳng qua.
+
+Khi chưa có gì để hiện:
+
+- VM vừa khởi động, hay VM đã dừng suốt khoảng đã chọn, không có lần đo nào: "Chưa có số liệu. Mức sử dụng hiện ra vài phút sau khi VM khởi động."
+- Dung lượng ổ đĩa cần guest agent chạy trong VM; không có agent, bộ nhớ hiện ở VM này mà không ở VM khác. Thẻ nào không có số đó suốt khoảng đã chọn thì hiện "Cần guest agent chạy bên trong VM."; CPU và tốc độ đọc, ghi ổ đĩa vẫn hiện khi không có agent.
+
+Các số này chỉ để bạn xem: chúng không đổi hoá đơn hay hạn mức của bạn.
+
 ## VM được tính tiền khi nào
 
 - Tiền compute tính theo giờ, theo giá của size. VM bị tính khi ở trạng thái Running, Ready, Frozen hoặc Error.
