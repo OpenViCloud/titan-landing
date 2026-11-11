@@ -1,0 +1,138 @@
+name: CI — Chat
+
+on:
+  # Every push to main publishes titan-landing-chat. Which tag an environment runs is decided outside this repository,
+  # as for the site image (ci-site.yml).
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - 'chat/**'
+      # The assistant reads the customer docs; the image copies them.
+      - 'site/src/content/docs/**'
+      - '.github/workflows/ci-chat.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: chat
+    # The store tests run on a real Postgres (chat/src/store.test.js); without TEST_DATABASE_URL they are skipped.
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: chat
+          POSTGRES_PASSWORD: chat
+          POSTGRES_DB: chat
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U chat" --health-interval 2s --health-timeout 5s --health-retries 15
+    env:
+      TEST_DATABASE_URL: postgres://chat:chat@localhost:5432/chat
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: chat/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # No test calls a real model: the provider is a fake (titan-ops features/public-site/design.md#chat-assistant).
+      - name: Run tests
+        run: |
+          npm test 2>&1 | tee test.log
+          # The Postgres tests must have run here, not been skipped.
+          if grep -q '# SKIP no TEST_DATABASE_URL' test.log; then echo "Postgres tests were skipped"; exit 1; fi
+
+      # The image starts only when the docs, the READMEs and the persona are in it (knowledge.js throws otherwise).
+      # No model is asked: the probe sends a body the service refuses before any model.
+      - name: Start the image and probe it
+        working-directory: .
+        run: |
+          docker build -f chat/Dockerfile -t chat-probe .
+          docker run -d --name chat-probe -p 8080:8080 -e OPENROUTER_API_KEY=not-a-key -e API_BASE_URL=http://127.0.0.1:9 chat-probe
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsS -o /dev/null http://localhost:8080/healthz; then break; fi
+            sleep 1
+          done
+          curl -fsS http://localhost:8080/healthz
+          status=$(curl -s -o /dev/null -w '%{http_code}' -X POST http://localhost:8080/api/chat -d '{"lang":"fr"}')
+          test "$status" = 400
+          docker logs chat-probe
+
+  image:
+    name: Image build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: chat/Dockerfile
+          platforms: linux/arm64,linux/amd64
+          push: false
+          labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          cache-from: type=gha,scope=titan-landing-chat
+          cache-to: type=gha,mode=max,scope=titan-landing-chat
+
+  push:
+    name: Image push
+    runs-on: ubuntu-latest
+    needs: [test, image]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: chat/Dockerfile
+          platforms: linux/arm64,linux/amd64
+          push: true
+          labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          tags: ghcr.io/openvicloud/titan-landing-chat:${{ env.SHORT_SHA }}
+          cache-from: type=gha,scope=titan-landing-chat
