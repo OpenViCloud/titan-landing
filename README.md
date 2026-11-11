@@ -53,8 +53,9 @@ the other environments by a release of titan-ops (`OpenViCloud/titan-ops`, priva
 
 `chat/` is the assistant that answers visitors who have not signed up, at `POST /api/chat` on the site's origin. It
 asks free models on OpenRouter, from the customer docs of `site/`, the READMEs in `chat/knowledge/readmes/` and the
-live prices of the API; its manner is in `chat/persona.md`. No environment routes `/api/chat` of the site's origin to
-it yet. Rules: `titan-ops features/public-site/design.md#chat-assistant`.
+live prices of the API; its manner is in `chat/persona.md`. The landing pages `/` and `/vi/` show the chat box that
+asks it; where `/api/chat` reaches no service, every answer is the busy text. No environment routes `/api/chat` of the
+site's origin to it yet. Rules: `titan-ops features/public-site/design.md#chat-assistant`.
 
 ```sh
 (cd chat && npm install && npm test)   # no test calls a real model; set TEST_DATABASE_URL to run the Postgres tests

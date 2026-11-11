@@ -12,6 +12,8 @@ on:
       # The docs' bold labels are checked against these (site/src/scripts/labels.test.js).
       - 'portal-labels/**'
       - 'api/openapi-v1.json'
+      # The chat box shows the service's busy text and keeps to its limits; site/src/scripts/chat.test.js imports them.
+      - 'chat/src/**'
       - '.github/workflows/ci-site.yml'
 
 permissions:

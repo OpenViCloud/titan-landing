@@ -1,5 +1,6 @@
 """Probe a running site: the checks only a served image can answer
-(titan-ops features/public-site/user-stories.md#us-site-02 AC-1, AC-2, AC-4, AC-6; titan-ops features/cli/user-stories.md#us-cli-14).
+(titan-ops features/public-site/user-stories.md#us-site-02 AC-1, AC-2, AC-4, AC-6; titan-ops features/cli/user-stories.md#us-cli-14;
+titan-ops features/public-site/design.md#chat-assistant).
 
 Usage: python3 probe.py <base-url>   e.g. http://localhost:8080, https://openvicloud.com
 Prints one line per check and a final PROBE_RESULT=PASS|FAIL line; exit code 1 on any failure.
@@ -59,6 +60,25 @@ def beta_label_checks(base):
     return results
 
 
+# The chat box is on the two landings only, its data notice before the box where a question is typed
+# (titan-ops features/public-site/design.md#chat-assistant).
+def chat_box_checks(base):
+    notices = {"/": "Your questions are stored by OpenViCloud", "/vi/": "Câu hỏi của bạn được OpenViCloud"}
+    results = []
+    for path, notice in notices.items():
+        status, _, page = fetch(base + path)
+        opener = "data-chat-open" in page
+        at_notice, at_input = page.find(notice), page.find("data-chat-input")
+        ordered = at_notice != -1 and at_input != -1 and at_notice < at_input
+        results.append((f"{path} has the chat box, notice before the input", status == 200 and opener and ordered,
+                        f"status={status} opener={opener} notice at={at_notice} input at={at_input}"))
+    for path in ("/docs/", "/vi/docs/"):
+        status, _, page = fetch(base + path)
+        absent = "data-chat-open" not in page
+        results.append((f"{path} has no chat box", status == 200 and absent, f"status={status} opener absent={absent}"))
+    return results
+
+
 def main():
     base = sys.argv[1].rstrip("/")
     results = []
@@ -94,6 +114,7 @@ def main():
     results.append(("config.json not cached", headers.get("Cache-Control") == "no-store", f"Cache-Control={headers.get('Cache-Control')}"))
 
     results.extend(beta_label_checks(base))
+    results.extend(chat_box_checks(base))
     results.extend(cli_download_checks(base))
     results.extend(install_script_checks(base))
 
