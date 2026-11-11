@@ -76,6 +76,27 @@ Click **Manage** on the VM's row, then open the **Snapshots** tab.
 
 **Delete a snapshot.** Click **Delete** on the snapshot, then click **Confirm**. This button is available when no action is running on the snapshot; a **Failed** or **Not found** snapshot can also be deleted. If a revert or a delete does not go through, the snapshot stays as it was, with a line explaining why.
 
+## VM usage
+
+Click **Manage** on the VM's row, then open the **Monitoring** tab. It shows how much CPU, memory and disk the VM uses over time.
+
+Pick **1h**, **24h** or **7d**; the tab opens on **1h**. Usage is kept for 7 days. In **1h** each point is one reading, taken about once a minute; **24h** averages the readings of each 5 minutes, and **7d** of each 30 minutes. While the tab is open it reads again every minute.
+
+The tab has three cards:
+
+- **CPU**: the share of the VM's vCPUs in use, as a percentage. With several vCPUs, 100% means all of them are busy.
+- **Memory**: memory used of the VM's total, for example "1.2 GiB of 3.8 GiB".
+- **Disk**: space used on the VM's root filesystem (`/`) of its size, with a chart of how fast the VM reads from and writes to its disk.
+
+Each card's title shows the latest value. A stretch with no reading is a gap in the line, not a straight line across it.
+
+When there is nothing to show:
+
+- A VM that has just started has no reading yet: "No data yet. Usage appears a few minutes after the VM starts."
+- Memory and disk space come from the guest agent running inside the VM. Without it, the card shows "Needs the guest agent inside the VM."; CPU and the disk read and write rates are still shown.
+
+These numbers are for you to see only: they do not change your bill or your quotas.
+
 ## When a VM is billed
 
 - Compute is billed by the hour, at the price of the size. A VM is billed when it is Running, Ready, Frozen or Error.
