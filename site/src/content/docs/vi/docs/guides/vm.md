@@ -92,8 +92,8 @@ Tiêu đề mỗi thẻ hiện giá trị mới nhất. Khoảng nào không có
 
 Khi chưa có gì để hiện:
 
-- VM vừa khởi động, hay VM đã dừng suốt khoảng đó, không có lần đo nào: "Chưa có số liệu. Mức sử dụng hiện ra vài phút sau khi VM khởi động."
-- Dung lượng ổ đĩa do guest agent chạy trong VM báo, bộ nhớ thì có lúc cũng vậy. Thẻ nào không có số đó suốt khoảng đã chọn thì hiện "Cần guest agent chạy bên trong VM."; CPU và tốc độ đọc, ghi ổ đĩa vẫn hiện khi không có agent.
+- VM vừa khởi động, hay VM đã dừng suốt khoảng đã chọn, không có lần đo nào: "Chưa có số liệu. Mức sử dụng hiện ra vài phút sau khi VM khởi động."
+- Dung lượng ổ đĩa cần guest agent chạy trong VM; không có agent, bộ nhớ hiện ở VM này mà không ở VM khác. Thẻ nào không có số đó suốt khoảng đã chọn thì hiện "Cần guest agent chạy bên trong VM."; CPU và tốc độ đọc, ghi ổ đĩa vẫn hiện khi không có agent.
 
 Các số này chỉ để bạn xem: chúng không đổi hoá đơn hay hạn mức của bạn.
 

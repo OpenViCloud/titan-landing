@@ -93,7 +93,7 @@ Each card's title shows the latest value. A stretch with no reading is a gap in 
 When there is nothing to show:
 
 - A VM that has just started, or one that was stopped for the whole range, has no reading: "No data yet. Usage appears a few minutes after the VM starts."
-- Disk space comes from the guest agent running inside the VM, and memory sometimes does. When a card has no such number in the whole range, it shows "Needs the guest agent inside the VM."; CPU and the disk read and write rates are shown without the agent.
+- Disk space needs the guest agent running inside the VM; without the agent, memory shows on some VMs and not on others. When a card has no such number in the whole range, it shows "Needs the guest agent inside the VM."; CPU and the disk read and write rates are still shown without the agent.
 
 These numbers are for you to see only: they do not change your bill or your quotas.
 
