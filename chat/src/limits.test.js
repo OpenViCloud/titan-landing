@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createDailyLimit, createKvDailyLimit, createSharedLimit, openKvLimit } from './limits.js';
+import { createDailyLimit, createKvDailyLimit, createReopeningLimit, createSharedLimit, openKvLimit } from './limits.js';
 
 const day1 = new Date('2026-11-11T10:00:00Z');
 const day1Late = new Date('2026-11-11T23:59:59Z');
@@ -131,7 +131,7 @@ test('a shared store that answers is the only count', async () => {
 // The real store: NATS JetStream with a memory-only KV, as the cluster runs it. Skipped without TEST_NATS_URL; the CI job
 // sets it and fails when this was skipped.
 test('on NATS: pods racing on one address get the cap and no more, in a memory-only bucket', { skip: !process.env.TEST_NATS_URL && 'no TEST_NATS_URL' }, async () => {
-  const pods = await Promise.all([1, 2].map(() => openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10 })));
+  const pods = await Promise.all([1, 2].map(() => openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10, bucket: 'test-race' })));
   try {
     const address = `test-${Date.now()}-${Math.random()}`;
     const taken = await Promise.all(Array.from({ length: 30 }, (_, i) => pods[i % 2].take(address)));
@@ -142,5 +142,63 @@ test('on NATS: pods racing on one address get the cap and no more, in a memory-o
     assert.equal(status.maxBytes, 8 * 1024 * 1024);
   } finally {
     await Promise.all(pods.map((pod) => pod.close()));
+  }
+});
+
+// The bucket lives in NATS memory: a NATS restart loses it while the pod's connection comes back. A store that fails is
+// dropped and opened again, which creates the bucket anew.
+test('a store that fails is closed and opened again, at most once per wait, and the new one counts', async () => {
+  let clock = 0;
+  const opened = [];
+  const open = async () => {
+    const store = { closed: false, fails: opened.length === 0, close: async () => { store.closed = true; },
+      take: async () => { if (store.fails) throw Object.assign(new Error('stream not found'), { code: 10059 }); return true; } };
+    opened.push(store);
+    return store;
+  };
+  const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
+  await limit.ready();
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /stream not found/);
+  assert.equal(opened[0].closed, true);
+  await limit.ready();
+  assert.equal(opened.length, 2);
+  assert.equal(await limit.take('a'), true);
+});
+
+test('a store that cannot open is tried again only after the wait', async () => {
+  let clock = 0;
+  let tries = 0;
+  const open = async () => { tries++; throw Object.assign(new Error('no JetStream'), { code: 503 }); };
+  const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
+  await limit.ready();
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(tries, 1);
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(tries, 2);
+});
+
+test('on NATS: a bucket lost as in a NATS restart is opened anew and counts again', { skip: !process.env.TEST_NATS_URL && 'no TEST_NATS_URL' }, async () => {
+  const bucket = `test-${Date.now()}`;
+  const opened = [];
+  const open = async () => {
+    const store = await openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10, bucket });
+    opened.push(store);
+    return store;
+  };
+  const limit = createReopeningLimit({ open, againMs: 0, log: () => {} });
+  try {
+    await limit.ready();
+    assert.equal(await limit.take('a'), true);
+    await opened[0].dropBucket();
+    await assert.rejects(limit.take('a'));
+    await limit.ready();
+    assert.equal(opened.length, 2);
+    assert.equal(await limit.take('a'), true);
+  } finally {
+    await Promise.all(opened.map((store) => store.close().catch(() => {})));
   }
 });

@@ -4,7 +4,7 @@
 // drops a key 48 hours after its last write.
 
 import { connect } from '@nats-io/transport-node';
-import { jetstream, JetStreamApiCodes } from '@nats-io/jetstream';
+import { jetstream, jetstreamManager, JetStreamApiCodes } from '@nats-io/jetstream';
 import { Kvm } from '@nats-io/kv';
 
 const BUCKET = 'chat-limits';
@@ -79,6 +79,49 @@ export function createKvDailyLimit({ perDay, kv, now = () => new Date() }) {
   };
 }
 
+// The shared store, kept open: opened at start, dropped and closed when a take fails (a NATS restart loses the
+// memory-only bucket while the connection comes back), and opened again at most once per againMs. Opening creates the
+// bucket when it is gone.
+export function createReopeningLimit({ open, log, againMs = 30_000, now = Date.now }) {
+  let store = null;
+  let opening = null;
+  let lastTry = -Infinity;
+  function tryOpen() {
+    if (store || opening || now() - lastTry < againMs) return;
+    lastTry = now();
+    opening = (async () => {
+      try {
+        store = await open();
+        log({ event: 'limit store open' });
+      } catch (error) {
+        log({ event: 'limit store open failed', reason: error.code ?? error.name });
+      } finally {
+        opening = null;
+      }
+    })();
+  }
+  tryOpen();
+  return {
+    // Settles when the open under way, if any, has ended.
+    ready: () => opening ?? Promise.resolve(),
+    async take(address) {
+      tryOpen();
+      if (!store) throw Object.assign(new Error('limit store not open'), { code: 'NOT_OPEN' });
+      const current = store;
+      try {
+        return await current.take(address);
+      } catch (error) {
+        if (store === current) {
+          store = null;
+          current.close().catch(() => {});
+          tryOpen();
+        }
+        throw error;
+      }
+    },
+  };
+}
+
 export function createSharedLimit({ shared, local, log }) {
   return {
     async take(address) {
@@ -94,13 +137,13 @@ export function createSharedLimit({ shared, local, log }) {
 
 // Connects to NATS and opens the bucket. The first pod creates it (memory storage, one value per key, 48 hours, 8 MiB);
 // a bucket that exists keeps the settings it was made with.
-export async function openKvLimit({ servers, perDay, now }) {
-  // Reconnects without end: a NATS restart must not leave the pod on its own count for good.
+export async function openKvLimit({ servers, perDay, now, bucket = BUCKET }) {
+  // Reconnects without end, so a NATS that comes back is reached again (createReopeningLimit opens the bucket anew).
   const nc = await connect({ servers, timeout: 3_000, maxReconnectAttempts: -1 });
   let kv;
   try {
     kv = await new Kvm(jetstream(nc, { timeout: STORE_TIMEOUT_MS }))
-      .create(BUCKET, { storage: 'memory', history: 1, ttl: KEEP_MS, max_bytes: BUCKET_MAX_BYTES });
+      .create(bucket, { storage: 'memory', history: 1, ttl: KEEP_MS, max_bytes: BUCKET_MAX_BYTES });
   } catch (error) {
     // No JetStream, or no room for the bucket: the next try opens a new connection, so this one closes.
     await nc.close();
@@ -114,5 +157,7 @@ export async function openKvLimit({ servers, perDay, now }) {
       return { storage: status.storage, ttl: status.ttl, maxBytes: status.max_bytes };
     },
     close: () => nc.close(),
+    // For tests: what a NATS restart does to a memory-only bucket.
+    dropBucket: async () => (await jetstreamManager(nc)).streams.delete(`KV_${bucket}`),
   };
 }

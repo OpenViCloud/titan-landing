@@ -7,7 +7,7 @@ import pg from 'pg';
 import { parseChatRequest } from './request.js';
 import { createTurn } from './turn.js';
 import { createOpenRouter, DEFAULT_MODELS } from './models.js';
-import { createDailyLimit, createSharedLimit, openKvLimit } from './limits.js';
+import { createDailyLimit, createReopeningLimit, createSharedLimit, openKvLimit } from './limits.js';
 import { createPrices } from './prices.js';
 import { createStore } from './store.js';
 import { loadKnowledge } from './knowledge.js';
@@ -105,24 +105,13 @@ async function main() {
 
   // With NATS_URL every pod counts in one bucket; until it opens, or while it fails, each pod counts on its own.
   const local = createDailyLimit({ perDay: ANSWERS_PER_ADDRESS_PER_DAY });
-  let kvLimit = null;
-  const openLimit = async () => {
-    try {
-      kvLimit = await openKvLimit({ servers: env.NATS_URL, perDay: ANSWERS_PER_ADDRESS_PER_DAY });
-      log({ event: 'limit store open' });
-    } catch (error) {
-      log({ event: 'limit store open failed', reason: error.code ?? error.name });
-      setTimeout(openLimit, OPEN_LIMIT_AGAIN_MS);
-    }
-  };
   const limit = env.NATS_URL
     ? createSharedLimit({
-        shared: {
-          take: async (address) => {
-            if (!kvLimit) throw Object.assign(new Error('limit store not open'), { code: 'NOT_OPEN' });
-            return kvLimit.take(address);
-          },
-        },
+        shared: createReopeningLimit({
+          open: () => openKvLimit({ servers: env.NATS_URL, perDay: ANSWERS_PER_ADDRESS_PER_DAY }),
+          log,
+          againMs: OPEN_LIMIT_AGAIN_MS,
+        }),
         local,
         log,
       })
@@ -140,8 +129,6 @@ async function main() {
   });
   const port = Number(env.PORT ?? 8080);
   createServer({ turn, log }).listen(port, () => log({ event: 'listening', port, models }));
-
-  if (env.NATS_URL) openLimit();
 
   // After listen: a database that is down at start must not keep the assistant down (it answers, keeping nothing).
   try {
