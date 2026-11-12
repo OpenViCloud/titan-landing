@@ -73,6 +73,7 @@ The READMEs are a copy made at the head of each repository's `main`; `chat/knowl
 ```sh
 chat/scripts/sync-readmes.sh           # copy again
 chat/scripts/sync-readmes.sh --check   # exit 1 when a README changed on main since the copy
+chat/scripts/sync-readmes.sh --check titan-control-plane=<commit>   # that repository at that commit, the others at main
 ```
 
 Every push to `main` also publishes `ghcr.io/openvicloud/titan-landing-chat` (`ci-chat.yml`), built from the root of

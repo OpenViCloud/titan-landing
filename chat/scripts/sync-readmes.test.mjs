@@ -9,12 +9,18 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const REPOS = ['titan-cli', 'terraform-provider-openvicloud', 'titan-control-plane', 'titan-incus-worker', 'titan-cloud-console'];
 
-// A gh that answers from a folder: <repo>.sha holds the head of main, <repo>.md its README.
+// A gh that answers from a folder: <repo>.sha holds the head of main, <repo>.md its README there, and <repo>@<sha>.md
+// the README at another commit. Every query is logged.
 const FAKE_GH = `#!/bin/bash
+echo "$2" >> "$FAKE_GH_DIR/queries"
 repo=$(echo "$2" | sed -E 's#repos/OpenViCloud/([^/]+)/.*#\\1#')
 case "$2" in
   */commits/main) cat "$FAKE_GH_DIR/$repo.sha" ;;
-  */contents/README.md*) [ -f "$FAKE_GH_DIR/$repo.md" ] && cat "$FAKE_GH_DIR/$repo.md" || exit 1 ;;
+  */contents/README.md*)
+    ref=\${2##*ref=}
+    if [ -f "$FAKE_GH_DIR/$repo@$ref.md" ]; then cat "$FAKE_GH_DIR/$repo@$ref.md"
+    elif [ "$ref" = "$(cat "$FAKE_GH_DIR/$repo.sha")" ] && [ -f "$FAKE_GH_DIR/$repo.md" ]; then cat "$FAKE_GH_DIR/$repo.md"
+    else exit 1; fi ;;
   *) exit 1 ;;
 esac
 `;
@@ -69,4 +75,32 @@ test('a repository without a README exits 2 and leaves the copy as it was', () =
   spawnSync('rm', [join(remote, 'titan-incus-worker.md')]);
   assert.equal(run().status, 2);
   assert.equal(readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8'), before);
+});
+
+test('--check compares a repository named with <repo>=<sha> at that commit, the others at the head of main', () => {
+  const { remote, run } = workspace();
+  const shipped = 'a'.repeat(40);
+  writeFileSync(join(remote, `titan-control-plane@${shipped}.md`), '# titan-control-plane\n');
+  run();
+  writeFileSync(join(remote, 'titan-control-plane.md'), '# titan-control-plane\nnot shipped yet\n');
+  const atShipped = run('--check', `titan-control-plane=${shipped}`);
+  assert.equal(atShipped.status, 0, atShipped.stdout + atShipped.stderr);
+  assert.match(atShipped.stdout, /READMES_CHECK=MATCH/);
+  const queries = readFileSync(join(remote, 'queries'), 'utf8');
+  assert.match(queries, new RegExp(`titan-control-plane/contents/README.md\\?ref=${shipped}`));
+  assert.doesNotMatch(queries.split('\n').slice(-7).join('\n'), /titan-control-plane\/commits\/main/);
+  assert.equal(run('--check').status, 1);
+  writeFileSync(join(remote, 'titan-cli.md'), '# titan-cli\nchanged on main\n');
+  assert.equal(run('--check', `titan-control-plane=${shipped}`).status, 1);
+});
+
+test('a <repo>=<sha> outside the five repositories, or not a full commit, exits 2 and writes nothing', () => {
+  const { root, run } = workspace();
+  run();
+  const before = readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8');
+  for (const arg of [`titan-regression=${'a'.repeat(40)}`, 'titan-control-plane=abc1234', 'titan-control-plane', '--wat']) {
+    const result = run(arg);
+    assert.equal(result.status, 2, arg);
+    assert.equal(readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8'), before, arg);
+  }
 });
