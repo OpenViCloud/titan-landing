@@ -7,7 +7,7 @@ const LANGS = new Set(['en', 'vi']);
 const ROLES = new Set(['user', 'assistant']);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 // History holds earlier answers too, which run longer than a question.
-const MAX_HISTORY_CHARS = 4000;
+export const MAX_HISTORY_CHARS = 4000;
 
 function refuse(reason) {
   return { ok: false, reason };

@@ -144,6 +144,21 @@ const en = {
     choose: 'Choose',
     volume: 'Volume',
   },
+  // The chat box (titan-ops features/public-site/design.md#chat-assistant). busy is the service's own busy text.
+  chat: {
+    open: 'Ask the assistant',
+    title: 'OpenViCloud assistant',
+    subtitle: "Answers from our docs. It can't see your account.",
+    notice: "Your questions are stored by OpenViCloud and a third-party AI service to improve this assistant. Don't enter personal information.",
+    understand: 'I understand',
+    placeholder: 'Ask about prices, VMs, Terraform…',
+    send: 'Send',
+    waiting: 'The assistant is answering. This can take up to 90 seconds.',
+    close: 'Close',
+    you: 'You',
+    assistant: 'Assistant',
+    busy: "The assistant is busy and can't answer right now. Please try again in a few minutes.",
+  },
 };
 
 const vi = {
@@ -287,6 +302,20 @@ const vi = {
     badge: 'Gợi ý để bắt đầu',
     choose: 'Chọn',
     volume: 'Volume',
+  },
+  chat: {
+    open: 'Hỏi trợ lý',
+    title: 'Trợ lý OpenViCloud',
+    subtitle: 'Trả lời theo tài liệu. Trợ lý không xem được tài khoản của bạn.',
+    notice: 'Câu hỏi của bạn được OpenViCloud và một dịch vụ AI bên thứ ba lưu lại để cải tiến trợ lý. Đừng nhập thông tin cá nhân.',
+    understand: 'Tôi đã hiểu',
+    placeholder: 'Hỏi về giá, VM, Terraform…',
+    send: 'Gửi',
+    waiting: 'Trợ lý đang trả lời. Có thể mất tới 90 giây.',
+    close: 'Đóng',
+    you: 'Bạn',
+    assistant: 'Trợ lý',
+    busy: 'Trợ lý đang bận, chưa trả lời được. Bạn thử lại sau ít phút.',
   },
 };
 
