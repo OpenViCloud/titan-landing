@@ -54,10 +54,10 @@ the other environments by a release of titan-ops (`OpenViCloud/titan-ops`, priva
 `chat/` is the assistant that answers visitors who have not signed up, at `POST /api/chat` on the site's origin. It
 asks free models on OpenRouter, from the customer docs of `site/`, the READMEs in `chat/knowledge/readmes/` and the
 live prices of the API; its manner is in `chat/persona.md`. The landing pages `/` and `/vi/` show the chat box that
-asks it; where `/api/chat` reaches no service, every answer is the busy text. Each environment routes `/api/chat` of the
-site's origin to the assistant in its own network layer, so the site's image knows nothing of it. Dev does, with an
-Ingress path (`gitops/chat/ingress.yaml` of OpenViCloud/titan-local-cluster); dev has no OpenRouter key, so there
-every answer is still the busy text. Prd has no route yet. Rules:
+asks it; where `/api/chat` reaches no service, every answer is the busy text. The route from `/api/chat` of the
+site's origin to the assistant belongs to each environment's network layer, so the site's image knows nothing of it.
+Dev has it, as an Ingress path (`gitops/chat/ingress.yaml` of OpenViCloud/titan-local-cluster); dev has no OpenRouter
+key, so there every answer is still the busy text. Prd has no route yet. Rules:
 `titan-ops features/public-site/design.md#chat-assistant`.
 
 ```sh
