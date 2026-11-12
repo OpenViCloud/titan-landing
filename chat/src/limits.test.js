@@ -147,23 +147,49 @@ test('on NATS: pods racing on one address get the cap and no more, in a memory-o
 
 // The bucket lives in NATS memory: a NATS restart loses it while the pod's connection comes back. A store that fails is
 // dropped and opened again, which creates the bucket anew.
-test('a store that fails is closed and opened again, at most once per wait, and the new one counts', async () => {
+test('a store found lost is closed and opened again, at most once per wait, and the new one counts', async () => {
   let clock = 0;
   const opened = [];
   const open = async () => {
     const store = { closed: false, fails: opened.length === 0, close: async () => { store.closed = true; },
-      take: async () => { if (store.fails) throw Object.assign(new Error('stream not found'), { code: 10059 }); return true; } };
+      take: async () => { if (store.fails) throw Object.assign(new Error("no responders: '$JS.API.DIRECT.GET.KV_chat-limits'"), { name: 'NoResponders' }); return true; } };
     opened.push(store);
     return store;
   };
   const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
   await limit.ready();
-  clock = 30_000;
-  await assert.rejects(limit.take('a'), /stream not found/);
+  await assert.rejects(limit.take('a'), /no responders/);
   assert.equal(opened[0].closed, true);
+  await limit.ready();
+  assert.equal(opened.length, 1, 'inside the wait: not opened again');
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /not open/);
   await limit.ready();
   assert.equal(opened.length, 2);
   assert.equal(await limit.take('a'), true);
+});
+
+test('a store that refuses, as a full bucket or writes that kept losing, is kept', async () => {
+  let closed = 0;
+  const store = { close: async () => { closed++; },
+    take: async () => { throw Object.assign(new Error('limit: the count kept changing'), { code: 'CONTENDED' }); } };
+  const limit = createReopeningLimit({ open: async () => store, againMs: 0, log: () => {} });
+  await limit.ready();
+  await assert.rejects(limit.take('a'), /kept changing/);
+  await assert.rejects(limit.take('a'), /kept changing/);
+  assert.equal(closed, 0);
+});
+
+test('an open that throws at once is tried again after the wait', async () => {
+  let clock = 0;
+  let tries = 0;
+  const open = () => { tries++; throw new Error('bad url'); };
+  const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
+  await limit.ready();
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(tries, 2);
 });
 
 test('a store that cannot open is tried again only after the wait', async () => {

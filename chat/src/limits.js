@@ -74,14 +74,21 @@ export function createKvDailyLimit({ perDay, kv, now = () => new Date() }) {
           await new Promise((resolve) => setTimeout(resolve, Math.random() * RETRY_WAIT_MS));
         }
       }
-      throw new Error('limit: the count kept changing');
+      throw Object.assign(new Error('limit: the count kept changing'), { code: 'CONTENDED' });
     },
   };
 }
 
-// The shared store, kept open: opened at start, dropped and closed when a take fails (a NATS restart loses the
-// memory-only bucket while the connection comes back), and opened again at most once per againMs. Opening creates the
-// bucket when it is gone.
+// A store that is gone or out of reach, as opposed to one that answered with a refusal (a full bucket, writes that
+// kept losing): no responders is what a bucket lost in a NATS restart answers once the connection is back.
+function storeLost(error) {
+  if (error?.name === 'JetStreamApiError') return error.code === JetStreamApiCodes.StreamNotFound;
+  return ['NoResponders', 'TimeoutError', 'ConnectionError', 'ClosedConnectionError'].includes(error?.name);
+}
+
+// The shared store, kept open: opened at start without waiting, dropped and closed when a take finds it lost (a NATS
+// restart loses the memory-only bucket while the connection comes back), and opened again at most once per againMs.
+// Opening creates the bucket when it is gone.
 export function createReopeningLimit({ open, log, againMs = 30_000, now = Date.now }) {
   let store = null;
   let opening = null;
@@ -89,16 +96,17 @@ export function createReopeningLimit({ open, log, againMs = 30_000, now = Date.n
   function tryOpen() {
     if (store || opening || now() - lastTry < againMs) return;
     lastTry = now();
-    opening = (async () => {
-      try {
-        store = await open();
+    // Set before open runs, so an open that throws at once still clears it.
+    opening = Promise.resolve()
+      .then(open)
+      .then((opened) => {
+        store = opened;
         log({ event: 'limit store open' });
-      } catch (error) {
-        log({ event: 'limit store open failed', reason: error.code ?? error.name });
-      } finally {
+      })
+      .catch((error) => log({ event: 'limit store open failed', reason: error.code ?? error.name }))
+      .finally(() => {
         opening = null;
-      }
-    })();
+      });
   }
   tryOpen();
   return {
@@ -111,7 +119,7 @@ export function createReopeningLimit({ open, log, againMs = 30_000, now = Date.n
       try {
         return await current.take(address);
       } catch (error) {
-        if (store === current) {
+        if (store === current && storeLost(error)) {
           store = null;
           current.close().catch(() => {});
           tryOpen();
