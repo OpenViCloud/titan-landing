@@ -73,7 +73,7 @@ The READMEs are a copy made at the head of each repository's `main`, or at the c
 
 ```sh
 chat/scripts/sync-readmes.sh           # copy again
-chat/scripts/sync-readmes.sh --check   # exit 1 when a README changed on main since the copy
+chat/scripts/sync-readmes.sh --check   # exit 1 when a README at the head of main differs from the copy
 chat/scripts/sync-readmes.sh --check titan-control-plane=<commit>   # that repository at that commit, the others at main
 chat/scripts/sync-readmes.sh titan-control-plane=<commit>           # copy again, that repository at that commit
 ```

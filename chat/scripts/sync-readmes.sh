@@ -5,7 +5,7 @@
 # fetched at run time. Rules: titan-ops features/public-site/design.md#chat-assistant.
 # With --check, nothing is written: the copy is compared with the same commits, and the script exits 1 when a README
 # differs from the copy. Exit 1 means only that a copy differs; any failure to read a repository (gh failed, no
-# README) or a bad argument (unknown repository, not a full commit, a repository named twice) exits 2.
+# README) or a bad argument (anything but <repo>=<40 hex> for one of the five, or a repository named twice) exits 2.
 # Usage: scripts/sync-readmes.sh [--check] [<repo>=<commit> ...]
 set -euo pipefail
 check=false
