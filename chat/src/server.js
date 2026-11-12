@@ -7,7 +7,7 @@ import pg from 'pg';
 import { parseChatRequest } from './request.js';
 import { createTurn } from './turn.js';
 import { createOpenRouter, DEFAULT_MODELS } from './models.js';
-import { createDailyLimit } from './limits.js';
+import { createDailyLimit, createSharedLimit, openKvLimit } from './limits.js';
 import { createPrices } from './prices.js';
 import { createStore } from './store.js';
 import { loadKnowledge } from './knowledge.js';
@@ -16,6 +16,7 @@ const MAX_BODY_BYTES = 32 * 1024;
 // The account has 50 free answers a day, so one address may not take them all (titan-ops features/public-site/design.md#chat-assistant).
 const ANSWERS_PER_ADDRESS_PER_DAY = 10;
 const PURGE_EVERY_MS = 24 * 60 * 60 * 1000;
+const OPEN_LIMIT_AGAIN_MS = 30_000;
 
 // Behind Cloudflare the connection comes from the tunnel, and Cloudflare names the visitor in this header.
 export function visitorAddress(req) {
@@ -102,11 +103,36 @@ async function main() {
     }
   };
 
+  // With NATS_URL every pod counts in one bucket; until it opens, or while it fails, each pod counts on its own.
+  const local = createDailyLimit({ perDay: ANSWERS_PER_ADDRESS_PER_DAY });
+  let kvLimit = null;
+  const openLimit = async () => {
+    try {
+      kvLimit = await openKvLimit({ servers: env.NATS_URL, perDay: ANSWERS_PER_ADDRESS_PER_DAY });
+      log({ event: 'limit store open' });
+    } catch (error) {
+      log({ event: 'limit store open failed', reason: error.code ?? error.name });
+      setTimeout(openLimit, OPEN_LIMIT_AGAIN_MS);
+    }
+  };
+  const limit = env.NATS_URL
+    ? createSharedLimit({
+        shared: {
+          take: async (address) => {
+            if (!kvLimit) throw Object.assign(new Error('limit store not open'), { code: 'NOT_OPEN' });
+            return kvLimit.take(address);
+          },
+        },
+        local,
+        log,
+      })
+    : local;
+
   const models = env.CHAT_MODELS ? env.CHAT_MODELS.split(',').map((m) => m.trim()).filter(Boolean) : DEFAULT_MODELS;
   const turn = createTurn({
     models,
     provider: createOpenRouter({ apiKey: env.OPENROUTER_API_KEY }),
-    limit: createDailyLimit({ perDay: ANSWERS_PER_ADDRESS_PER_DAY }),
+    limit,
     knowledge,
     prices: createPrices({ apiBaseUrl: env.API_BASE_URL }),
     store,
@@ -114,6 +140,8 @@ async function main() {
   });
   const port = Number(env.PORT ?? 8080);
   createServer({ turn, log }).listen(port, () => log({ event: 'listening', port, models }));
+
+  if (env.NATS_URL) openLimit();
 
   // After listen: a database that is down at start must not keep the assistant down (it answers, keeping nothing).
   try {
