@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createDailyLimit } from './limits.js';
+import { createDailyLimit, createKvDailyLimit, createSharedLimit, openKvLimit } from './limits.js';
 
 const day1 = new Date('2026-11-11T10:00:00Z');
 const day1Late = new Date('2026-11-11T23:59:59Z');
@@ -38,4 +38,96 @@ test('a new UTC day forgets yesterday’s addresses', () => {
   now = day2;
   limit.take('c');
   assert.equal(limit.size(), 1);
+});
+
+// A KV with revisions, as NATS keeps them: create fails when the key exists, update fails on a stale revision. Each
+// call yields first, so takes from two pods interleave.
+function fakeKv() {
+  const entries = new Map();
+  let sequence = 0;
+  const tick = () => new Promise((resolve) => setImmediate(resolve));
+  return {
+    entries,
+    async get(key) {
+      await tick();
+      const entry = entries.get(key);
+      return entry ? { operation: 'PUT', revision: entry.revision, string: () => entry.value } : null;
+    },
+    async create(key, value) {
+      await tick();
+      if (entries.has(key)) throw new Error('wrong last sequence');
+      entries.set(key, { value, revision: ++sequence });
+      return sequence;
+    },
+    async update(key, value, revision) {
+      await tick();
+      if (entries.get(key)?.revision !== revision) throw new Error('wrong last sequence');
+      entries.set(key, { value, revision: ++sequence });
+      return sequence;
+    },
+  };
+}
+
+test('two pods share one count for an address', async () => {
+  const kv = fakeKv();
+  const podA = createKvDailyLimit({ perDay: 3, kv, now: () => day1 });
+  const podB = createKvDailyLimit({ perDay: 3, kv, now: () => day1 });
+  assert.deepEqual([await podA.take('a'), await podA.take('a'), await podB.take('a'), await podB.take('a')],
+    [true, true, true, false]);
+  assert.equal(await podB.take('b'), true);
+});
+
+test('takes that race on two pods give the cap and no more', async () => {
+  const kv = fakeKv();
+  const pods = [createKvDailyLimit({ perDay: 10, kv, now: () => day1 }), createKvDailyLimit({ perDay: 10, kv, now: () => day1 })];
+  const taken = await Promise.all(Array.from({ length: 30 }, (_, i) => pods[i % 2].take('a')));
+  assert.equal(taken.filter(Boolean).length, 10);
+});
+
+test('the key is the UTC day and an encoding of the address, not the address itself', async () => {
+  const kv = fakeKv();
+  let now = day1;
+  const limit = createKvDailyLimit({ perDay: 1, kv, now: () => now });
+  await limit.take('2001:db8::1');
+  now = day2;
+  assert.equal(await limit.take('2001:db8::1'), true);
+  const keys = [...kv.entries.keys()];
+  assert.equal(keys.length, 2);
+  for (const key of keys) {
+    assert.match(key, /^\d{4}-\d{2}-\d{2}\.[0-9a-f]+$/);
+    assert.ok(!key.includes('2001:db8::1'));
+  }
+});
+
+test('a shared store that fails falls back to the pod’s own count, and the log names no address', async () => {
+  const logs = [];
+  const broken = { take: async () => { throw new Error('no responders'); } };
+  const limit = createSharedLimit({ shared: broken, local: createDailyLimit({ perDay: 1, now: () => day1 }), log: (e) => logs.push(e) });
+  assert.deepEqual([await limit.take('203.0.113.7'), await limit.take('203.0.113.7')], [true, false]);
+  assert.equal(logs.length, 2);
+  assert.ok(logs.every((e) => e.event === 'limit store failed' && !JSON.stringify(e).includes('203.0.113.7')));
+});
+
+test('a shared store that answers is the only count', async () => {
+  const kv = fakeKv();
+  const local = createDailyLimit({ perDay: 1, now: () => day1 });
+  const limit = createSharedLimit({ shared: createKvDailyLimit({ perDay: 2, kv, now: () => day1 }), local, log: () => {} });
+  assert.deepEqual([await limit.take('a'), await limit.take('a'), await limit.take('a')], [true, true, false]);
+  assert.equal(local.size(), 0);
+});
+
+// The real store: NATS JetStream with a memory-only KV, as the cluster runs it. Skipped without TEST_NATS_URL; the CI job
+// sets it and fails when this was skipped.
+test('on NATS: pods racing on one address get the cap and no more, in a memory-only bucket', { skip: !process.env.TEST_NATS_URL && 'no TEST_NATS_URL' }, async () => {
+  const pods = await Promise.all([1, 2].map(() => openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10 })));
+  try {
+    const address = `test-${Date.now()}-${Math.random()}`;
+    const taken = await Promise.all(Array.from({ length: 30 }, (_, i) => pods[i % 2].take(address)));
+    assert.equal(taken.filter(Boolean).length, 10);
+    const status = await pods[0].status();
+    assert.equal(status.storage, 'memory');
+    assert.equal(status.ttl, 48 * 60 * 60 * 1000);
+  } finally {
+    await Promise.all(pods.map((pod) => pod.close()));
+  }
 });

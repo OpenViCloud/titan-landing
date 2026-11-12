@@ -58,7 +58,7 @@ export function createTurn({ models, provider, limit, knowledge, prices, store, 
   return {
     async answer({ request, address }) {
       const { conversationId, lang, message, history } = request;
-      if (!limit.take(address)) {
+      if (!(await limit.take(address))) {
         log({ event: 'turn', kind: 'limit', lang });
         return { kind: 'limit', answer: TEXTS[lang].limit };
       }

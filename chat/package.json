@@ -10,6 +10,8 @@
     "test": "node --test 'src/*.test.js' 'scripts/*.test.mjs'"
   },
   "dependencies": {
+    "@nats-io/kv": "3.4.0",
+    "@nats-io/transport-node": "3.4.0",
     "pg": "8.23.1"
   }
 }

@@ -37,8 +37,16 @@ jobs:
           --health-cmd "pg_isready -U chat" --health-interval 2s --health-timeout 5s --health-retries 15
     env:
       TEST_DATABASE_URL: postgres://chat:chat@localhost:5432/chat
+      TEST_NATS_URL: nats://localhost:4222
     steps:
       - uses: actions/checkout@v4
+
+      # The limit tests run on a real NATS with JetStream, the version the clusters run (chat/src/limits.test.js). A
+      # service container cannot take the -js argument, so the step starts it.
+      - name: Start NATS with JetStream
+        run: |
+          docker run -d --name nats -p 4222:4222 nats:2.10.18-alpine -js
+          for attempt in 1 2 3 4 5 6 7 8 9 10; do nc -z localhost 4222 && break; sleep 1; done
 
       - uses: actions/setup-node@v4
         with:
@@ -55,6 +63,7 @@ jobs:
           npm test 2>&1 | tee test.log
           # The Postgres tests must have run here, not been skipped.
           if grep -q '# SKIP no TEST_DATABASE_URL' test.log; then echo "Postgres tests were skipped"; exit 1; fi
+          if grep -q '# SKIP no TEST_NATS_URL' test.log; then echo "NATS tests were skipped"; exit 1; fi
 
       # The image starts only when the docs, the READMEs and the persona are in it (knowledge.js throws otherwise).
       # No model is asked: the probe sends a body the service refuses before any model.

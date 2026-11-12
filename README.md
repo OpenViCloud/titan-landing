@@ -61,12 +61,13 @@ key, so there every answer is still the busy text. Prd has no route yet. Rules:
 `titan-ops features/public-site/design.md#chat-assistant`.
 
 ```sh
-(cd chat && npm install && npm test)   # no test calls a real model; set TEST_DATABASE_URL to run the Postgres tests
+(cd chat && npm install && npm test)   # no test calls a real model; set TEST_DATABASE_URL and TEST_NATS_URL (JetStream on) to run the Postgres and NATS tests
 (cd chat && OPENROUTER_API_KEY=… API_BASE_URL=http://api.localhost:8080 DOCS_DIR=../site/src/content/docs npm start)
 ```
 
-Optional env: `DATABASE_URL` (without it nothing is kept), `CHAT_MODELS` (comma list, overrides the default order),
-`PORT` (8080).
+Optional env: `DATABASE_URL` (without it nothing is kept), `NATS_URL` (with JetStream on, every pod counts the daily cap
+per address in one memory-only bucket; without it, or while NATS fails, each pod counts on its own), `CHAT_MODELS`
+(comma list, overrides the default order), `PORT` (8080).
 
 The READMEs are a copy made at the head of each repository's `main`, or at the commit an argument names;
 `chat/knowledge/SOURCE` names the commits:
