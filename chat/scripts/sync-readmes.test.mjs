@@ -83,24 +83,47 @@ test('--check compares a repository named with <repo>=<sha> at that commit, the 
   writeFileSync(join(remote, `titan-control-plane@${shipped}.md`), '# titan-control-plane\n');
   run();
   writeFileSync(join(remote, 'titan-control-plane.md'), '# titan-control-plane\nnot shipped yet\n');
+  const before = readFileSync(join(remote, 'queries'), 'utf8').length;
   const atShipped = run('--check', `titan-control-plane=${shipped}`);
   assert.equal(atShipped.status, 0, atShipped.stdout + atShipped.stderr);
   assert.match(atShipped.stdout, /READMES_CHECK=MATCH/);
-  const queries = readFileSync(join(remote, 'queries'), 'utf8');
+  const queries = readFileSync(join(remote, 'queries'), 'utf8').slice(before);
   assert.match(queries, new RegExp(`titan-control-plane/contents/README.md\\?ref=${shipped}`));
-  assert.doesNotMatch(queries.split('\n').slice(-7).join('\n'), /titan-control-plane\/commits\/main/);
+  assert.doesNotMatch(queries, /titan-control-plane\/commits\/main/);
   assert.equal(run('--check').status, 1);
   writeFileSync(join(remote, 'titan-cli.md'), '# titan-cli\nchanged on main\n');
   assert.equal(run('--check', `titan-control-plane=${shipped}`).status, 1);
 });
 
-test('a <repo>=<sha> outside the five repositories, or not a full commit, exits 2 and writes nothing', () => {
+test('a sync with <repo>=<sha> copies that repository at that commit and records it in SOURCE', () => {
+  const { root, remote, run } = workspace();
+  const shipped = 'a'.repeat(40);
+  writeFileSync(join(remote, `titan-control-plane@${shipped}.md`), '# titan-control-plane\nas shipped\n');
+  assert.equal(run(`titan-control-plane=${shipped}`).status, 0);
+  assert.equal(readFileSync(join(root, 'knowledge', 'readmes', 'titan-control-plane.md'), 'utf8'), '# titan-control-plane\nas shipped\n');
+  const source = readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8').trim().split('\n');
+  assert.ok(source.includes(`titan-control-plane ${shipped}`));
+  assert.ok(source.includes(`titan-cli ${'0'.repeat(40)}`));
+  assert.equal(run('--check', `titan-control-plane=${shipped}`).status, 0);
+});
+
+test('a bad argument exits 2 and leaves the copy as it was', () => {
   const { root, run } = workspace();
   run();
-  const before = readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8');
-  for (const arg of [`titan-regression=${'a'.repeat(40)}`, 'titan-control-plane=abc1234', 'titan-control-plane', '--wat']) {
-    const result = run(arg);
-    assert.equal(result.status, 2, arg);
-    assert.equal(readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8'), before, arg);
+  const copy = () => [readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8'),
+    ...REPOS.map((r) => readFileSync(join(root, 'knowledge', 'readmes', `${r}.md`), 'utf8'))];
+  const before = copy();
+  const sha = 'a'.repeat(40);
+  const bad = [
+    [`titan-regression=${sha}`],                              // outside the five repositories
+    ['titan-control-plane=abc1234'],                          // not a full commit
+    ['titan-control-plane'],                                  // no commit
+    ['--wat'],                                                // unknown flag
+    [`titan-cli=${sha}`, `titan-cli=${'b'.repeat(40)}`],      // one repository named twice
+  ];
+  for (const args of bad) {
+    const result = run(...args);
+    assert.equal(result.status, 2, args.join(' '));
+    assert.deepEqual(copy(), before, args.join(' '));
   }
 });

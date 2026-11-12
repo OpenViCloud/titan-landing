@@ -1,12 +1,11 @@
 #!/bin/bash
-# Copies README.md of the five public repositories the assistant knows into knowledge/readmes/<repo>.md, from the head
-# of each one's main, and records each commit in knowledge/SOURCE. The image ships the copy; nothing is fetched at run
-# time. Rules: titan-ops features/public-site/design.md#chat-assistant.
-# With --check, nothing is written: the copy is compared with the head of each main, and the script exits 1 when a
-# README changed since the copy. Exit 1 means only that a copy differs; any failure to read a repository (gh failed,
-# no README) or a bad argument exits 2.
-# <repo>=<40 hex> reads that repository at that commit instead of the head of its main: a release checks the README of
-# the commit it ships (titan-ops features/public-site/design.md#chat-assistant).
+# Copies README.md of the five public repositories the assistant knows into knowledge/readmes/<repo>.md and records
+# each commit in knowledge/SOURCE. A repository is read at the head of its main, or at the commit an argument
+# <repo>=<40 hex> names: a release checks the README of the commit it ships. The image ships the copy; nothing is
+# fetched at run time. Rules: titan-ops features/public-site/design.md#chat-assistant.
+# With --check, nothing is written: the copy is compared with the same commits, and the script exits 1 when a README
+# differs from the copy. Exit 1 means only that a copy differs; any failure to read a repository (gh failed, no
+# README) or a bad argument (unknown repository, not a full commit, a repository named twice) exits 2.
 # Usage: scripts/sync-readmes.sh [--check] [<repo>=<commit> ...]
 set -euo pipefail
 check=false
@@ -30,6 +29,10 @@ for arg in "$@"; do
     echo "bad argument $arg: expected <repo>=<40 hex commit>, <repo> one of ${repos[*]}" >&2
     exit 2
   fi
+  if printf '%s' "$pinned" | grep -q "^$name "; then
+    echo "bad argument $arg: $name is named twice" >&2
+    exit 2
+  fi
   pinned+="$name $commit"$'\n'
 done
 
@@ -51,7 +54,7 @@ if [ "$check" = true ]; then
   if diff -r knowledge/readmes "$fetched/readmes"; then
     echo "READMES_CHECK=MATCH knowledge/readmes/ matches every repository (the commits named, else the head of main)"
   else
-    echo "READMES_CHECK=DIFFER knowledge/readmes/ (from knowledge/SOURCE) differs: run scripts/sync-readmes.sh with the same arguments, open a pull request"
+    echo "READMES_CHECK=DIFFER knowledge/readmes/ (from knowledge/SOURCE) differs: run scripts/sync-readmes.sh with the same <repo>=<commit> arguments, open a pull request"
     exit 1
   fi
 else
