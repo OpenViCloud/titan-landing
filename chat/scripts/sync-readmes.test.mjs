@@ -108,8 +108,10 @@ test('a sync with <repo>=<sha> copies that repository at that commit and records
 });
 
 test('a bad argument exits 2 and leaves the copy as it was', () => {
-  const { root, run } = workspace();
+  const { root, remote, run } = workspace();
   run();
+  // Both commits of the repository named twice have a README, so only the argument check can stop that run.
+  for (const c of ['a', 'b']) writeFileSync(join(remote, `titan-cli@${c.repeat(40)}.md`), `# titan-cli ${c}\n`);
   const copy = () => [readFileSync(join(root, 'knowledge', 'SOURCE'), 'utf8'),
     ...REPOS.map((r) => readFileSync(join(root, 'knowledge', 'readmes', `${r}.md`), 'utf8'))];
   const before = copy();
