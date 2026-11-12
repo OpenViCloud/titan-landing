@@ -80,14 +80,15 @@ export function createKvDailyLimit({ perDay, kv, now = () => new Date() }) {
 }
 
 // A store that is gone or out of reach, as opposed to one that answered with a refusal (a full bucket, writes that
-// kept losing). Once the connection is back, a bucket lost in a NATS restart has no responders: the client wraps that
-// in a RequestError on a read and a JetStreamNotEnabled on a write, so the error and its causes are read.
+// kept losing). A bucket lost in a NATS restart answers a read with a timeout on NATS 2.10.18 (the CI test below), or
+// with no responders, which the client wraps in a RequestError on a read and a JetStreamNotEnabled on a write: the
+// error and its causes are read.
 const LOST = new Set(['NoResponders', 'TimeoutError', 'ConnectionError', 'ClosedConnectionError', 'JetStreamNotEnabled',
   'StreamNotFoundError']);
 export function storeLost(error) {
   for (let e = error, depth = 0; e && depth < 5; e = e.cause, depth++) {
     if (LOST.has(e.name)) return true;
-    if (e.name === 'JetStreamApiError' && e.code === JetStreamApiCodes.StreamNotFound) return true;
+    if (e.code === JetStreamApiCodes.StreamNotFound) return true;
   }
   return false;
 }
