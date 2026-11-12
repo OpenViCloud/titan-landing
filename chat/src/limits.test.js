@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createDailyLimit, createKvDailyLimit, createReopeningLimit, createSharedLimit, openKvLimit } from './limits.js';
+import { createDailyLimit, createKvDailyLimit, createReopeningLimit, createSharedLimit, openKvLimit, storeLost } from './limits.js';
 
 const day1 = new Date('2026-11-11T10:00:00Z');
 const day1Late = new Date('2026-11-11T23:59:59Z');
@@ -145,14 +145,27 @@ test('on NATS: pods racing on one address get the cap and no more, in a memory-o
   }
 });
 
-// The bucket lives in NATS memory: a NATS restart loses it while the pod's connection comes back. A store that fails is
-// dropped and opened again, which creates the bucket anew.
+// The bucket lives in NATS memory: a NATS restart loses it while the pod's connection comes back. A store found lost is
+// dropped and opened again, which creates the bucket anew. What a read of a lost bucket throws: a RequestError whose
+// cause has no responders (@nats-io/nats-core request.js).
+const lostBucket = () => Object.assign(new Error("no responders: '$JS.API.DIRECT.GET.KV_chat-limits'", {
+  cause: Object.assign(new Error("no responders: '$JS.API.DIRECT.GET.KV_chat-limits'"), { name: 'NoResponders' }),
+}), { name: 'RequestError' });
+
+test('a lost store is told from a refusal: no responders behind a read or a write, a missing stream, a timeout', () => {
+  assert.equal(storeLost(lostBucket()), true);
+  assert.equal(storeLost(Object.assign(new Error('jetstream is not enabled'), { name: 'JetStreamNotEnabled' })), true);
+  assert.equal(storeLost(Object.assign(new Error('stream not found'), { name: 'StreamNotFoundError', code: 10059 })), true);
+  assert.equal(storeLost(Object.assign(new Error('timeout'), { name: 'TimeoutError' })), true);
+  assert.equal(storeLost(Object.assign(new Error('maximum bytes exceeded'), { name: 'JetStreamApiError', code: 10047 })), false);
+  assert.equal(storeLost(Object.assign(new Error('limit: the count kept changing'), { code: 'CONTENDED' })), false);
+});
 test('a store found lost is closed and opened again, at most once per wait, and the new one counts', async () => {
   let clock = 0;
   const opened = [];
   const open = async () => {
     const store = { closed: false, fails: opened.length === 0, close: async () => { store.closed = true; },
-      take: async () => { if (store.fails) throw Object.assign(new Error("no responders: '$JS.API.DIRECT.GET.KV_chat-limits'"), { name: 'NoResponders' }); return true; } };
+      take: async () => { if (store.fails) throw lostBucket(); return true; } };
     opened.push(store);
     return store;
   };
@@ -220,7 +233,10 @@ test('on NATS: a bucket lost as in a NATS restart is opened anew and counts agai
     await limit.ready();
     assert.equal(await limit.take('a'), true);
     await opened[0].dropBucket();
-    await assert.rejects(limit.take('a'));
+    await assert.rejects(limit.take('a'), (error) => {
+      assert.equal(storeLost(error), true, `${error.name}: ${error.message}`);
+      return true;
+    });
     await limit.ready();
     assert.equal(opened.length, 2);
     assert.equal(await limit.take('a'), true);
