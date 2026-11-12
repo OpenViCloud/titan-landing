@@ -118,3 +118,4 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `INVOICE_INVALID_STATE` | 422 | Hoá đơn đã được thanh toán, nên không trả từ ví được nữa. | Không cần làm gì. |
 | `INVOICE_WALLET_INSUFFICIENT` | 422 | Số dư ví không đủ trả trọn hoá đơn. Không đồng nào bị trừ. Trường `title` cho biết còn thiếu bao nhiêu. | — |
 | `INVOICE_PAYMENT_CONFLICT` | 409 | Lần trả này không bắt đầu được, hoặc đã có một lần trả khác đang xử lý. Lần bấm này không trừ tiền. | Tải lại hoá đơn để xem trạng thái mới trước khi bấm lại. |
+| `USAGE_PERIOD_EXPIRED` | 422 | Bạn xem chi phí của một tháng có ngày đầu cách hôm nay hơn 90 ngày. Mức sử dụng chi tiết chỉ được giữ 90 ngày. | Xem hoá đơn của tháng đó. |

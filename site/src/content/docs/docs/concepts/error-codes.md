@@ -118,3 +118,4 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `INVOICE_INVALID_STATE` | 422 | The invoice has already been paid, so it can no longer be paid from the wallet. | Nothing to do. |
 | `INVOICE_WALLET_INSUFFICIENT` | 422 | Your wallet balance is not enough to pay the whole invoice. Nothing was taken. The `title` field says how much is missing. | — |
 | `INVOICE_PAYMENT_CONFLICT` | 409 | This payment could not start, or another payment is already being processed. This click did not take any money. | Reload the invoice to see its new state before you click again. |
+| `USAGE_PERIOD_EXPIRED` | 422 | You asked for the cost of a month whose first day is more than 90 days ago. Detailed usage is kept for 90 days. | Read that month's invoice instead. |

@@ -19,6 +19,8 @@ Load balancer và IPv6 công khai được miễn phí: không có dòng mức d
 
 Mở mục **Mức sử dụng** trong thanh điều hướng, nằm trong nhóm **Thanh toán**. Tiêu đề trang là **Thanh toán**. Dùng hai mũi tên để chuyển tháng. Bạn không chuyển được quá tháng hiện tại.
 
+Mức sử dụng chi tiết chỉ được giữ 90 ngày. Với tháng có ngày đầu cách hôm nay hơn 90 ngày, trang hiện một dòng ghi chú và liên kết **Xem hoá đơn** thay cho thẻ tổng và bảng, và bạn không lùi thêm được. Hoá đơn của tháng đó vẫn ghi số tiền đã tính.
+
 - **Tổng tháng này** là tổng chi phí của tháng, gồm VM, volume và snapshot. Hoá đơn tháng gom đúng các loại chi phí này.
 - Bảng bên dưới chỉ liệt kê chi phí của từng VM. Chi phí volume và snapshot không nằm trong bảng, nên các dòng cộng lại có thể nhỏ hơn tổng.
 

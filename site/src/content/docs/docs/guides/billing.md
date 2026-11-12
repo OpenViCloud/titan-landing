@@ -19,6 +19,8 @@ Load balancers and public IPv6 are free: they do not appear as a usage line and 
 
 Open the sidebar's **Usage** item, under the **Billing** group. The page heading is **Billing**. Use the two arrows to change month. You cannot go past the current month.
 
+Detailed usage is kept for 90 days. For a month whose first day is more than 90 days ago, the page shows a short note and a **See the invoices** link instead of the total and the table, and you cannot go further back. That month's invoice still shows what was billed.
+
 - **Total this month** is the total cost for the month, including VMs, volumes and snapshots. The monthly invoice collects exactly these costs.
 - The table below only lists the cost of each VM. Volume and snapshot costs are not in the table, so the rows can add up to less than the total.
 
