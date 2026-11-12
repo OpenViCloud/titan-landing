@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createDailyLimit, createKvDailyLimit, createSharedLimit, openKvLimit } from './limits.js';
+import { createDailyLimit, createKvDailyLimit, createReopeningLimit, createSharedLimit, openKvLimit, storeLost } from './limits.js';
 
 const day1 = new Date('2026-11-11T10:00:00Z');
 const day1Late = new Date('2026-11-11T23:59:59Z');
@@ -131,7 +131,7 @@ test('a shared store that answers is the only count', async () => {
 // The real store: NATS JetStream with a memory-only KV, as the cluster runs it. Skipped without TEST_NATS_URL; the CI job
 // sets it and fails when this was skipped.
 test('on NATS: pods racing on one address get the cap and no more, in a memory-only bucket', { skip: !process.env.TEST_NATS_URL && 'no TEST_NATS_URL' }, async () => {
-  const pods = await Promise.all([1, 2].map(() => openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10 })));
+  const pods = await Promise.all([1, 2].map(() => openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10, bucket: 'test-race' })));
   try {
     const address = `test-${Date.now()}-${Math.random()}`;
     const taken = await Promise.all(Array.from({ length: 30 }, (_, i) => pods[i % 2].take(address)));
@@ -142,5 +142,105 @@ test('on NATS: pods racing on one address get the cap and no more, in a memory-o
     assert.equal(status.maxBytes, 8 * 1024 * 1024);
   } finally {
     await Promise.all(pods.map((pod) => pod.close()));
+  }
+});
+
+// The bucket lives in NATS memory: a NATS restart loses it while the pod's connection comes back. A store found lost is
+// dropped and opened again, which creates the bucket anew. What a read of a lost bucket throws: a RequestError whose
+// cause has no responders (@nats-io/nats-core request.js).
+const lostBucket = () => Object.assign(new Error("no responders: '$JS.API.DIRECT.GET.KV_chat-limits'", {
+  cause: Object.assign(new Error("no responders: '$JS.API.DIRECT.GET.KV_chat-limits'"), { name: 'NoResponders' }),
+}), { name: 'RequestError' });
+
+test('a lost store is told from a refusal: no responders behind a read or a write, a missing stream, a timeout', () => {
+  assert.equal(storeLost(lostBucket()), true);
+  assert.equal(storeLost(Object.assign(new Error('jetstream is not enabled'), { name: 'JetStreamNotEnabled' })), true);
+  assert.equal(storeLost(Object.assign(new Error('stream not found'), { name: 'StreamNotFoundError', code: 10059 })), true);
+  assert.equal(storeLost(Object.assign(new Error('timeout'), { name: 'TimeoutError' })), true);
+  assert.equal(storeLost(Object.assign(new Error('maximum bytes exceeded'), { name: 'JetStreamApiError', code: 10047 })), false);
+  assert.equal(storeLost(Object.assign(new Error('limit: the count kept changing'), { code: 'CONTENDED' })), false);
+});
+test('a store found lost is closed and opened again, at most once per wait, and the new one counts', async () => {
+  let clock = 0;
+  const opened = [];
+  const open = async () => {
+    const store = { closed: false, fails: opened.length === 0, close: async () => { store.closed = true; },
+      take: async () => { if (store.fails) throw lostBucket(); return true; } };
+    opened.push(store);
+    return store;
+  };
+  const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
+  await limit.ready();
+  await assert.rejects(limit.take('a'), /no responders/);
+  assert.equal(opened[0].closed, true);
+  await limit.ready();
+  assert.equal(opened.length, 1, 'inside the wait: not opened again');
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(opened.length, 2);
+  assert.equal(await limit.take('a'), true);
+});
+
+test('a store that refuses, as a full bucket or writes that kept losing, is kept', async () => {
+  let closed = 0;
+  const store = { close: async () => { closed++; },
+    take: async () => { throw Object.assign(new Error('limit: the count kept changing'), { code: 'CONTENDED' }); } };
+  const limit = createReopeningLimit({ open: async () => store, againMs: 0, log: () => {} });
+  await limit.ready();
+  await assert.rejects(limit.take('a'), /kept changing/);
+  await assert.rejects(limit.take('a'), /kept changing/);
+  assert.equal(closed, 0);
+});
+
+test('an open that throws at once is tried again after the wait', async () => {
+  let clock = 0;
+  let tries = 0;
+  const open = () => { tries++; throw new Error('bad url'); };
+  const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
+  await limit.ready();
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(tries, 2);
+});
+
+test('a store that cannot open is tried again only after the wait', async () => {
+  let clock = 0;
+  let tries = 0;
+  const open = async () => { tries++; throw Object.assign(new Error('no JetStream'), { code: 503 }); };
+  const limit = createReopeningLimit({ open, againMs: 30_000, now: () => clock, log: () => {} });
+  await limit.ready();
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(tries, 1);
+  clock = 30_000;
+  await assert.rejects(limit.take('a'), /not open/);
+  await limit.ready();
+  assert.equal(tries, 2);
+});
+
+test('on NATS: a bucket lost as in a NATS restart is opened anew and counts again', { skip: !process.env.TEST_NATS_URL && 'no TEST_NATS_URL' }, async () => {
+  const bucket = `test-${Date.now()}`;
+  const opened = [];
+  const open = async () => {
+    const store = await openKvLimit({ servers: process.env.TEST_NATS_URL, perDay: 10, bucket });
+    opened.push(store);
+    return store;
+  };
+  const limit = createReopeningLimit({ open, againMs: 0, log: () => {} });
+  try {
+    await limit.ready();
+    assert.equal(await limit.take('a'), true);
+    await opened[0].dropBucket();
+    await assert.rejects(limit.take('a'), (error) => {
+      assert.equal(storeLost(error), true, `${error.name}: ${error.message}`);
+      return true;
+    });
+    await limit.ready();
+    assert.equal(opened.length, 2);
+    assert.equal(await limit.take('a'), true);
+  } finally {
+    await Promise.all(opened.map((store) => store.close().catch(() => {})));
   }
 });
