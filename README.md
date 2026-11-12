@@ -66,7 +66,8 @@ key, so there every answer is still the busy text. Prd has no route yet. Rules:
 ```
 
 Optional env: `DATABASE_URL` (without it nothing is kept), `NATS_URL` (with JetStream on, every pod counts the daily cap
-per address in one memory-only bucket; without it, or while NATS fails, each pod counts on its own), `CHAT_MODELS`
+per address in one memory-only bucket; without it, or while NATS fails, each pod counts on its own, a store that does
+not answer within 1 s included), `CHAT_MODELS`
 (comma list, overrides the default order), `PORT` (8080).
 
 The READMEs are a copy made at the head of each repository's `main`, or at the commit an argument names;

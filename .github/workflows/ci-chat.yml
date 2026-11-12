@@ -41,12 +41,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # The limit tests run on a real NATS with JetStream, the version the clusters run (chat/src/limits.test.js). A
+      # The limit tests run on a real NATS with JetStream, the server version the clusters run (chat/src/limits.test.js). A
       # service container cannot take the -js argument, so the step starts it.
       - name: Start NATS with JetStream
         run: |
           docker run -d --name nats -p 4222:4222 nats:2.10.18-alpine -js
           for attempt in 1 2 3 4 5 6 7 8 9 10; do nc -z localhost 4222 && break; sleep 1; done
+          nc -z localhost 4222
 
       - uses: actions/setup-node@v4
         with:

@@ -42,6 +42,9 @@ test('a new UTC day forgets yesterday’s addresses', () => {
 
 // A KV with revisions, as NATS keeps them: create fails when the key exists, update fails on a stale revision. Each
 // call yields first, so takes from two pods interleave.
+// What NATS answers when a conditional write finds another revision: JetStream API error 10071, wrong last sequence.
+const conflict = () => Object.assign(new Error('wrong last sequence'), { code: 10071 });
+
 function fakeKv() {
   const entries = new Map();
   let sequence = 0;
@@ -55,13 +58,13 @@ function fakeKv() {
     },
     async create(key, value) {
       await tick();
-      if (entries.has(key)) throw new Error('wrong last sequence');
+      if (entries.has(key)) throw conflict();
       entries.set(key, { value, revision: ++sequence });
       return sequence;
     },
     async update(key, value, revision) {
       await tick();
-      if (entries.get(key)?.revision !== revision) throw new Error('wrong last sequence');
+      if (entries.get(key)?.revision !== revision) throw conflict();
       entries.set(key, { value, revision: ++sequence });
       return sequence;
     },
@@ -84,7 +87,7 @@ test('takes that race on two pods give the cap and no more', async () => {
   assert.equal(taken.filter(Boolean).length, 10);
 });
 
-test('the key is the UTC day and an encoding of the address, not the address itself', async () => {
+test('the key is the UTC day and the hex of the address, never its raw text', async () => {
   const kv = fakeKv();
   let now = day1;
   const limit = createKvDailyLimit({ perDay: 1, kv, now: () => now });
@@ -97,6 +100,15 @@ test('the key is the UTC day and an encoding of the address, not the address its
     assert.match(key, /^\d{4}-\d{2}-\d{2}\.[0-9a-f]+$/);
     assert.ok(!key.includes('2001:db8::1'));
   }
+});
+
+test('a write that fails for another reason is not tried again: the error goes to the caller', async () => {
+  const kv = fakeKv();
+  let writes = 0;
+  kv.create = async () => { writes++; throw Object.assign(new Error('timeout'), { code: 'TIMEOUT' }); };
+  const limit = createKvDailyLimit({ perDay: 3, kv, now: () => day1 });
+  await assert.rejects(limit.take('a'), /timeout/);
+  assert.equal(writes, 1);
 });
 
 test('a shared store that fails falls back to the pod’s own count, and the log names no address', async () => {
@@ -127,6 +139,7 @@ test('on NATS: pods racing on one address get the cap and no more, in a memory-o
     const status = await pods[0].status();
     assert.equal(status.storage, 'memory');
     assert.equal(status.ttl, 48 * 60 * 60 * 1000);
+    assert.equal(status.maxBytes, 8 * 1024 * 1024);
   } finally {
     await Promise.all(pods.map((pod) => pod.close()));
   }
