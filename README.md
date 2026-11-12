@@ -68,11 +68,14 @@ key, so there every answer is still the busy text. Prd has no route yet. Rules:
 Optional env: `DATABASE_URL` (without it nothing is kept), `CHAT_MODELS` (comma list, overrides the default order),
 `PORT` (8080).
 
-The READMEs are a copy made at the head of each repository's `main`; `chat/knowledge/SOURCE` names the commits:
+The READMEs are a copy made at the head of each repository's `main`, or at the commit an argument names;
+`chat/knowledge/SOURCE` names the commits:
 
 ```sh
 chat/scripts/sync-readmes.sh           # copy again
-chat/scripts/sync-readmes.sh --check   # exit 1 when a README changed on main since the copy
+chat/scripts/sync-readmes.sh --check   # exit 1 when a README at the head of main differs from the copy
+chat/scripts/sync-readmes.sh --check titan-control-plane=<commit>   # that repository at that commit, the others at main
+chat/scripts/sync-readmes.sh titan-control-plane=<commit>           # copy again, that repository at that commit
 ```
 
 Every push to `main` also publishes `ghcr.io/openvicloud/titan-landing-chat` (`ci-chat.yml`), built from the root of
