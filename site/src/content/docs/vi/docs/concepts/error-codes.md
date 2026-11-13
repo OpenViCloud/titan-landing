@@ -41,6 +41,7 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `VM_NOT_FOUND` | 404 | VM không tồn tại, hoặc không thuộc tài khoản của bạn. | Tải lại danh sách VM. |
 | `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH tới một VM không ở trạng thái Running hoặc Ready, và khi bạn bật, tắt, xoá, tạo snapshot, quay về snapshot hay gắn volume cho một VM trong lúc một snapshot của nó đang được tạo hoặc đang quay về. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
 | `VM_AGENT_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM còn đang khởi động. | Chờ một phút rồi thử lại. |
+| `VM_SSH_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM đã chạy nhưng SSH server trong VM chưa nghe: VM còn đang hoàn tất lần khởi động đầu. | Chờ một phút rồi thử lại. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Tài khoản của bạn đã mở đủ 5 phiên SSH. | Đóng bớt một phiên rồi thử lại. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | Bạn xoá một VM mà một load balancer chưa xoá vẫn đang gửi traffic tới. | Gỡ VM khỏi load balancer trước. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | VM đã có đủ số snapshot tối đa. | Xoá bớt snapshot của VM đó. |

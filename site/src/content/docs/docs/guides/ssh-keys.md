@@ -27,7 +27,7 @@ Accepted key types: `ssh-ed25519`, `ecdsa-sha2-nistp256`, `ecdsa-sha2-nistp384`,
 
 ## Pick keys when you create a VM
 
-The [Create VM](/docs/guides/vm/) dialog has an **SSH keys** checkbox group. Pick up to 10 keys per VM. Picked keys are installed only once, at the VM's first boot, into the `ubuntu` user's `authorized_keys`. You cannot add a key to a VM after it is created from the portal, and deleting a key does not remove it from VMs that already have it — remove it inside the VM if you need to.
+The [Create VM](/docs/guides/vm/) dialog has an **SSH keys** checkbox group. Pick up to 10 keys per VM. Picked keys are installed only once, early in the VM's first boot, into `/etc/ssh/openvicloud/ubuntu`, a file the VM's SSH server reads for the `ubuntu` user next to `~/.ssh/authorized_keys`. You cannot add a key to a VM after it is created from the portal, and deleting a key does not remove it from VMs that already have it — remove its line from `/etc/ssh/openvicloud/ubuntu` inside the VM (with `sudo`) if you need to; it does not come back at the next boot.
 
 The only template offered to customers today is **Ubuntu-22.04-Standard**.
 
@@ -39,7 +39,7 @@ The only template offered to customers today is **Ubuntu-22.04-Standard**.
 openvicloud vm ssh <vm name or id>
 ```
 
-This works on any network — the VM needs no public address. The control plane relays the SSH session. The VM must be in the `Running` or `Ready` state. Right after the VM boots, a session may end at once; try again shortly.
+This works on any network — the VM needs no public address. The control plane relays the SSH session. The VM must be in the `Running` or `Ready` state. Right after the VM starts, `vm ssh` may fail for a few minutes with `VM_AGENT_NOT_READY` or `VM_SSH_NOT_READY` (see [error codes](/docs/concepts/error-codes/)) while the VM finishes booting; try again shortly.
 
 Up to 5 sessions per account can be open at the same time, and an idle session closes after 30 minutes.
 
