@@ -240,7 +240,7 @@ Mã thoát của lệnh chính là mã thoát của `ssh`.
 Lưu ý:
 
 - Tài khoản của bạn mở được tối đa 5 phiên SSH cùng lúc (tính chung cho mọi người trong tài khoản). Một phiên không có hoạt động trong 30 phút sẽ bị đóng.
-- Ngay sau khi VM vừa khởi động xong, một phiên có thể kết thúc gần như ngay lập tức. Nếu gặp vậy, chờ một chút rồi thử lại.
+- Ngay sau khi VM bật, `vm ssh` có thể báo lỗi `VM_AGENT_NOT_READY` hoặc `VM_SSH_NOT_READY` trong vài phút (xem [mã lỗi](/vi/docs/concepts/error-codes/)) trong lúc VM khởi động xong. Nếu gặp vậy, chờ một chút rồi thử lại.
 - Nếu tên hoặc id không khớp VM nào của bạn, CLI in `no VM named "<name>" in your tenant: see your VMs on the portal`.
 - Nếu phiên bị từ chối vì lý do khác (ví dụ VM chưa ở trạng thái Running hoặc Ready), CLI in ra một lỗi. Hãy kiểm tra trạng thái VM trên portal rồi thử lại khi VM đã Running hoặc Ready.
 

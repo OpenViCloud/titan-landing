@@ -27,7 +27,7 @@ Loại key được chấp nhận: `ssh-ed25519`, `ecdsa-sha2-nistp256`, `ecdsa-
 
 ## Chọn key khi tạo VM
 
-Hộp thoại [Tạo VM](/vi/docs/guides/vm/) có nhóm ô đánh dấu **SSH key**. Chọn tối đa 10 key cho mỗi VM. Key đã chọn chỉ được cài đúng một lần, lúc VM khởi động lần đầu, vào `authorized_keys` của user `ubuntu`. Bạn không thêm được key vào một VM đã tạo từ portal, và xoá một key không gỡ nó khỏi các VM đã có key đó — muốn gỡ thì xoá trong chính VM.
+Hộp thoại [Tạo VM](/vi/docs/guides/vm/) có nhóm ô đánh dấu **SSH key**. Chọn tối đa 10 key cho mỗi VM. Key đã chọn chỉ được cài đúng một lần, sớm trong lần khởi động đầu của VM, vào `/etc/ssh/openvicloud/ubuntu` — file mà SSH server của VM đọc cho user `ubuntu`, cạnh `~/.ssh/authorized_keys`. Bạn không thêm được key vào một VM đã tạo từ portal, và xoá một key không gỡ nó khỏi các VM đã có key đó — muốn gỡ thì xoá dòng của nó trong `/etc/ssh/openvicloud/ubuntu` ngay trong VM (dùng `sudo`); lần khởi động sau nó không quay lại.
 
 Template duy nhất đang cho khách chọn hôm nay là **Ubuntu-22.04-Standard**.
 
@@ -39,7 +39,7 @@ Template duy nhất đang cho khách chọn hôm nay là **Ubuntu-22.04-Standard
 openvicloud vm ssh <tên hoặc id VM>
 ```
 
-Cách này dùng được trên mọi network — VM không cần địa chỉ công khai. Control plane chuyển tiếp phiên SSH. VM phải ở trạng thái `Running` hoặc `Ready`. Ngay sau khi VM khởi động, một phiên có thể kết thúc ngay; hãy thử lại sau ít phút.
+Cách này dùng được trên mọi network — VM không cần địa chỉ công khai. Control plane chuyển tiếp phiên SSH. VM phải ở trạng thái `Running` hoặc `Ready`. Ngay sau khi VM bật, `vm ssh` có thể báo lỗi `VM_AGENT_NOT_READY` hoặc `VM_SSH_NOT_READY` trong vài phút (xem [mã lỗi](/vi/docs/concepts/error-codes/)) trong lúc VM khởi động xong; hãy thử lại sau ít phút.
 
 Tối đa 5 phiên mỗi tài khoản được mở cùng lúc, và một phiên không hoạt động sẽ tự đóng sau 30 phút.
 
