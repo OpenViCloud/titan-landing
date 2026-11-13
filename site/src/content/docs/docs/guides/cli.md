@@ -240,7 +240,7 @@ The command's exit code is `ssh`'s own exit code.
 Notes:
 
 - Your account can have at most 5 SSH sessions open at the same time (shared across everyone on the account). A session that sits idle for 30 minutes is closed.
-- Right after a VM finishes booting, a session can end almost immediately. If that happens, wait a short while and try again.
+- Right after a VM starts, `vm ssh` may fail for a few minutes with `VM_AGENT_NOT_READY` or `VM_SSH_NOT_READY` (see [error codes](/docs/concepts/error-codes/)) while the VM finishes booting. If that happens, wait a short while and try again.
 - If the name or ID does not match one of your VMs, the CLI prints `no VM named "<name>" in your tenant: see your VMs on the portal`.
 - If the session is refused for another reason (for example the VM is not Running or Ready), the CLI prints an error. Check the VM's state on the portal and try again once it is Running or Ready.
 
