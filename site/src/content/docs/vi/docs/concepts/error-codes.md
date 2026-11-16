@@ -3,7 +3,7 @@ title: Mã lỗi
 description: Các mã lỗi bạn có thể gặp khi dùng portal hoặc API của OpenViCloud, ý nghĩa và cách xử lý.
 ---
 
-Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON có trường `code`, ví dụ `VM_QUOTA_EXCEEDED`. Bảng dưới liệt kê các mã bạn có thể gặp, nhóm theo chủ đề.
+Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON có trường `code`, ví dụ `VM_QUOTA_EXCEEDED`. Kết nối console bị từ chối sau khi đã mở thì bị đóng, với close code 4000 + mã HTTP (ví dụ 4422) và mã lỗi là lý do đóng; mã chỉ đến theo cách này có — ở cột HTTP. Bảng dưới liệt kê các mã bạn có thể gặp, nhóm theo chủ đề.
 
 ## Tài khoản và yêu cầu
 

@@ -3,7 +3,7 @@ title: Error codes
 description: The error codes you may see when using the OpenViCloud portal or API, what they mean and what to do.
 ---
 
-When a request is refused, OpenViCloud returns a JSON body with a `code` field, for example `VM_QUOTA_EXCEEDED`. The tables below list the codes you may see, grouped by topic.
+When a request is refused, OpenViCloud returns a JSON body with a `code` field, for example `VM_QUOTA_EXCEEDED`. A console connection refused after it has opened closes instead, with close code 4000 + the HTTP status (for example 4422) and the code as the close reason; codes that only arrive this way show — as their HTTP status. The tables below list the codes you may see, grouped by topic.
 
 ## Account and requests
 
@@ -45,7 +45,7 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `VM_SESSION_LIMIT_REACHED` | 422 | Your account already has 5 SSH or console sessions open. | Close one, then try again. |
 | `VM_CONSOLE_BUSY` | — | Another console session is already open on this VM. A VM has one console at a time. This code comes only as the reason the console connection closes with (close code 4422), not in a JSON body. | Close the other session, then connect again. |
 | `VM_CONSOLE_UNAVAILABLE` | — | The VM's console could not be attached, or it ended as it opened. This code comes only as the reason the console connection closes with (close code 4422), not in a JSON body. | Try again later. If it keeps happening, log in over SSH instead. |
-| `CONSOLE_TICKET_INVALID` | 401 | A console connection came with a ticket that is missing, malformed, never issued, already used, older than 30 seconds, or for another VM, or got by someone no longer in your account. The portal shows this as "The session could not open." | Connect again: each connection gets a new ticket. |
+| `CONSOLE_TICKET_INVALID` | 401 | A console connection came with a ticket that is missing, malformed, never issued, already used, older than 30 seconds, for another VM, or got by someone no longer in your account. The portal shows this as "The session could not open." | Connect again: each connection gets a new ticket. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | You tried to delete a VM that a load balancer not yet deleted still sends traffic to. | Remove the VM from the load balancer first. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | The VM already has the maximum number of snapshots. | Delete some of that VM's snapshots. |
 | `VM_SNAPSHOT_NOT_FOUND` | 404 | The snapshot does not exist, or does not belong to this VM. | Reload the snapshot list. |

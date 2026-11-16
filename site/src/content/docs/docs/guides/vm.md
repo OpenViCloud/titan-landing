@@ -52,7 +52,7 @@ Click **Manage** on the VM's row, then open the **Console** tab. It shows the VM
 - The tab does not connect by itself: click **Connect**. Each console session counts toward the 5 SSH or console sessions your account can have open at once.
 - Log in as `ubuntu` with the console password set when the VM was created. The **Create VM** dialog has no field for it yet, so a VM created in the portal has no console password and cannot be logged in to here with a password (see [known limitations](/docs/known-limitations/)). Creating a VM through the API takes an optional `consolePassword`, 12 to 72 characters.
 - The console opens only while the VM is Running or Ready, with no stop, delete or snapshot waiting. A VM has one console at a time: a second one is refused with "Another console session is open on this VM. Close it, then connect again."
-- **Disconnect**, or leaving the tab, ends the session. A session with no activity for 30 minutes is closed. When a session ends while you stay on the tab, the tab keeps what it showed, and offers **Reconnect** while the VM still runs.
+- **Disconnect**, or leaving the tab, ends the session. A session with no activity for 30 minutes is closed. When a session ends while you stay on the tab, the tab keeps what it showed, and offers **Reconnect** while the VM runs.
 
 ## Stop, Start and Resume
 

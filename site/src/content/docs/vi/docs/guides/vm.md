@@ -52,7 +52,7 @@ Bấm **Quản lý** trên hàng của VM, rồi mở tab **Console**. Tab này 
 - Tab không tự kết nối: hãy bấm **Kết nối**. Mỗi phiên console tính vào 5 phiên SSH hoặc console mà tài khoản của bạn được mở cùng lúc.
 - Đăng nhập bằng user `ubuntu` và mật khẩu console đặt lúc tạo VM. Hộp thoại **Tạo VM** chưa có ô nhập mật khẩu này, nên VM tạo trên portal không có mật khẩu console và không đăng nhập bằng mật khẩu ở đây được (xem [giới hạn hiện tại](/vi/docs/known-limitations/)). Tạo VM qua API nhận `consolePassword` tuỳ chọn, từ 12 đến 72 ký tự.
 - Console chỉ mở được khi VM ở trạng thái Running hoặc Ready và không có lệnh tắt, xoá hay snapshot nào đang chờ. Mỗi VM chỉ có một console tại một thời điểm: phiên thứ hai bị từ chối với câu "VM này đang có một phiên console khác. Đóng phiên đó rồi kết nối lại."
-- **Ngắt kết nối**, hoặc rời tab, sẽ kết thúc phiên. Phiên không có hoạt động trong 30 phút sẽ bị đóng. Khi phiên kết thúc trong lúc bạn vẫn ở tab, tab giữ lại những gì đã hiện, và có nút **Kết nối lại** khi VM vẫn chạy.
+- **Ngắt kết nối**, hoặc rời tab, sẽ kết thúc phiên. Phiên không có hoạt động trong 30 phút sẽ bị đóng. Khi phiên kết thúc trong lúc bạn vẫn ở tab, tab giữ lại những gì đã hiện, và có nút **Kết nối lại** khi VM đang chạy.
 
 ## Stop, Start và Resume
 
