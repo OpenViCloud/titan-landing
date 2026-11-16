@@ -11,9 +11,9 @@ Your VM gets an IPv4 address in the [network](/docs/guides/network/) it is attac
 
 A VM reaches the Internet only over IPv6, and only on a network created with public IPv6 enabled. See [public IPv6](/docs/guides/public-ipv6/) for how to create one.
 
-## No SSH button or console in the portal
+## No SSH button or console password in the portal
 
-The portal itself has no button to open a shell and no web console for VMs. To log in to a VM, use the CLI or connect directly over SSH — see [SSH keys and logging in](/docs/guides/ssh-keys/). The **Create VM** dialog has no field for a password or a cloud-init script; SSH keys can only be picked when you create the VM, not added to an existing one from the portal.
+The portal has no button to open an SSH session. To log in to a VM, use the CLI or connect directly over SSH — see [SSH keys and logging in](/docs/guides/ssh-keys/). The VM's **Console** tab opens its serial console, but the **Create VM** dialog has no field for a console password or a cloud-init script, so a VM created in the portal cannot be logged in to on the console with a password — see [the VM console](/docs/guides/vm/#open-the-vms-console). SSH keys can only be picked when you create the VM, not added to an existing one from the portal.
 
 ## Firewall rules do not block extra traffic yet
 

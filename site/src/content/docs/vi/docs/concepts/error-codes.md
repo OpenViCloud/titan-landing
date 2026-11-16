@@ -3,7 +3,7 @@ title: Mã lỗi
 description: Các mã lỗi bạn có thể gặp khi dùng portal hoặc API của OpenViCloud, ý nghĩa và cách xử lý.
 ---
 
-Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON có trường `code`, ví dụ `VM_QUOTA_EXCEEDED`. Bảng dưới liệt kê các mã bạn có thể gặp, nhóm theo chủ đề.
+Khi một yêu cầu bị từ chối, OpenViCloud trả về nội dung JSON có trường `code`, ví dụ `VM_QUOTA_EXCEEDED`. Kết nối console bị từ chối sau khi đã mở thì bị đóng, với close code 4000 + mã HTTP (ví dụ 4422) và mã lỗi là lý do đóng; mã chỉ đến theo cách này có — ở cột HTTP. Bảng dưới liệt kê các mã bạn có thể gặp, nhóm theo chủ đề.
 
 ## Tài khoản và yêu cầu
 
@@ -32,17 +32,20 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `TEMPLATE_NOT_SYNCED` | 422 | Template chưa có ở cluster của VM. | Chọn template khác trong danh sách của cluster đó. |
 | `TEMPLATE_UNAVAILABLE` | 422 | Template tạm thời không dùng được ở cluster này. | Chọn template khác, hoặc thử lại sau. |
 
-## VM, snapshot VM và phiên SSH
+## VM, snapshot VM, phiên SSH và console
 
 | Mã | HTTP | Ý nghĩa | Bạn nên làm gì |
 |----|------|---------|----------------|
 | `VM_QUOTA_EXCEEDED` | 422 | Bạn đã dùng hết số VM được phép. | Xoá bớt VM, xem [giới hạn](/vi/docs/concepts/quotas/). |
 | `VM_NAME_TAKEN` | 409 | Bạn đã có một VM khác cùng tên. | Chọn tên khác. |
 | `VM_NOT_FOUND` | 404 | VM không tồn tại, hoặc không thuộc tài khoản của bạn. | Tải lại danh sách VM. |
-| `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH tới một VM không ở trạng thái Running hoặc Ready, và khi bạn bật, tắt, xoá, tạo snapshot, quay về snapshot hay gắn volume cho một VM trong lúc một snapshot của nó đang được tạo hoặc đang quay về. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
+| `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH hay console tới một VM không ở trạng thái Running hoặc Ready, hoặc đang có lệnh tắt, xoá hay snapshot chờ, và khi bạn bật, tắt, xoá, tạo snapshot, quay về snapshot hay gắn volume cho một VM trong lúc một snapshot của nó đang được tạo hoặc đang quay về. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
 | `VM_AGENT_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM còn đang khởi động. | Chờ một phút rồi thử lại. |
 | `VM_SSH_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM đã chạy nhưng chưa có SSH server nào sẵn sàng nhận kết nối ở cổng 22: VM còn đang khởi động, hoặc SSH server trong VM đã bị tắt. | Chờ một hai phút rồi thử lại. Nếu vẫn gặp, kiểm tra SSH server trong VM có đang chạy không. |
-| `VM_SESSION_LIMIT_REACHED` | 422 | Tài khoản của bạn đã mở đủ 5 phiên SSH. | Đóng bớt một phiên rồi thử lại. |
+| `VM_SESSION_LIMIT_REACHED` | 422 | Tài khoản của bạn đã mở đủ 5 phiên SSH hoặc console. | Đóng bớt một phiên rồi thử lại. |
+| `VM_CONSOLE_BUSY` | — | VM này đã có một phiên console khác đang mở. Mỗi VM chỉ có một console tại một thời điểm. Mã này chỉ đến dưới dạng lý do đóng kết nối console (close code 4422), không trong body JSON. | Đóng phiên kia rồi kết nối lại. |
+| `VM_CONSOLE_UNAVAILABLE` | — | Không gắn được console của VM, hoặc console kết thúc ngay khi vừa mở. Mã này chỉ đến dưới dạng lý do đóng kết nối console (close code 4422), không trong body JSON. | Thử lại sau. Nếu vẫn gặp, đăng nhập bằng SSH. |
+| `CONSOLE_TICKET_INVALID` | 401 | Một lần kết nối console mang vé bị thiếu, sai dạng, chưa từng được cấp, đã dùng, quá 30 giây, của VM khác, hoặc do người không còn trong tài khoản của bạn lấy. Portal hiện lỗi này là "Phiên không mở được." | Kết nối lại: mỗi lần kết nối có vé mới. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | Bạn xoá một VM mà một load balancer chưa xoá vẫn đang gửi traffic tới. | Gỡ VM khỏi load balancer trước. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | VM đã có đủ số snapshot tối đa. | Xoá bớt snapshot của VM đó. |
 | `VM_SNAPSHOT_NOT_FOUND` | 404 | Snapshot không tồn tại, hoặc không thuộc VM này. | Tải lại danh sách snapshot. |

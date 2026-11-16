@@ -59,4 +59,4 @@ ssh ubuntu@<the VM's Public IPv6 address>
 
 This only works for a VM on a network with public IPv6 enabled (see [public IPv6](/docs/guides/public-ipv6/)). On such a network, every port of the VM is open to the Internet, and firewall rules created from the portal cannot close any port yet — see [known limitations](/docs/known-limitations/) and [firewall rules](/docs/guides/firewall/).
 
-The portal itself has no button to open a shell and no web console.
+The portal itself has no button to open an SSH session. Its **Console** tab opens the VM's serial console instead — see [the VM console](/docs/guides/vm/#open-the-vms-console).

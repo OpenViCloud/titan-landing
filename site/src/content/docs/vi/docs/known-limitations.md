@@ -11,9 +11,9 @@ VM của bạn nhận một địa chỉ IPv4 trong [network](/vi/docs/guides/ne
 
 VM chỉ ra được Internet qua IPv6, và chỉ trên network được tạo có bật IPv6 công khai. Xem [IPv6 công khai](/vi/docs/guides/public-ipv6/) để biết cách tạo.
 
-## Portal chưa có nút SSH hay console
+## Portal chưa có nút SSH hay mật khẩu console
 
-Bản thân portal không có nút mở shell và không có console web cho VM. Để đăng nhập vào VM, hãy dùng CLI hoặc kết nối SSH trực tiếp — xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/). Hộp thoại **Tạo VM** không có ô nhập mật khẩu hay script cloud-init; SSH key chỉ chọn được lúc tạo VM, không thêm được vào VM đã có từ portal.
+Portal không có nút mở phiên SSH. Để đăng nhập vào VM, hãy dùng CLI hoặc kết nối SSH trực tiếp — xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/). Tab **Console** của VM mở console serial của nó, nhưng hộp thoại **Tạo VM** không có ô nhập mật khẩu console hay script cloud-init, nên VM tạo trên portal không đăng nhập bằng mật khẩu trên console được — xem [console của VM](/vi/docs/guides/vm/#mở-console-của-vm). SSH key chỉ chọn được lúc tạo VM, không thêm được vào VM đã có từ portal.
 
 ## Rule firewall chưa chặn thêm traffic
 
