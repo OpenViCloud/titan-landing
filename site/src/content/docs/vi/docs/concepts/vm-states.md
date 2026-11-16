@@ -41,14 +41,14 @@ Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`
 | **Tiếp tục** | `Frozen` (nút **Bật** đổi tên thành **Tiếp tục**) |
 | Tạo snapshot | `Running`, `Ready`, `Stopped`, `Frozen` |
 | Gắn volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
-| Phiên SSH ([đăng nhập vào VM](/vi/docs/guides/ssh-keys/)) | `Running` hoặc `Ready` |
+| Phiên SSH ([đăng nhập vào VM](/vi/docs/guides/ssh-keys/)) hoặc phiên console ([console của VM](/vi/docs/guides/vm/#mở-console-của-vm)) | `Running` hoặc `Ready` |
 | **Xoá** | Mọi trạng thái, trừ `Creating`, `Deleting` và `Snapshotting` |
 
 Một số lưu ý:
 
 - Nút **Tắt** tắt VM ngay lập tức, giống như rút điện. Hãy tắt các ứng dụng quan trọng bên trong VM trước khi bấm.
 - Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping`, `Deleting` hoặc `Snapshotting`, hoặc khi VM ở `Error`. Bạn không tạo snapshot được khi VM đang `Starting`; chờ VM bật xong.
-- Khi một snapshot của VM đang được tạo hoặc đang quay về, VM hiện `Snapshotting`. Bạn không bật, tắt, xoá hay mở phiên SSH tới VM được cho tới khi snapshot xong.
+- Khi một snapshot của VM đang được tạo hoặc đang quay về, VM hiện `Snapshotting`. Bạn không bật, tắt, xoá hay mở phiên SSH hoặc console tới VM được cho tới khi snapshot xong.
 - Khi VM đang `Creating`, nút **Xoá** bị tắt. Chờ VM rời `Creating` rồi hãy xoá.
 - Nếu bạn bấm Tắt, Bật hoặc Tiếp tục ở trạng thái không hợp lệ, portal báo *VM không ở trạng thái phù hợp cho thao tác này* (mã lỗi `VM_INVALID_STATUS`).
 

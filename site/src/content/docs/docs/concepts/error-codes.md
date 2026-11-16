@@ -43,9 +43,9 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `VM_AGENT_NOT_READY` | 422 | You opened an SSH session while the VM is still starting. | Wait a minute and try again. |
 | `VM_SSH_NOT_READY` | 422 | You opened an SSH session while the VM is running but no SSH server is listening on port 22 yet: the VM is still booting, or its SSH server is stopped. | Wait a minute or two and try again. If it keeps happening, check that the SSH server inside the VM is running. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Your account already has 5 SSH or console sessions open. | Close one, then try again. |
-| `VM_CONSOLE_BUSY` | 422 | Another console session is already open on this VM. A VM has one console at a time. | Close the other session, then connect again. |
-| `VM_CONSOLE_UNAVAILABLE` | 422 | The VM's console could not be attached, or it ended as it opened. | Try again later. If it keeps happening, log in over SSH instead. |
-| `CONSOLE_TICKET_INVALID` | 401 | A console connection came with a ticket that is missing, malformed, already used, older than 30 seconds, or for another VM. The portal shows this as "The session could not open." | Connect again: each connection gets a new ticket. |
+| `VM_CONSOLE_BUSY` | — | Another console session is already open on this VM. A VM has one console at a time. This code comes only as the reason the console connection closes with (close code 4422), not in a JSON body. | Close the other session, then connect again. |
+| `VM_CONSOLE_UNAVAILABLE` | — | The VM's console could not be attached, or it ended as it opened. This code comes only as the reason the console connection closes with (close code 4422), not in a JSON body. | Try again later. If it keeps happening, log in over SSH instead. |
+| `CONSOLE_TICKET_INVALID` | 401 | A console connection came with a ticket that is missing, malformed, never issued, already used, older than 30 seconds, or for another VM, or got by someone no longer in your account. The portal shows this as "The session could not open." | Connect again: each connection gets a new ticket. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | You tried to delete a VM that a load balancer not yet deleted still sends traffic to. | Remove the VM from the load balancer first. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | The VM already has the maximum number of snapshots. | Delete some of that VM's snapshots. |
 | `VM_SNAPSHOT_NOT_FOUND` | 404 | The snapshot does not exist, or does not belong to this VM. | Reload the snapshot list. |

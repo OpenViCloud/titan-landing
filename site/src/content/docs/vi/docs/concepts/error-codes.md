@@ -43,9 +43,9 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `VM_AGENT_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM còn đang khởi động. | Chờ một phút rồi thử lại. |
 | `VM_SSH_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM đã chạy nhưng chưa có SSH server nào sẵn sàng nhận kết nối ở cổng 22: VM còn đang khởi động, hoặc SSH server trong VM đã bị tắt. | Chờ một hai phút rồi thử lại. Nếu vẫn gặp, kiểm tra SSH server trong VM có đang chạy không. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Tài khoản của bạn đã mở đủ 5 phiên SSH hoặc console. | Đóng bớt một phiên rồi thử lại. |
-| `VM_CONSOLE_BUSY` | 422 | VM này đã có một phiên console khác đang mở. Mỗi VM chỉ có một console tại một thời điểm. | Đóng phiên kia rồi kết nối lại. |
-| `VM_CONSOLE_UNAVAILABLE` | 422 | Không gắn được console của VM, hoặc console kết thúc ngay khi vừa mở. | Thử lại sau. Nếu vẫn gặp, đăng nhập bằng SSH. |
-| `CONSOLE_TICKET_INVALID` | 401 | Một lần kết nối console mang vé bị thiếu, sai dạng, đã dùng, quá 30 giây, hoặc của VM khác. Portal hiện lỗi này là "Phiên không mở được." | Kết nối lại: mỗi lần kết nối có vé mới. |
+| `VM_CONSOLE_BUSY` | — | VM này đã có một phiên console khác đang mở. Mỗi VM chỉ có một console tại một thời điểm. Mã này chỉ đến dưới dạng lý do đóng kết nối console (close code 4422), không trong body JSON. | Đóng phiên kia rồi kết nối lại. |
+| `VM_CONSOLE_UNAVAILABLE` | — | Không gắn được console của VM, hoặc console kết thúc ngay khi vừa mở. Mã này chỉ đến dưới dạng lý do đóng kết nối console (close code 4422), không trong body JSON. | Thử lại sau. Nếu vẫn gặp, đăng nhập bằng SSH. |
+| `CONSOLE_TICKET_INVALID` | 401 | Một lần kết nối console mang vé bị thiếu, sai dạng, chưa từng được cấp, đã dùng, quá 30 giây, của VM khác, hoặc do người không còn trong tài khoản của bạn lấy. Portal hiện lỗi này là "Phiên không mở được." | Kết nối lại: mỗi lần kết nối có vé mới. |
 | `VM_IS_LOAD_BALANCER_BACKEND` | 422 | Bạn xoá một VM mà một load balancer chưa xoá vẫn đang gửi traffic tới. | Gỡ VM khỏi load balancer trước. |
 | `VM_SNAPSHOT_QUOTA_EXCEEDED` | 422 | VM đã có đủ số snapshot tối đa. | Xoá bớt snapshot của VM đó. |
 | `VM_SNAPSHOT_NOT_FOUND` | 404 | Snapshot không tồn tại, hoặc không thuộc VM này. | Tải lại danh sách snapshot. |
