@@ -59,4 +59,4 @@ ssh ubuntu@<địa chỉ Public IPv6 của VM>
 
 Cách này chỉ dùng được với VM trên network có bật IPv6 công khai (xem [IPv6 công khai](/vi/docs/guides/public-ipv6/)). Trên network như vậy, mọi cổng của VM đều mở ra Internet, và rule firewall tạo từ portal hiện chưa chặn được cổng nào — xem [giới hạn hiện tại](/vi/docs/known-limitations/) và [rule firewall](/vi/docs/guides/firewall/).
 
-Bản thân portal không có nút mở shell và không có console web.
+Bản thân portal không có nút mở phiên SSH. Tab **Console** của nó mở console serial của VM — xem [console của VM](/vi/docs/guides/vm/#mở-console-của-vm).

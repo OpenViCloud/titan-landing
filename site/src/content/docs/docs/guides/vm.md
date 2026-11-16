@@ -43,7 +43,16 @@ A VM you have clicked delete on no longer counts toward the VM limit.
 
 ## Log in to a VM
 
-See [SSH keys and logging in](/docs/guides/ssh-keys/) — add a key, pick it when you create a VM, then use the CLI or a direct SSH connection.
+See [SSH keys and logging in](/docs/guides/ssh-keys/) — add a key, pick it when you create a VM, then use the CLI or a direct SSH connection. To see the VM's own screen, open its [console](#open-the-vms-console).
+
+## Open the VM's console
+
+Click **Manage** on the VM's row, then open the **Console** tab. It shows the VM's serial console: what a screen plugged into the VM would show, with its boot messages and a login prompt. Use it when you cannot reach the VM over SSH, for example after a mistake in its network or SSH settings.
+
+- The tab does not connect by itself: click **Connect**. Each console session counts toward the 5 SSH or console sessions your account can have open at once.
+- Log in as `ubuntu` with the console password set when the VM was created. The **Create VM** dialog has no field for it yet, so a VM created in the portal has no console password and cannot be logged in to here with a password (see [known limitations](/docs/known-limitations/)). Creating a VM through the API takes an optional `consolePassword`, 12 to 72 characters.
+- The console opens only while the VM is Running or Ready, with no stop, delete or snapshot waiting. A VM has one console at a time: a second one is refused with "Another console session is open on this VM."
+- **Disconnect**, or leaving the tab, ends the session. A session with no activity for 30 minutes is closed. After a session ends, the tab keeps what it showed and offers **Reconnect**.
 
 ## Stop, Start and Resume
 
