@@ -3,7 +3,7 @@ title: OpenViCloud documentation
 description: How to use OpenViCloud — virtual machines, networks, volumes, public IPv6, load balancers, the wallet and invoices.
 ---
 
-OpenViCloud lets you create virtual machines (VMs), private networks and volumes, billed by the hour in VND. You do everything in the portal after you sign in. The [command-line tool](/docs/guides/cli/) also creates and manages VMs and SSH keys, and logs you in to your VMs over SSH.
+OpenViCloud lets you create virtual machines (VMs), private networks and volumes, billed by the hour. You do everything in the portal after you sign in. The [command-line tool](/docs/guides/cli/) also creates and manages VMs and SSH keys, and logs you in to your VMs over SSH.
 
 Read the [known limitations](/docs/known-limitations/) before you start.
 
