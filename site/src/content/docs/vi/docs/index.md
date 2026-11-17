@@ -3,7 +3,7 @@ title: Tài liệu OpenViCloud
 description: Hướng dẫn dùng OpenViCloud — máy chủ ảo, network, volume, IPv6 công khai, load balancer, ví và hoá đơn.
 ---
 
-OpenViCloud cho bạn tạo máy chủ ảo (VM), network riêng và volume, tính tiền theo giờ bằng VND. Mọi thao tác làm trong portal sau khi đăng nhập. [Công cụ dòng lệnh](/vi/docs/guides/cli/) cũng tạo và quản lý VM và SSH key, và đưa bạn vào VM qua SSH.
+OpenViCloud cho bạn tạo máy chủ ảo (VM), network riêng và volume, tính tiền theo giờ. Mọi thao tác làm trong portal sau khi đăng nhập. [Công cụ dòng lệnh](/vi/docs/guides/cli/) cũng tạo và quản lý VM và SSH key, và đưa bạn vào VM qua SSH.
 
 Đọc [giới hạn hiện tại](/vi/docs/known-limitations/) trước khi bắt đầu.
 

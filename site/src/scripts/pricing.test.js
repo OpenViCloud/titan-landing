@@ -3,22 +3,22 @@ import assert from 'node:assert/strict';
 import { vmRows, volumeRows, startingPrice } from './pricing.js';
 
 const seedVm = [
-  { id: 's', name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 161.388 },
-  { id: 'xl', name: 'Extra Large', vcpu: 8, memoryMb: 16384, pricePerHour: 1268.1 },
+  { id: 's', name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 170 },
+  { id: 'xl', name: 'Extra Large', vcpu: 8, memoryMb: 16384, pricePerHour: 1280 },
 ];
 
-test('vm rows keep every decimal and read in vi-VN', () => {
+test('vm rows read in vi-VN', () => {
   const rows = vmRows(seedVm, 'vi');
   assert.deepEqual(rows[0], {
     id: 's',
     name: 'Small',
     vcpu: '1',
     memory: '2 GB',
-    price: '161,388 ₫/giờ',
-    monthly: '≈ 117.813 ₫/tháng',
+    price: '170 ₫/giờ',
+    monthly: '≈ 124.100 ₫/tháng',
     featured: false,
   });
-  assert.equal(rows[1].price, '1.268,1 ₫/giờ');
+  assert.equal(rows[1].price, '1.280 ₫/giờ');
   assert.equal(rows[1].memory, '16 GB');
 });
 
@@ -29,26 +29,34 @@ test('vm rows read in English with English separators and units', () => {
     name: 'Small',
     vcpu: '1',
     memory: '2 GB',
-    price: '161.388 ₫/hour',
-    monthly: '≈ 117,813 ₫/month',
+    price: '170 ₫/hour',
+    monthly: '≈ 124,100 ₫/month',
     featured: false,
   });
-  assert.equal(rows[1].price, '1,268.1 ₫/hour');
-  assert.equal(rows[1].monthly, '≈ 925,713 ₫/month');
+  assert.equal(rows[1].price, '1,280 ₫/hour');
+  assert.equal(rows[1].monthly, '≈ 934,400 ₫/month');
+});
+
+// The price is the one the meter charges, so a fractional price from the API is printed in full, never rounded
+// (titan-ops features/public-site/design.md#live-pricing).
+test('a fractional price is printed with every decimal the API sends', () => {
+  const rows = vmRows([{ id: 's', name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 161.388 }], 'vi');
+  assert.equal(rows[0].price, '161,388 ₫/giờ');
+  assert.equal(vmRows([{ id: 's', name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 161.388 }], 'en')[0].price, '161.388 ₫/hour');
 });
 
 test('volume rows read in English', () => {
-  const rows = volumeRows([{ id: 'standard', name: 'Standard', pricePerGbPerHour: 1.57914 }], 'en');
-  assert.deepEqual(rows, [{ name: 'Standard', price: '1.57914 ₫/GB/hour', monthly: '≈ 1,153 ₫/GB/month' }]);
+  const rows = volumeRows([{ id: 'standard', name: 'Standard', pricePerGbPerHour: 2 }], 'en');
+  assert.deepEqual(rows, [{ name: 'Standard', price: '2 ₫/GB/hour', monthly: '≈ 1,460 ₫/GB/month' }]);
 });
 
 test('an unknown language reads as English', () => {
-  assert.equal(vmRows(seedVm, 'fr')[0].price, '161.388 ₫/hour');
+  assert.equal(vmRows(seedVm, 'fr')[0].price, '170 ₫/hour');
 });
 
 test('volume rows show the price per GB per hour', () => {
-  const rows = volumeRows([{ id: 'standard', name: 'Standard', pricePerGbPerHour: 1.57914 }], 'vi');
-  assert.deepEqual(rows, [{ name: 'Standard', price: '1,57914 ₫/GB/giờ', monthly: '≈ 1.153 ₫/GB/tháng' }]);
+  const rows = volumeRows([{ id: 'standard', name: 'Standard', pricePerGbPerHour: 2 }], 'vi');
+  assert.deepEqual(rows, [{ name: 'Standard', price: '2 ₫/GB/giờ', monthly: '≈ 1.460 ₫/GB/tháng' }]);
 });
 
 // Every input the page can't trust must give null (fallback sentence), never a row with 0 or NaN.
@@ -57,12 +65,12 @@ const untrusted = [
   ['empty list', []],
   ['zero price', [{ ...seedVm[0], pricePerHour: 0 }]],
   ['negative price', [{ ...seedVm[0], pricePerHour: -1 }]],
-  ['price as string', [{ ...seedVm[0], pricePerHour: '161.388' }]],
+  ['price as string', [{ ...seedVm[0], pricePerHour: '170' }]],
   ['missing price', [{ id: 's', name: 'Small', vcpu: 1, memoryMb: 2048 }]],
   ['NaN price', [{ ...seedVm[0], pricePerHour: Number.NaN }]],
   ['null row', [null]],
   ['one bad row among good ones', [seedVm[0], { ...seedVm[1], pricePerHour: 0 }]],
-  ['missing id', [{ name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 161.388 }]],
+  ['missing id', [{ name: 'Small', vcpu: 1, memoryMb: 2048, pricePerHour: 170 }]],
   ['empty id', [{ ...seedVm[0], id: '' }]],
 ];
 
@@ -83,7 +91,7 @@ test('monthly estimate rounds half a dong up on the decimal value', () => {
 });
 
 test('monthly estimate keeps thousands separators for large prices', () => {
-  assert.equal(vmRows(seedVm, 'vi')[1].monthly, '≈ 925.713 ₫/tháng');
+  assert.equal(vmRows(seedVm, 'vi')[1].monthly, '≈ 934.400 ₫/tháng');
 });
 
 test('no monthly line when the estimate rounds to zero', () => {
@@ -93,7 +101,7 @@ test('no monthly line when the estimate rounds to zero', () => {
 });
 
 test('only tier m is featured', () => {
-  const rows = vmRows([...seedVm, { id: 'm', name: 'Medium', vcpu: 2, memoryMb: 4096, pricePerHour: 311.256 }], 'en');
+  const rows = vmRows([...seedVm, { id: 'm', name: 'Medium', vcpu: 2, memoryMb: 4096, pricePerHour: 320 }], 'en');
   assert.deepEqual(rows.map((row) => [row.id, row.featured]), [['s', false], ['xl', false], ['m', true]]);
 });
 
@@ -104,8 +112,8 @@ test('without tier m no card is featured and the others still show', () => {
 });
 
 test('starting price is the cheapest hourly price', () => {
-  assert.equal(startingPrice([seedVm[1], seedVm[0]], 'vi'), '161,388 ₫');
-  assert.equal(startingPrice([seedVm[1], seedVm[0]], 'en'), '161.388 ₫');
+  assert.equal(startingPrice([seedVm[1], seedVm[0]], 'vi'), '170 ₫');
+  assert.equal(startingPrice([seedVm[1], seedVm[0]], 'en'), '170 ₫');
 });
 
 test('starting price is null when the data cannot be trusted', () => {

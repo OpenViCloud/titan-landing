@@ -2,7 +2,7 @@
 // Returns null whenever the data can't be trusted, so the page shows the fallback sentence
 // instead of "0 ₫", an empty cell or NaN.
 
-// Numbers follow the page language: 161.388 ₫/hour in English, 161,388 ₫/giờ in Vietnamese. Keep every decimal
+// Numbers follow the page language: 1,280 ₫/hour in English, 1.280 ₫/giờ in Vietnamese. Keep every decimal
 // the API sends: rounding here would print a price the meter never charges.
 const FORMATS = {
   en: {
