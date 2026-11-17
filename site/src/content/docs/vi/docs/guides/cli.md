@@ -216,7 +216,7 @@ Các lệnh VM khác nhận tên hoặc ID của VM:
 
 - `openvicloud vm list` — các VM của bạn (trừ VM đã xoá): tên, ID, cluster, trạng thái, địa chỉ IPv4.
 - `openvicloud vm get <vm>` — chi tiết một VM, kể cả lý do nếu tạo VM thất bại.
-- `openvicloud vm stop <vm>` / `vm start <vm>` — dừng một VM, hoặc bật VM đã dừng (`start` cũng tiếp tục một VM Frozen). VM đã dừng không bị tính tiền máy.
+- `openvicloud vm stop <vm>` / `vm start <vm>` — dừng một VM, hoặc bật VM đã dừng (`start` cũng tiếp tục một VM Frozen). VM đã dừng không bị tính tiền máy. CLI chưa đặt hay xem được thời gian dừng; hãy dùng portal. `stop` tắt VM như nút Tắt của portal, chờ tối đa [thời gian dừng](/vi/docs/guides/vm/#stop-start-và-resume) của VM.
 - `openvicloud vm rename <vm> <tên mới>`
 - `openvicloud vm delete <vm>` — hỏi bạn gõ `y` trước khi xoá VM và đĩa của nó; `--yes` bỏ qua câu hỏi.
 
@@ -225,6 +225,7 @@ Các lệnh VM khác nhận tên hoặc ID của VM:
 - `create` và `start` thành công khi VM Running hoặc Ready, `stop` khi VM Stopped, `delete` khi VM đã xoá.
 - Yêu cầu kết thúc kiểu khác — tạo thất bại, hoặc VM ở trạng thái khác — lệnh in lý do và kết thúc với mã thoát 1.
 - Hết thời gian chờ, lệnh nói VM còn ở trạng thái nào và kết thúc với mã thoát 1; `openvicloud vm get <vm>` cho bạn xem VM đi tiếp ra sao.
+- Với `stop --wait`, đặt `--timeout` dài hơn thời gian dừng của VM, ví dụ `--timeout 35m` cho thời gian dừng 30 phút.
 
 Không có `--wait`, lệnh trả về ngay khi yêu cầu được nhận. Ý nghĩa từng trạng thái ở [trạng thái VM](/vi/docs/concepts/vm-states/).
 

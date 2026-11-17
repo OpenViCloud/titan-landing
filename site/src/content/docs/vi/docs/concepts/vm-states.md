@@ -26,7 +26,7 @@ Khi bạn vừa bấm một nút, VM hiện trạng thái đang chuyển cho t�
 |--------|----------|
 | `Creating` | VM đang được tạo. |
 | `Starting` | VM đang được bật. |
-| `Stopping` | VM đang được tắt. |
+| `Stopping` | VM đang được tắt: hệ điều hành đang tự tắt, hoặc VM bị ngắt nguồn khi hết thời gian dừng. |
 | `Deleting` | VM đang được xoá. |
 | `Snapshotting` | Một snapshot của VM đang được tạo hoặc đang quay về. |
 
@@ -46,7 +46,7 @@ Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`
 
 Một số lưu ý:
 
-- Nút **Tắt** tắt VM ngay lập tức, giống như rút điện. Hãy tắt các ứng dụng quan trọng bên trong VM trước khi bấm.
+- Nút **Tắt** yêu cầu hệ điều hành của VM tự tắt và chờ tối đa thời gian dừng của VM (mặc định 120 giây, từ 30 đến 1800); hết thời gian đó mà VM chưa tắt thì mới bị ngắt nguồn, giống như rút điện. VM ở `Error` bị ngắt nguồn ngay. Chi tiết ở [hướng dẫn VM](/vi/docs/guides/vm/#stop-start-và-resume).
 - Bạn không tạo snapshot hay gắn volume được khi VM đang `Stopping`, `Deleting` hoặc `Snapshotting`, hoặc khi VM ở `Error`. Bạn không tạo snapshot được khi VM đang `Starting`; chờ VM bật xong.
 - Khi một snapshot của VM đang được tạo hoặc đang quay về, VM hiện `Snapshotting`. Bạn không bật, tắt, xoá hay mở phiên SSH hoặc console tới VM được cho tới khi snapshot xong.
 - Khi VM đang `Creating`, nút **Xoá** bị tắt. Chờ VM rời `Creating` rồi hãy xoá.
@@ -58,6 +58,6 @@ Badge luôn hiện trạng thái VM đang ở. Ví dụ: nếu bạn tắt hệ 
 
 ## Trạng thái và chi phí
 
-VM ở `Running`, `Ready`, `Frozen` hoặc `Error` được tính phí theo giờ của size VM. VM ở `Stopped` thì không bị tính phí này. Tuy vậy, volume gắn vào VM và snapshot của VM vẫn được tính phí khi VM ở `Stopped`. Giá theo giờ của từng size VM xem ở [bảng giá](/vi/#pricing).
+VM ở `Running`, `Ready`, `Frozen` hoặc `Error` được tính phí theo giờ của size VM. VM ở `Stopping` vẫn bị tính cho tới khi dừng xong. VM ở `Stopped` thì không bị tính phí này. Tuy vậy, volume gắn vào VM và snapshot của VM vẫn được tính phí khi VM ở `Stopped`. Giá theo giờ của từng size VM xem ở [bảng giá](/vi/#pricing).
 
 Xem thêm: [Mã lỗi](/vi/docs/concepts/error-codes/) · [Giới hạn tài khoản](/vi/docs/concepts/quotas/)

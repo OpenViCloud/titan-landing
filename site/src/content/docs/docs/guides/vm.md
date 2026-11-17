@@ -19,9 +19,14 @@ Each VM needs a [network](/docs/guides/network/) in the same cluster. That netwo
 6. Choose a **Size**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) or Extra Large (8 vCPU, 16 GB).
 7. Under **SSH keys**, tick the keys to add to this VM. See [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first. Picked keys are added for the user `ubuntu`.
 8. Optionally, fill in **Console password**: 12 to 72 characters, to log in as `ubuntu` on the VM's [console](#open-the-vms-console). OpenViCloud keeps only a hash of it, so it cannot be shown again. A VM created without one has no console password.
-9. Click **Create VM**.
+9. Optionally, change **Stop timeout (seconds)**: how long a stop waits for the VM's operating system to shut down before its power is cut ([Stop](#stop-start-and-resume)). 30 to 1800 seconds, default 120. Give a VM that needs time to shut down cleanly, such as a database, a longer one.
+10. Click **Create VM**.
 
-Fill in every field above SSH keys. If **Cluster**, **Network**, **Template** or **Size** is still empty when you click **Create VM**, the portal shows "Choose a cluster, network, template and size." and sends nothing. A console password shorter than 12 or longer than 72 characters shows "The console password must be 12 to 72 characters." and sends nothing too.
+Fill in every field above SSH keys. When you click **Create VM**, the portal checks the name, then the rest in this order, shows only the first problem it finds, and sends nothing:
+
+- A console password shorter than 12 or longer than 72 characters: "The console password must be 12 to 72 characters."
+- A stop timeout that is not a whole number of seconds from 30 to 1800: "The stop timeout must be a whole number of seconds from 30 to 1800."
+- **Cluster**, **Network**, **Template** or **Size** still empty: "Choose a cluster, network, template and size."
 
 The new VM appears in the list with the state **Creating**. When the VM runs, the state changes to **Running** or **Ready**, and the **Private IPv4** field shows the VM's address in the network. The **Public IPv6** column shows the VM's address if its network has public IPv6, or "—" otherwise; on the VM's own page this field shows "Not enabled" instead when the network has no public IPv6. If creation fails, the state is **Failed** with a line explaining why.
 
@@ -57,18 +62,22 @@ Click **Manage** on the VM's row, then open the **Console** tab. It shows the VM
 
 ## Stop, Start and Resume
 
-- **Stop** is available when the VM is Running, Ready, Frozen or Error. Stop turns the VM off immediately, without waiting for the operating system to shut down, like pulling the plug. Save any unfinished work before you click it.
+- **Stop** is available when the VM is Running, Ready, Frozen or Error. Stop asks the VM's operating system to shut down, as a computer's power button does, and waits up to the VM's stop timeout (120 seconds unless you changed it). If the VM has not shut down by then, its power is cut, like pulling the plug, and work not yet saved inside the VM can be lost. A VM in Error cannot shut down cleanly, so Stop cuts its power at once.
 - **Start** is available when the VM is Stopped.
 - **Resume** replaces Start when the VM is Frozen. This button lets the VM continue running.
 
-While a command is running, the action cell shows **Creating…**, **Stopping…**, **Starting…**, **Deleting…** or **Snapshotting…**, and the Stop/Start buttons are hidden for the moment.
+While a command is running, the action cell shows **Creating…**, **Stopping…**, **Starting…**, **Deleting…** or **Snapshotting…**, and the Stop/Start buttons are hidden for the moment. A VM stays **Stopping** until its operating system has shut down, or until its stop timeout runs out and its power is cut.
+
+### Change the stop timeout
+
+On the VM's page, the **Overview** tab shows **Stop timeout**. Type a new number of seconds, 30 to 1800, and click **Save**; the portal shows "Stop timeout saved". The new value applies from the next stop: a stop already requested keeps the value it was requested with. A number outside 30 to 1800 shows "The stop timeout must be a whole number of seconds from 30 to 1800." The stop timeout of a deleted VM cannot be changed: "This VM is deleted — its stop timeout can no longer be changed." VMs created before stop timeouts existed have 120 seconds. Over the API the field is `stopTimeoutSeconds`, on `POST /v1/tenant/vms` and `PATCH /v1/tenant/vms/{vmId}`; a value outside 30 to 1800 returns `400 VALIDATION_ERROR`.
 
 ## Delete a VM
 
 1. Click **Delete** on the VM's row.
 2. Click **Confirm** in the "Delete *VM name*?" dialog.
 
-Deleting a VM also deletes all of its snapshots. Volumes attached to the VM are detached and kept; a volume is still billed until its deletion finishes ([volumes](/docs/guides/volume/)).
+Delete does not wait for the operating system: it cuts the VM's power, then deletes it. Deleting a VM also deletes all of its snapshots. Volumes attached to the VM are detached and kept; a volume is still billed until its deletion finishes ([volumes](/docs/guides/volume/)).
 
 You cannot delete a VM yet in three cases:
 
@@ -109,7 +118,7 @@ These numbers are for you to see only: they do not change your bill or your quot
 
 ## When a VM is billed
 
-- Compute is billed by the hour, at the price of the size. A VM is billed when it is Running, Ready, Frozen or Error.
+- Compute is billed by the hour, at the price of the size. A VM is billed when it is Running, Ready, Frozen or Error, and while it is Stopping, until it has stopped.
 - A VM in the **Stopped** state is not billed for compute.
 - Each snapshot that exists on the infrastructure is billed at a fixed hourly price, which does not depend on size, until the deletion is finished. A snapshot being reverted is still billed.
 - Volumes are billed separately, see the [volumes](/docs/guides/volume/) page.

@@ -19,9 +19,14 @@ Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Netw
 6. Chọn **Cấu hình**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) hoặc Extra Large (8 vCPU, 16 GB).
 7. Ở mục **SSH key**, đánh dấu key muốn thêm vào VM này. Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước. Key đã chọn được thêm cho user `ubuntu`.
 8. Nếu muốn, điền **Mật khẩu console**: 12 đến 72 ký tự, để đăng nhập user `ubuntu` trên [console](#mở-console-của-vm) của VM. OpenViCloud chỉ giữ hash của nó, nên không xem lại được. VM tạo không có mật khẩu này thì không có mật khẩu console.
-9. Bấm **Tạo VM**.
+9. Nếu muốn, đổi **Thời gian dừng (giây)**: thời gian tối đa hệ thống chờ hệ điều hành của VM tự tắt trước khi ngắt nguồn ([Tắt](#stop-start-và-resume)). Từ 30 đến 1800 giây, mặc định 120. VM cần thời gian để tắt êm, như database, nên đặt dài hơn.
+10. Bấm **Tạo VM**.
 
-Hãy điền đủ các ô phía trên SSH key. Nếu **Cluster**, **Mạng**, **Template** hay **Cấu hình** còn trống lúc bấm **Tạo VM**, portal báo "Chọn cluster, mạng, template và cấu hình." và không gửi gì. Mật khẩu console ngắn hơn 12 hay dài hơn 72 ký tự thì portal báo "Mật khẩu console phải từ 12 đến 72 ký tự." và cũng không gửi gì.
+Hãy điền đủ các ô phía trên SSH key. Khi bạn bấm **Tạo VM**, portal kiểm tên, rồi phần còn lại theo thứ tự dưới đây, chỉ báo lỗi đầu tiên tìm thấy, và không gửi gì:
+
+- Mật khẩu console ngắn hơn 12 hay dài hơn 72 ký tự: "Mật khẩu console phải từ 12 đến 72 ký tự."
+- Thời gian dừng không phải số giây nguyên từ 30 đến 1800: "Thời gian dừng phải là số giây nguyên, từ 30 đến 1800."
+- **Cluster**, **Mạng**, **Template** hay **Cấu hình** còn trống: "Chọn cluster, mạng, template và cấu hình."
 
 VM mới hiện trong danh sách với trạng thái **Creating**. Khi VM chạy, trạng thái chuyển sang **Running** hoặc **Ready**, và ô **IPv4 riêng** hiện địa chỉ của VM trong network. Cột **IPv6 công khai** hiện địa chỉ của VM nếu network của nó có IPv6 công khai, hoặc "—" nếu không; ở trang riêng của VM, ô này hiện "Chưa bật" thay vì "—" khi network không có IPv6 công khai. Nếu tạo không thành, trạng thái là **Failed** kèm một dòng giải thích.
 
@@ -57,18 +62,22 @@ Bấm **Quản lý** trên hàng của VM, rồi mở tab **Console**. Tab này 
 
 ## Stop, Start và Resume
 
-- **Tắt** có khi VM ở trạng thái Running, Ready, Frozen hoặc Error. Nút này tắt VM ngay, không chờ hệ điều hành tự tắt, giống như rút điện. Hãy lưu dữ liệu đang làm dở trước khi bấm.
+- **Tắt** có khi VM ở trạng thái Running, Ready, Frozen hoặc Error. Nút này yêu cầu hệ điều hành của VM tự tắt, như khi bấm nút nguồn của máy tính, và chờ tối đa thời gian dừng của VM (120 giây nếu bạn chưa đổi). Quá thời gian đó mà VM chưa tắt thì VM bị ngắt nguồn, giống như rút điện, và dữ liệu chưa lưu bên trong VM có thể mất. VM ở Error không tắt êm được, nên bị ngắt nguồn ngay.
 - **Bật** có khi VM ở trạng thái Stopped.
 - **Tiếp tục** thay cho Bật khi VM ở trạng thái Frozen. Nút này cho VM chạy tiếp.
 
-Trong lúc lệnh đang chạy, ô thao tác hiện **Creating…**, **Stopping…**, **Starting…**, **Deleting…** hoặc **Snapshotting…**, và các nút Tắt/Bật tạm ẩn.
+Trong lúc lệnh đang chạy, ô thao tác hiện **Creating…**, **Stopping…**, **Starting…**, **Deleting…** hoặc **Snapshotting…**, và các nút Tắt/Bật tạm ẩn. VM ở **Stopping** cho tới khi hệ điều hành tự tắt xong, hoặc tới khi hết thời gian dừng và VM bị ngắt nguồn.
+
+### Đổi thời gian dừng
+
+Trên trang của VM, tab **Tổng quan** có mục **Thời gian dừng**. Gõ số giây mới, từ 30 đến 1800, rồi bấm **Lưu**; portal báo "Đã lưu thời gian dừng". Giá trị mới áp dụng từ lần dừng kế tiếp: lần dừng đã yêu cầu trước đó vẫn dùng giá trị cũ. Số ngoài 30–1800 thì portal báo "Thời gian dừng phải là số giây nguyên, từ 30 đến 1800." Không đổi được thời gian dừng của VM đã xoá: "VM này đã bị xoá — không đổi được thời gian dừng nữa." VM tạo trước khi có thời gian dừng nhận 120 giây. Qua API, field là `stopTimeoutSeconds`, ở `POST /v1/tenant/vms` và `PATCH /v1/tenant/vms/{vmId}`; giá trị ngoài 30–1800 trả `400 VALIDATION_ERROR`.
 
 ## Xoá VM
 
 1. Bấm **Xoá** trên hàng của VM.
 2. Bấm **Xác nhận** trong hộp thoại "Xoá *tên VM*?".
 
-Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM được gỡ ra và giữ lại; volume vẫn tính tiền cho tới khi xoá xong ([volume](/vi/docs/guides/volume/)).
+Xoá không chờ hệ điều hành: VM bị ngắt nguồn rồi bị xoá. Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM được gỡ ra và giữ lại; volume vẫn tính tiền cho tới khi xoá xong ([volume](/vi/docs/guides/volume/)).
 
 Bạn chưa xoá được VM trong ba trường hợp:
 
@@ -109,7 +118,7 @@ Các số này chỉ để bạn xem: chúng không đổi hoá đơn hay hạn 
 
 ## VM được tính tiền khi nào
 
-- Tiền compute tính theo giờ, theo giá của size. VM bị tính khi ở trạng thái Running, Ready, Frozen hoặc Error.
+- Tiền compute tính theo giờ, theo giá của size. VM bị tính khi ở trạng thái Running, Ready, Frozen hoặc Error, và trong lúc Stopping, cho tới khi dừng xong.
 - VM ở trạng thái **Stopped** không bị tính tiền compute.
 - Mỗi snapshot có trên hạ tầng bị tính một mức giá cố định theo giờ, không phụ thuộc dung lượng, tới khi việc xoá xong. Snapshot đang quay về vẫn bị tính.
 - Volume tính tiền riêng, xem trang [volume](/vi/docs/guides/volume/).
