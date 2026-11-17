@@ -98,7 +98,10 @@ openvicloud vm ssh web-1 -- uptime
 ## What to know
 
 - A VM is created when it is Running or Ready.
-- Only a VM's name changes in place. Any other change replaces the VM.
+- Only a VM's name changes in place. Any other change replaces the VM, apart from `ssh_key_ids` and `console_password` after an import, which the next apply only records.
+- `console_password` sets the password of user `ubuntu` on the VM's [console](/docs/guides/vm/#open-the-vms-console), 12 to 72 characters. It is sensitive: declare it as a sensitive variable and set it, for example, through `TF_VAR_console_password`, never in a `.tf` file. Changing it replaces the VM.
+- Upgrading the provider to a version with `console_password` from one without it plans one in-place update per VM, never a replacement.
+- OpenViCloud never returns the console password. After `terraform import`, or after that upgrade, the next apply only records `console_password` in state: the VM keeps the console password it has. `terraform apply -replace=openvicloud_vm.<name>` creates the VM again with the new one.
 - Terraform declares what exists, not whether a VM is on. Stop and start a VM with the CLI or the portal; Terraform leaves it as it is.
 - To bring something that already exists under Terraform, use `terraform import`, for example `terraform import openvicloud_vm.web <vm id>`.
 - A load balancer needs a network created with `enable_public_ipv6 = true`. OpenViCloud refuses to delete a VM a load balancer still sends to, so remove it from `backend_vm_ids` and apply before you replace that VM.

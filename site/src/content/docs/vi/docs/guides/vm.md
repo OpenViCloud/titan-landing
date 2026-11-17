@@ -18,9 +18,10 @@ Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Netw
 5. Chọn **Template**, tức hệ điều hành. Ô này chỉ hiện template đã có ở cluster đó.
 6. Chọn **Cấu hình**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) hoặc Extra Large (8 vCPU, 16 GB).
 7. Ở mục **SSH key**, đánh dấu key muốn thêm vào VM này. Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước. Key đã chọn được thêm cho user `ubuntu`.
-8. Bấm **Tạo VM**.
+8. Nếu muốn, điền **Mật khẩu console**: 12 đến 72 ký tự, để đăng nhập user `ubuntu` trên [console](#mở-console-của-vm) của VM. OpenViCloud chỉ giữ hash của nó, nên không xem lại được. VM tạo không có mật khẩu này thì không có mật khẩu console.
+9. Bấm **Tạo VM**.
 
-Hãy điền đủ các ô phía trên SSH key. Nếu **Cluster**, **Mạng**, **Template** hay **Cấu hình** còn trống lúc bấm **Tạo VM**, portal báo "Chọn cluster, mạng, template và cấu hình." và không gửi gì.
+Hãy điền đủ các ô phía trên SSH key. Nếu **Cluster**, **Mạng**, **Template** hay **Cấu hình** còn trống lúc bấm **Tạo VM**, portal báo "Chọn cluster, mạng, template và cấu hình." và không gửi gì. Mật khẩu console ngắn hơn 12 hay dài hơn 72 ký tự thì portal báo "Mật khẩu console phải từ 12 đến 72 ký tự." và cũng không gửi gì.
 
 VM mới hiện trong danh sách với trạng thái **Creating**. Khi VM chạy, trạng thái chuyển sang **Running** hoặc **Ready**, và ô **IPv4 riêng** hiện địa chỉ của VM trong network. Cột **IPv6 công khai** hiện địa chỉ của VM nếu network của nó có IPv6 công khai, hoặc "—" nếu không; ở trang riêng của VM, ô này hiện "Chưa bật" thay vì "—" khi network không có IPv6 công khai. Nếu tạo không thành, trạng thái là **Failed** kèm một dòng giải thích.
 
@@ -50,7 +51,7 @@ Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) — thêm một key, 
 Bấm **Quản lý** trên hàng của VM, rồi mở tab **Console**. Tab này hiện console serial của VM: một console dạng chữ với các dòng khởi động của VM và lời nhắc đăng nhập. Dùng nó khi không vào được VM bằng SSH, ví dụ sau khi cấu hình network hay SSH của VM bị sai.
 
 - Tab không tự kết nối: hãy bấm **Kết nối**. Mỗi phiên console tính vào 5 phiên SSH hoặc console mà tài khoản của bạn được mở cùng lúc.
-- Đăng nhập bằng user `ubuntu` và mật khẩu console đặt lúc tạo VM. Hộp thoại **Tạo VM** chưa có ô nhập mật khẩu này, nên VM tạo trên portal không có mật khẩu console và không đăng nhập bằng mật khẩu ở đây được (xem [giới hạn hiện tại](/vi/docs/known-limitations/)). Tạo VM qua API nhận `consolePassword` tuỳ chọn, từ 12 đến 72 ký tự.
+- Đăng nhập bằng user `ubuntu` và mật khẩu console đặt lúc tạo VM: ô **Mật khẩu console** của hộp thoại **Tạo VM**, `--console-password-stdin` của [CLI](/vi/docs/guides/cli/), `console_password` trong [Terraform](/vi/docs/guides/terraform/), hay `consolePassword` của API. VM tạo không có mật khẩu này thì không đăng nhập bằng mật khẩu ở đây được.
 - Console chỉ mở được khi VM ở trạng thái Running hoặc Ready và không có lệnh tắt, xoá hay snapshot nào đang chờ. Mỗi VM chỉ có một console tại một thời điểm: phiên thứ hai bị từ chối với câu "VM này đang có một phiên console khác. Đóng phiên đó rồi kết nối lại."
 - **Ngắt kết nối**, hoặc rời tab, sẽ kết thúc phiên. Phiên không có hoạt động trong 30 phút sẽ bị đóng. Khi phiên kết thúc trong lúc bạn vẫn ở tab, tab giữ lại những gì đã hiện, và có nút **Kết nối lại** khi VM đang chạy.
 

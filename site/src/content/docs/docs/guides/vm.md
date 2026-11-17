@@ -18,9 +18,10 @@ Each VM needs a [network](/docs/guides/network/) in the same cluster. That netwo
 5. Choose a **Template**, which is the operating system. This field only shows templates available in that cluster.
 6. Choose a **Size**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) or Extra Large (8 vCPU, 16 GB).
 7. Under **SSH keys**, tick the keys to add to this VM. See [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first. Picked keys are added for the user `ubuntu`.
-8. Click **Create VM**.
+8. Optionally, fill in **Console password**: 12 to 72 characters, to log in as `ubuntu` on the VM's [console](#open-the-vms-console). OpenViCloud keeps only a hash of it, so it cannot be shown again. A VM created without one has no console password.
+9. Click **Create VM**.
 
-Fill in every field above SSH keys. If **Cluster**, **Network**, **Template** or **Size** is still empty when you click **Create VM**, the portal shows "Choose a cluster, network, template and size." and sends nothing.
+Fill in every field above SSH keys. If **Cluster**, **Network**, **Template** or **Size** is still empty when you click **Create VM**, the portal shows "Choose a cluster, network, template and size." and sends nothing. A console password shorter than 12 or longer than 72 characters shows "The console password must be 12 to 72 characters." and sends nothing too.
 
 The new VM appears in the list with the state **Creating**. When the VM runs, the state changes to **Running** or **Ready**, and the **Private IPv4** field shows the VM's address in the network. The **Public IPv6** column shows the VM's address if its network has public IPv6, or "—" otherwise; on the VM's own page this field shows "Not enabled" instead when the network has no public IPv6. If creation fails, the state is **Failed** with a line explaining why.
 
@@ -50,7 +51,7 @@ See [SSH keys and logging in](/docs/guides/ssh-keys/) — add a key, pick it whe
 Click **Manage** on the VM's row, then open the **Console** tab. It shows the VM's serial console: a text console with the VM's boot messages and a login prompt. Use it when you cannot reach the VM over SSH, for example after a mistake in its network or SSH settings.
 
 - The tab does not connect by itself: click **Connect**. Each console session counts toward the 5 SSH or console sessions your account can have open at once.
-- Log in as `ubuntu` with the console password set when the VM was created. The **Create VM** dialog has no field for it yet, so a VM created in the portal has no console password and cannot be logged in to here with a password (see [known limitations](/docs/known-limitations/)). Creating a VM through the API takes an optional `consolePassword`, 12 to 72 characters.
+- Log in as `ubuntu` with the console password set when the VM was created: **Console password** in the **Create VM** dialog, `--console-password-stdin` of the [CLI](/docs/guides/cli/), `console_password` in [Terraform](/docs/guides/terraform/), or `consolePassword` in the API. A VM created without one cannot be logged in to here with a password.
 - The console opens only while the VM is Running or Ready, with no stop, delete or snapshot waiting. A VM has one console at a time: a second one is refused with "Another console session is open on this VM. Close it, then connect again."
 - **Disconnect**, or leaving the tab, ends the session. A session with no activity for 30 minutes is closed. When a session ends while you stay on the tab, the tab keeps what it showed, and offers **Reconnect** while the VM runs.
 

@@ -177,7 +177,13 @@ openvicloud size list
 openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop
 ```
 
-`--cluster`, `--network`, `--template` and `--size` are required. The network must already exist (create it on the portal). Network, template, size and SSH key can be given by name or by ID. `--ssh-key` can be repeated to add several keys; without one you cannot log in to the VM. `--disk-size <GB>` sets the disk size. If a name does not match, the CLI says which one and creates nothing.
+`--cluster`, `--network`, `--template` and `--size` are required. The network must already exist (create it on the portal). Network, template, size and SSH key can be given by name or by ID. `--ssh-key` can be repeated to add several keys; without one you cannot log in over SSH. `--disk-size <GB>` sets the disk size. If a name does not match, the CLI says which one and creates nothing.
+
+`--console-password-stdin` reads a console password (12 to 72 characters) from standard input, to log in as `ubuntu` on the VM's [console](/docs/guides/vm/#open-the-vms-console). The CLI never takes the password on the command line, where other users of the machine and the shell history would see it. Everything on standard input is the password, less one line end at its end; empty input is refused and nothing is created:
+
+```bash
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --console-password-stdin < console-password.txt
+```
 
 The create prints the new VM's ID. The VM is then created in the background; add `--wait` to wait until it is Running or Ready and print it:
 

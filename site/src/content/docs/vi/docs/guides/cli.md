@@ -177,7 +177,13 @@ openvicloud size list
 openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop
 ```
 
-Bắt buộc có `--cluster`, `--network`, `--template` và `--size`. Network phải có sẵn (tạo trên portal). Network, template, size và SSH key cho theo tên hoặc ID. `--ssh-key` lặp được để thêm nhiều key; không có key thì bạn không đăng nhập được vào VM. `--disk-size <GB>` đặt dung lượng đĩa. Tên nào không khớp, CLI báo tên đó và không tạo gì.
+Bắt buộc có `--cluster`, `--network`, `--template` và `--size`. Network phải có sẵn (tạo trên portal). Network, template, size và SSH key cho theo tên hoặc ID. `--ssh-key` lặp được để thêm nhiều key; không có key thì bạn không đăng nhập được bằng SSH. `--disk-size <GB>` đặt dung lượng đĩa. Tên nào không khớp, CLI báo tên đó và không tạo gì.
+
+`--console-password-stdin` đọc mật khẩu console (12 đến 72 ký tự) từ standard input, để đăng nhập user `ubuntu` trên [console](/vi/docs/guides/vm/#mở-console-của-vm) của VM. CLI không bao giờ nhận mật khẩu trên dòng lệnh, nơi người dùng khác của máy và lịch sử shell nhìn thấy nó. Toàn bộ standard input là mật khẩu, bỏ một dấu xuống dòng ở cuối; input rỗng thì bị từ chối và không tạo gì:
+
+```bash
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --console-password-stdin < console-password.txt
+```
 
 Lệnh tạo in ID của VM mới. VM được tạo tiếp ở phía sau; thêm `--wait` để chờ tới khi VM Running hoặc Ready rồi in VM ra:
 
