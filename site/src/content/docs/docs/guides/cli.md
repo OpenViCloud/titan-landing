@@ -107,7 +107,7 @@ The CLI prints a page to open and a code to check, tries to open your browser to
 
 ```
 To log in, open this page and check that it shows the code <CODE>:
-  <login page URL>
+  https://auth.openvicloud.com/<login page and code>
 Waiting for you to confirm in the browser...
 ```
 
@@ -188,7 +188,26 @@ openvicloud vm create web-1 --cluster <cluster> --network <network> --template U
 The create prints the new VM's ID. The VM is then created in the background; add `--wait` to wait until it is Running or Ready and print it:
 
 ```bash
-openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait
+openvicloud vm create web-1 --cluster <cluster> \
+  --network <network> --template Ubuntu-22.04-Standard \
+  --size <size> --ssh-key laptop --wait
+```
+
+First the CLI prints a line, then it waits and prints the VM. A field with no value, such as the public IPv6 address of a VM whose network has none, shows `-`:
+
+```
+Creating VM web-1, waiting until it is Running or Ready...
+ID:           <VM ID>
+Name:         web-1
+Cluster:      <cluster ID>
+Status:       Running
+IPv4:         <IPv4 address>
+Public IPv6:  <public IPv6 address>
+Network:      <network ID>
+Size:         <size ID>
+Template:     <template ID>
+Disk GB:      <disk size>
+Created:      <time created>
 ```
 
 If the network drops while the create is being sent, the CLI sends it again, up to three sends in all. Each send carries the same request key, so you still get one VM.
@@ -239,6 +258,12 @@ Anything after `--` is passed to `ssh`, for example to choose a key or run a sin
 ```bash
 openvicloud vm ssh web-1 -- -i ~/.ssh/id_ed25519
 openvicloud vm ssh web-1 -- uptime
+```
+
+The second command prints what `uptime` prints on the VM, for example:
+
+```
+ 10:42:17 up 3 min,  0 users,  load average: 0.12, 0.05, 0.01
 ```
 
 The command's exit code is `ssh`'s own exit code.

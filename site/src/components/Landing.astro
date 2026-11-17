@@ -109,7 +109,7 @@ function tokens(line: string) {
               </div>
               <div class="tab-panel terminal" data-tab="cli">
                 <div class="panel-top"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="file-name">openvicloud</span></div>
-                <pre><code>{t.cli.commands.map((command) => <span class="line">{command}</span>)}</code></pre>
+                <pre><code>{t.cli.session.map((step) => <span class="step">{step.command.map((line, index) => <span class={index === 0 ? 'line' : 'line cont'}>{line}</span>)}{step.output.map((line) => <span class="term-out">{line}</span>)}</span>)}</code></pre>
               </div>
               <div class="tab-panel" data-tab="web">
                 <div class="panel-top"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
@@ -215,7 +215,7 @@ function tokens(line: string) {
 
           <figure class="panel terminal" aria-label={t.cli.panelLabel}>
             <div class="panel-top" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span></div>
-            <pre><code>{t.cli.commands.map((command) => <span class="line">{command}</span>)}</code></pre>
+            <pre><code>{t.cli.session.map((step) => <span class="step">{step.command.map((line, index) => <span class={index === 0 ? 'line' : 'line cont'}>{line}</span>)}{step.output.map((line) => <span class="term-out">{line}</span>)}</span>)}</code></pre>
             <figcaption>{t.cli.caption}</figcaption>
           </figure>
         </div>
@@ -702,6 +702,10 @@ function tokens(line: string) {
       .terminal pre { margin: 0; overflow-x: auto; padding: 1rem; border: 1px solid var(--color-border); border-radius: 0.75rem; background: var(--color-background); font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.75; }
       .terminal .line { display: block; white-space: pre; }
       .terminal .line::before { content: "$ "; color: var(--color-accent); }
+      .terminal .line.cont::before { content: none; }
+      .terminal .step { display: block; }
+      .terminal .step + .step { margin-top: 0.75rem; }
+      .terminal .term-out { display: block; white-space: pre-wrap; word-break: break-all; color: var(--color-muted-foreground); }
 
       .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; counter-reset: step; }
       .steps li { counter-increment: step; padding: 1.5rem; border-top: 2px solid var(--color-accent); background: var(--color-raised); border-radius: 0 0 var(--radius) var(--radius); }
