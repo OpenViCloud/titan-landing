@@ -102,10 +102,38 @@ const en = {
     guide: '/docs/guides/cli/',
     guideLink: 'Windows, manual download and the full guide',
     panelLabel: 'Illustration of a terminal session with openvicloud',
-    commands: [
-      'openvicloud auth login',
-      'openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait',
-      'openvicloud vm ssh web-1 -- uptime',
+    // The CLI prints English only, so the output is the same in both languages.
+    session: [
+      {
+        command: ['openvicloud auth login'],
+        output: [
+          'To log in, open this page and check that it shows the code KDPW-RTMX:',
+          '  https://auth.openvicloud.com/auth/realms/titan/device?user_code=KDPW-RTMX',
+          'Waiting for you to confirm in the browser...',
+          'Logged in to https://api.openvicloud.com as alice',
+        ],
+      },
+      {
+        command: [
+          'openvicloud vm create web-1 --cluster <cluster> \\',
+          '  --network <network> --template Ubuntu-22.04-Standard \\',
+          '  --size <size> --ssh-key laptop --wait',
+        ],
+        output: [
+          'Creating VM web-1, waiting until it is Running or Ready...',
+          'ID:           3f2b8c1e-7d4a-4e9b-a6c5-0e1f2a3b4c5d',
+          'Name:         web-1',
+          'Cluster:      <cluster>',
+          'Status:       Running',
+          'IPv4:         10.0.0.12',
+          'Public IPv6:  2001:db8::12',
+          '…',
+        ],
+      },
+      {
+        command: ['openvicloud vm ssh web-1 -- uptime'],
+        output: [' 10:42:17 up 3 min,  0 users,  load average: 0.12, 0.05, 0.01'],
+      },
     ],
     caption: 'Illustration',
   },
@@ -261,10 +289,38 @@ const vi = {
     guide: '/vi/docs/guides/cli/',
     guideLink: 'Windows, tải tay và hướng dẫn đầy đủ',
     panelLabel: 'Minh hoạ một phiên terminal với openvicloud',
-    commands: [
-      'openvicloud auth login',
-      'openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait',
-      'openvicloud vm ssh web-1 -- uptime',
+    // The CLI prints English only, so the output is the same in both languages.
+    session: [
+      {
+        command: ['openvicloud auth login'],
+        output: [
+          'To log in, open this page and check that it shows the code KDPW-RTMX:',
+          '  https://auth.openvicloud.com/auth/realms/titan/device?user_code=KDPW-RTMX',
+          'Waiting for you to confirm in the browser...',
+          'Logged in to https://api.openvicloud.com as alice',
+        ],
+      },
+      {
+        command: [
+          'openvicloud vm create web-1 --cluster <cluster> \\',
+          '  --network <network> --template Ubuntu-22.04-Standard \\',
+          '  --size <size> --ssh-key laptop --wait',
+        ],
+        output: [
+          'Creating VM web-1, waiting until it is Running or Ready...',
+          'ID:           3f2b8c1e-7d4a-4e9b-a6c5-0e1f2a3b4c5d',
+          'Name:         web-1',
+          'Cluster:      <cluster>',
+          'Status:       Running',
+          'IPv4:         10.0.0.12',
+          'Public IPv6:  2001:db8::12',
+          '…',
+        ],
+      },
+      {
+        command: ['openvicloud vm ssh web-1 -- uptime'],
+        output: [' 10:42:17 up 3 min,  0 users,  load average: 0.12, 0.05, 0.01'],
+      },
     ],
     caption: 'Minh hoạ',
   },

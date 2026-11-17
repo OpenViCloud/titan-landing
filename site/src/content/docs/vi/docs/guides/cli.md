@@ -107,7 +107,7 @@ CLI in ra một trang để mở và một mã để kiểm tra, thử tự mở
 
 ```
 To log in, open this page and check that it shows the code <CODE>:
-  <login page URL>
+  https://auth.openvicloud.com/<login page and code>
 Waiting for you to confirm in the browser...
 ```
 
@@ -188,7 +188,26 @@ openvicloud vm create web-1 --cluster <cluster> --network <network> --template U
 Lệnh tạo in ID của VM mới. VM được tạo tiếp ở phía sau; thêm `--wait` để chờ tới khi VM Running hoặc Ready rồi in VM ra:
 
 ```bash
-openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --wait
+openvicloud vm create web-1 --cluster <cluster> \
+  --network <network> --template Ubuntu-22.04-Standard \
+  --size <size> --ssh-key laptop --wait
+```
+
+CLI in một dòng trước, rồi chờ và in VM ra. Trường không có giá trị, như địa chỉ IPv6 công khai của VM mà network không có, hiện `-`:
+
+```
+Creating VM web-1, waiting until it is Running or Ready...
+ID:           <VM ID>
+Name:         web-1
+Cluster:      <cluster ID>
+Status:       Running
+IPv4:         <IPv4 address>
+Public IPv6:  <public IPv6 address>
+Network:      <network ID>
+Size:         <size ID>
+Template:     <template ID>
+Disk GB:      <disk size>
+Created:      <time created>
 ```
 
 Nếu mạng rớt lúc đang gửi lệnh tạo, CLI gửi lại, tổng cộng tối đa ba lần gửi. Mọi lần gửi mang cùng một khoá yêu cầu, nên bạn vẫn chỉ có một VM.
@@ -239,6 +258,12 @@ Mọi tham số sau `--` được chuyển cho `ssh`, ví dụ để chọn key 
 ```bash
 openvicloud vm ssh web-1 -- -i ~/.ssh/id_ed25519
 openvicloud vm ssh web-1 -- uptime
+```
+
+Lệnh thứ hai in ra đúng những gì `uptime` in trên VM, ví dụ:
+
+```
+ 10:42:17 up 3 min,  0 users,  load average: 0.12, 0.05, 0.01
 ```
 
 Mã thoát của lệnh chính là mã thoát của `ssh`.

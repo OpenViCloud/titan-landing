@@ -156,20 +156,36 @@ export function codeLines(markdown) {
 
 const cliPage = { en: join(enDir, 'guides', 'cli.md'), vi: join(viDir, 'guides', 'cli.md') };
 
-test('the command check finds a command the CLI page does not show (the check can fail)', () => {
-  const lines = codeLines('Text\n\n```bash\nopenvicloud auth login\n```\n\nopenvicloud network create x\n');
-  const missing = ['openvicloud auth login', 'openvicloud network create x'].filter((command) => !lines.includes(command));
-  assert.deepEqual(missing, ['openvicloud network create x']);
+// A panel line of the CLI session that no code block line of the page shows. A `<…>` on the page stands for one
+// value without spaces that the panel picks; a page line that is only a `<…>` matches nothing. A panel line `…` marks
+// lines the panel leaves out.
+export function sessionLinesOnNoPage(panelLines, page) {
+  const fixedText = (line) => line.replace(/<[^<>]+>/g, '').trim() !== '';
+  const patterns = codeLines(page).filter(fixedText).map((line) => {
+    const pieces = line.split(/<[^<>]+>/).map((piece) => piece.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    return new RegExp(`^${pieces.join('\\S+')}$`);
+  });
+  return panelLines.filter((line) => line.trim() !== '…' && !patterns.some((pattern) => pattern.test(line.trim())));
+}
+
+test('the session check finds a line the CLI page does not show (the check can fail)', () => {
+  const page = 'Text\n\n```bash\nopenvicloud auth login\n```\n\n```\n  <login page URL>\n  https://auth.example/<login page>\nLogged in to <api> as <username>\n```\n\nopenvicloud network create x\n';
+  const panel = ['openvicloud auth login', '  https://auth.example/device', 'Logged in to https://api.example as alice', '…',
+    'Logged out.', 'Waiting', 'Logged in to https://api.example as alice and bob', 'openvicloud auth login --wait',
+    'openvicloud network create x'];
+  assert.deepEqual(sessionLinesOnNoPage(panel, page),
+    ['Logged out.', 'Waiting', 'Logged in to https://api.example as alice and bob', 'openvicloud auth login --wait', 'openvicloud network create x']);
 });
 
-// The landing's CLI panel copies commands from the CLI page, which lists only what main has
-// (titan-ops features/cli/design.md#cli-download).
-test('every command on the landing CLI panel is a line of a code block of the CLI page in the same language', () => {
+// The landing's CLI panels copy each command and its output from the CLI page, which lists only what main has
+// (titan-ops features/public-site/design.md#landing-spec).
+test('every command and output line on the landing CLI panel is a line of a code block of the CLI page in the same language', () => {
   for (const lang of ['en', 'vi']) {
-    const commands = copy[lang].cli.commands;
-    assert.ok(commands.length >= 3, lang);
-    const lines = codeLines(readFileSync(cliPage[lang], 'utf8'));
-    assert.deepEqual(commands.filter((command) => !lines.includes(command)), [], lang);
+    const { session } = copy[lang].cli;
+    assert.ok(session.length >= 3, lang);
+    for (const step of session) assert.ok(step.command.length >= 1 && step.output.length >= 1, `${lang}: ${step.command[0]}`);
+    const lines = session.flatMap((step) => [...step.command, ...step.output]);
+    assert.deepEqual(sessionLinesOnNoPage(lines, readFileSync(cliPage[lang], 'utf8')), [], lang);
   }
 });
 
