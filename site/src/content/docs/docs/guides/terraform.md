@@ -99,6 +99,7 @@ openvicloud vm ssh web-1 -- uptime
 
 - A VM is created when it is Running or Ready.
 - Only a VM's name changes in place. Any other change replaces the VM, apart from `ssh_key_ids` and `console_password` after an import, which the next apply only records.
+- The stop timeout cannot be set from Terraform yet: set it on the VM's [Overview tab](/docs/guides/vm/#change-the-stop-timeout). A VM that Terraform replaces gets 120 seconds again.
 - `console_password` sets the password of user `ubuntu` on the VM's [console](/docs/guides/vm/#open-the-vms-console), 12 to 72 characters. It is sensitive: declare it as a sensitive variable and set it, for example, through `TF_VAR_console_password`, never in a `.tf` file. Changing it replaces the VM.
 - Upgrading the provider to a version with `console_password` from one without it plans one in-place update per VM, never a replacement.
 - OpenViCloud never returns the console password. After `terraform import`, or after that upgrade, the next apply only records `console_password` in state: the VM keeps the console password it has. `terraform apply -replace=openvicloud_vm.<name>` creates the VM again with the new one.

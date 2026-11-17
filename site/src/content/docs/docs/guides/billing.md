@@ -9,7 +9,7 @@ OpenViCloud bills after use. Usage is recorded during the month, then collected 
 
 Prices are per hour. Usage is recorded every 10 minutes.
 
-- **VM**: billed at the price of the VM's size while the VM is in the `Running`, `Ready`, `Frozen` or `Error` state. A `Stopped` VM is not charged the VM price.
+- **VM**: billed at the price of the VM's size while the VM is in the `Running`, `Ready`, `Frozen` or `Error` state. A `Stopped` VM is not charged the VM price. A VM shown as `Stopping` is still billed until it has stopped ([stop timeout](/docs/guides/vm/#change-the-stop-timeout)).
 - **Volume**: billed by size (GB), from when the volume is created until the deletion is finished, not when you click delete. A volume is still billed when it is not attached to any VM.
 - **Snapshot**: each VM or volume snapshot is billed at a fixed hourly price that does not depend on size, from when the snapshot is created until the deletion is finished, not when you click delete.
 

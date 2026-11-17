@@ -216,7 +216,7 @@ Other VM commands take the VM's name or ID:
 
 - `openvicloud vm list` — your VMs (not deleted ones): name, ID, cluster, status, IPv4 address.
 - `openvicloud vm get <vm>` — one VM in detail, including the reason if its creation failed.
-- `openvicloud vm stop <vm>` / `vm start <vm>` — stop a VM, or start a stopped one (`start` also resumes a Frozen VM). A stopped VM is not billed for compute.
+- `openvicloud vm stop <vm>` / `vm start <vm>` — stop a VM, or start a stopped one (`start` also resumes a Frozen VM). A stopped VM is not billed for compute. The CLI cannot set or show the stop timeout yet; use the portal. `stop` shuts the VM down as the portal's Stop does, waiting up to its [stop timeout](/docs/guides/vm/#stop-start-and-resume).
 - `openvicloud vm rename <vm> <new name>`
 - `openvicloud vm delete <vm>` — asks you to type `y` before it deletes the VM and its disk; `--yes` skips the question.
 
@@ -225,6 +225,7 @@ Other VM commands take the VM's name or ID:
 - `create` and `start` succeed when the VM is Running or Ready, `stop` when it is Stopped, `delete` when the VM is deleted.
 - If the request ends another way — the creation failed, or the VM is in another state — the command prints why and ends with exit code 1.
 - If the time runs out, the command says which state the VM is still in and ends with exit code 1; `openvicloud vm get <vm>` shows how it goes on.
+- For `stop --wait`, give a `--timeout` longer than the VM's stop timeout, for example `--timeout 35m` for a stop timeout of 30 minutes.
 
 Without `--wait`, the command returns as soon as the request is accepted. See [VM states](/docs/concepts/vm-states/) for what each state means.
 

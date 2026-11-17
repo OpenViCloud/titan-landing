@@ -9,7 +9,7 @@ OpenViCloud tính phí sau khi dùng. Mức dùng được ghi nhận trong thá
 
 Đơn giá tính theo giờ. Mức dùng được ghi lại mỗi 10 phút.
 
-- **VM**: tính theo đơn giá của cấu hình VM, khi VM ở trạng thái `Running`, `Ready`, `Frozen` hoặc `Error`. VM `Stopped` không bị tính phí VM.
+- **VM**: tính theo đơn giá của cấu hình VM, khi VM ở trạng thái `Running`, `Ready`, `Frozen` hoặc `Error`. VM `Stopped` không bị tính phí VM. VM đang hiện `Stopping` vẫn bị tính cho tới khi dừng xong ([thời gian dừng](/vi/docs/guides/vm/#đổi-thời-gian-dừng)).
 - **Volume**: tính theo dung lượng (GB), từ khi volume tạo xong tới khi việc xoá xong, không phải lúc bạn bấm xoá. Volume vẫn bị tính khi không gắn vào VM nào.
 - **Snapshot**: mỗi snapshot của VM hoặc volume tính một đơn giá theo giờ cố định, không phụ thuộc dung lượng, từ khi snapshot tạo xong tới khi việc xoá xong, không phải lúc bạn bấm xoá.
 

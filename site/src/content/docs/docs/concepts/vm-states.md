@@ -26,7 +26,7 @@ When you have just clicked a button, the VM shows a changing state until the act
 |--------|----------|
 | `Creating` | The VM is being created. |
 | `Starting` | The VM is being turned on. |
-| `Stopping` | The VM is being turned off. |
+| `Stopping` | The VM is being turned off: its operating system is shutting down, or its power is cut once its stop timeout runs out. |
 | `Deleting` | The VM is being deleted. |
 | `Snapshotting` | A snapshot of the VM is being created or reverted. |
 
@@ -46,7 +46,7 @@ During that time, the action column has a greyed-out button, for example `Stoppi
 
 Some notes:
 
-- **Stop** turns the VM off immediately, like pulling the plug. Shut down important applications inside the VM before you click it.
+- **Stop** asks the VM's operating system to shut down and waits up to the VM's stop timeout (120 seconds by default, 30 to 1800); a VM that has not shut down by then has its power cut, like pulling the plug. A VM in `Error` has its power cut at once. Details in the [VM guide](/docs/guides/vm/#stop-start-and-resume).
 - You cannot create a snapshot or attach a volume while the VM is `Stopping`, `Deleting` or `Snapshotting`, or when the VM is in `Error`. You cannot create a snapshot while the VM is `Starting`; wait until it has started.
 - While a snapshot of the VM is being created or reverted, the VM shows `Snapshotting`. You cannot start, stop or delete it, and you cannot open an SSH or console session to it, until the snapshot is done.
 - While the VM is `Creating`, **Delete** is disabled. Wait until it is no longer `Creating`, then delete it.
@@ -58,6 +58,6 @@ The badge always shows the state the VM is in. For example: if you shut down the
 
 ## States and cost
 
-A VM in `Running`, `Ready`, `Frozen` or `Error` is billed at the hourly price of its size. A VM in `Stopped` is not charged this price. However, volumes attached to the VM and the VM's snapshots are still billed while the VM is `Stopped`. The hourly price of each VM size is on the [pricing table](/#pricing).
+A VM in `Running`, `Ready`, `Frozen` or `Error` is billed at the hourly price of its size. A VM in `Stopping` is still billed until it has stopped. A VM in `Stopped` is not charged this price. However, volumes attached to the VM and the VM's snapshots are still billed while the VM is `Stopped`. The hourly price of each VM size is on the [pricing table](/#pricing).
 
 See also: [Error codes](/docs/concepts/error-codes/) · [Account quotas](/docs/concepts/quotas/)
