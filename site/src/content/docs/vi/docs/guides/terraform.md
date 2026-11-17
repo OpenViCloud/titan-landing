@@ -98,7 +98,9 @@ openvicloud vm ssh web-1 -- uptime
 ## Cần biết
 
 - VM được coi là đã tạo xong khi ở trạng thái Running hoặc Ready.
-- Chỉ tên VM đổi tại chỗ. Mọi thay đổi khác thay VM bằng một VM mới.
+- Chỉ tên VM đổi tại chỗ. Mọi thay đổi khác thay VM bằng một VM mới, trừ `ssh_key_ids` và `console_password` sau khi import: lần apply kế chỉ ghi chúng vào state.
+- `console_password` đặt mật khẩu của user `ubuntu` trên [console](/vi/docs/guides/vm/#mở-console-của-vm) của VM, 12 đến 72 ký tự. Đây là giá trị nhạy cảm: đặt nó từ một biến sensitive (ví dụ `TF_VAR_console_password`), không viết trong file `.tf`. Đổi nó thì VM bị thay. OpenViCloud không bao giờ trả lại nó, nên sau `terraform import` VM giữ mật khẩu console nó đang có.
+- Nâng provider từ bản chưa có `console_password` lên bản có nó thì plan sửa tại chỗ mỗi VM một lần, không bao giờ thay VM.
 - Terraform khai cái gì tồn tại, không khai VM đang bật hay tắt. Stop và start VM bằng CLI hoặc portal; Terraform để yên.
 - Muốn đưa thứ đã có sẵn vào Terraform, dùng `terraform import`, ví dụ `terraform import openvicloud_vm.web <id VM>`.
 - Load balancer cần network tạo với `enable_public_ipv6 = true`. OpenViCloud từ chối xoá VM mà load balancer còn gửi tới, nên hãy gỡ VM khỏi `backend_vm_ids` rồi apply trước khi thay VM đó.

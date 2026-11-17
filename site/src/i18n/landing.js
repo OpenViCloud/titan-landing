@@ -122,7 +122,7 @@ const en = {
   limitsLink: 'Read the current limitations',
   limits: [
     { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For an address the Internet can reach, create the network with public IPv6.' },
-    { title: 'No SSH button or console password in the portal', body: 'Log in with your SSH key through the command-line tool. The portal opens the VM\'s serial console, but a VM created in the portal has no password to log in there.', href: '/docs/guides/cli/', link: 'Command-line tool guide' },
+    { title: 'No SSH button in the portal', body: 'Log in with your SSH key through the command-line tool, or on the VM\'s serial console in the portal with the console password set when you created the VM.', href: '/docs/guides/cli/', link: 'Command-line tool guide' },
     { title: 'Firewall rules do not block more traffic yet', body: 'A network allows all traffic by default, and rules are only allow rules. On a network with public IPv6, every port of its VMs is open to the Internet.' },
     { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. Contact OpenViCloud when you need more.' },
   ],
@@ -281,7 +281,7 @@ const vi = {
   limitsLink: 'Đọc trang giới hạn hiện tại',
   limits: [
     { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ truy cập được từ Internet, hãy tạo network có IPv6 công khai.' },
-    { title: 'Portal chưa có nút SSH hay mật khẩu console', body: 'Đăng nhập bằng SSH key qua công cụ dòng lệnh. Portal mở được console serial của VM, nhưng VM tạo trên portal không có mật khẩu để đăng nhập ở đó.', href: '/vi/docs/guides/cli/', link: 'Hướng dẫn công cụ dòng lệnh' },
+    { title: 'Portal chưa có nút SSH', body: 'Đăng nhập bằng SSH key qua công cụ dòng lệnh, hoặc trên console serial của VM trong portal bằng mật khẩu console đặt lúc tạo VM.', href: '/vi/docs/guides/cli/', link: 'Hướng dẫn công cụ dòng lệnh' },
     { title: 'Rule firewall chưa chặn thêm traffic', body: 'Network mặc định cho phép mọi traffic, rule hiện chỉ là rule cho phép. Trên network có IPv6 công khai, mọi cổng của VM đều mở ra Internet.' },
     { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Liên hệ OpenViCloud khi cần thêm.' },
   ],
