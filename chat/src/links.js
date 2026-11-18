@@ -1,7 +1,8 @@
 // The assistant sends a visitor nowhere but the support issue (titan-ops features/public-site/design.md#chat-assistant):
 // free models add links even when the prompt forbids them, so links (Markdown, HTML), http(s) and www addresses and
-// email addresses leave the answer here. A bare domain stays, such as the brand's own name or github.com/OpenViCloud/titan-support.
-// Code keeps every address: an install command is part of the answer, not a place to go.
+// email addresses leave the answer here. A bare domain stays, such as the brand's own name or
+// github.com/OpenViCloud/titan-support. Code keeps every address: an install command is part of the answer, not a
+// place to go.
 
 const CODE = /(```[\s\S]*?```|`[^`\n]*`)/;
 // The (address) of a Markdown link, which may itself hold one pair of parentheses.
