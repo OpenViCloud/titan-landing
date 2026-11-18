@@ -12,7 +12,7 @@ Network là mạng riêng nối các VM của bạn với nhau. Mỗi VM cần m
 3. Điền **Tên**. Tên dài tối đa 100 ký tự, chỉ gồm chữ, số, dấu gạch ngang (`-`) và gạch dưới (`_`), và phải bắt đầu bằng chữ hoặc số.
 4. Chọn **Cluster**. Nếu bỏ trống, portal báo "Chọn một cluster" và không gửi gì.
 5. Điền **CIDR** nếu bạn muốn chọn dải địa chỉ, ví dụ `10.0.0.0/24`. Ô này không bắt buộc. Nếu để trống, hệ thống tự chọn một dải và hiện nó ở cột **CIDR** khi network tạo xong.
-6. Đánh dấu **Bật IPv6 công khai** nếu bạn muốn VM trên network này truy cập được từ Internet qua IPv6. Đọc [IPv6 công khai](/vi/docs/guides/public-ipv6/) trước khi đánh dấu.
+6. Đánh dấu **Bật IPv6 công khai** nếu bạn muốn VM trên network này có địa chỉ IPv6 công khai. Traffic từ Internet bị chặn cho tới khi bạn thêm [rule firewall](/vi/docs/guides/firewall/) — đọc [IPv6 công khai](/vi/docs/guides/public-ipv6/) trước khi đánh dấu.
 7. Bấm **Tạo mạng**.
 
 Network mới hiện trong bảng với trạng thái **Creating**. Bảng poll lại mỗi 5 giây khi còn dòng nào đang thay đổi, rồi dừng. Hết **Creating**, network có thể hiện **Pending** một lúc trong khi hạ tầng hoàn tất việc dựng nó. Khi trạng thái thành **Created**, bạn tạo được VM và firewall rule trên network đó. Nếu tạo không thành, dòng đó hiện **Failed**, **Errored**, **Unavailable**, **Unknown** hoặc **Not found**.
@@ -45,6 +45,6 @@ Mặc định, một tài khoản mới được tạo 1 network. Khi đã đủ
 
 Khi network còn VM hoặc còn [load balancer](/vi/docs/guides/load-balancer/) chưa xoá xong, nút **Xoá** bị tắt; nếu lý do là load balancer, rê chuột lên nút sẽ thấy "Xoá các load balancer của mạng này trước". Nếu server vẫn từ chối, portal báo "Không xoá được: mạng vẫn còn máy ảo hoặc load balancer" (mã `NETWORK_NOT_EMPTY`). Thứ tự xoá: load balancer, rồi VM, rồi network.
 
-Sau khi xác nhận, portal báo "Đã xoá mạng", nhưng network vẫn nằm trong bảng với trạng thái **Deleting** cho tới khi xoá xong, rồi mới biến mất. Các firewall rule của network bị xoá cùng network. Nếu OpenViCloud không xoá được network, dòng đó trở về trạng thái trước và hiện lý do bằng chữ đỏ dưới dòng cluster; bấm **Xoá** lần nữa để thử lại.
+Sau khi xác nhận, portal báo "Đã xoá mạng", nhưng network vẫn nằm trong bảng với trạng thái **Deleting** cho tới khi xoá xong, rồi mới biến mất. Các firewall rule của network bị xoá cùng network. Nếu OpenViCloud không xoá được network, dòng đó hiện trạng thái OpenViCloud đọc được gần nhất của network — **Unknown** nếu chưa có — và lý do bằng chữ đỏ dưới dòng cluster; bấm **Xoá** lần nữa để thử lại.
 
 Nút **Xoá** cũng tắt khi network còn đang **Creating** hoặc **Deleting**. Network có trạng thái **Failed** hoặc **Not found** vẫn xoá được.

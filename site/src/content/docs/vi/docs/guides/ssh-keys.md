@@ -59,6 +59,6 @@ Xem [trang hướng dẫn CLI](/vi/docs/guides/cli/) để cài `openvicloud` v�
 ssh ubuntu@<địa chỉ Public IPv6 của VM>
 ```
 
-Cách này chỉ dùng được với VM trên network có bật IPv6 công khai (xem [IPv6 công khai](/vi/docs/guides/public-ipv6/)). Network tạo từ portal giữ chính sách mặc định Allow, nên mọi cổng của VM đều mở ra Internet, và rule firewall tạo ở đó chỉ thêm traffic được phép — xem [giới hạn hiện tại](/vi/docs/known-limitations/) và [rule firewall](/vi/docs/guides/firewall/).
+Cách này chỉ dùng được với VM trên network có bật IPv6 công khai (xem [IPv6 công khai](/vi/docs/guides/public-ipv6/)), và chỉ khi network cho cổng TCP 22 đi vào: network mới chặn chiều vào, nên hãy thêm [rule firewall](/vi/docs/guides/firewall/) Ingress TCP 22 trước — từ `::/0`, hoặc chỉ từ dải IPv6 của bạn.
 
 Bản thân portal không có nút mở phiên SSH. Tab **Console** của nó mở console serial của VM — xem [console của VM](/vi/docs/guides/vm/#mở-console-của-vm).

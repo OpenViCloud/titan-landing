@@ -105,5 +105,6 @@ openvicloud vm ssh web-1 -- uptime
 - OpenViCloud không bao giờ trả lại mật khẩu console. Sau `terraform import`, hay sau lần nâng provider đó, lần apply kế chỉ ghi `console_password` vào state: VM giữ mật khẩu console nó đang có. `terraform apply -replace=openvicloud_vm.<tên>` tạo lại VM với mật khẩu mới.
 - Terraform khai cái gì tồn tại, không khai VM đang bật hay tắt. Stop và start VM bằng CLI hoặc portal; Terraform để yên.
 - Muốn đưa thứ đã có sẵn vào Terraform, dùng `terraform import`, ví dụ `terraform import openvicloud_vm.web <id VM>`.
+- Network tạo không có `default_ingress_policy` chặn traffic từ ngoài network đi vào và cho traffic đi ra. Hãy khai một `openvicloud_firewall_rule` cho mỗi cổng muốn vào được — ví dụ Ingress TCP 22 để SSH, và từng target port của load balancer — hoặc đặt `default_ingress_policy = "Allow"` để mọi cổng mở. Chính sách của network đã có không đổi được: đổi nó trong file thì network bị thay.
 - Load balancer cần network tạo với `enable_public_ipv6 = true`. OpenViCloud từ chối xoá VM mà load balancer còn gửi tới, nên hãy gỡ VM khỏi `backend_vm_ids` rồi apply trước khi thay VM đó.
 - Áp dụng cùng [giới hạn tài khoản](/vi/docs/concepts/quotas/) như trên portal.

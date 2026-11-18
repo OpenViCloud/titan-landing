@@ -11,13 +11,13 @@ VM của bạn nhận một địa chỉ IPv4 trong [network](/vi/docs/guides/ne
 
 VM chỉ ra được Internet qua IPv6, và chỉ trên network được tạo có bật IPv6 công khai. Xem [IPv6 công khai](/vi/docs/guides/public-ipv6/) để biết cách tạo.
 
-## Rule firewall chưa chặn gì, trừ khi bạn đặt chính sách deny
+## Không đổi được chính sách mặc định của network
 
-Portal có nút **Tường lửa** trên mỗi network để thêm rule, và mỗi rule là một rule **cho phép** (allow). Chính sách mặc định của network quyết định traffic không khớp rule nào đi về đâu.
+Chính sách mặc định của network quyết định traffic không khớp [rule firewall](/vi/docs/guides/firewall/) nào đi về đâu. Nó được đặt lúc tạo network và không đổi được về sau.
 
-Network tạo từ portal có chính sách mặc định là Allow cho cả hai chiều, và portal chưa có ô để đổi. Trên network như vậy, mọi traffic vào và ra đều được cho phép — trên network có bật IPv6 công khai, mọi cổng của mọi VM trên đó đều mở ra Internet.
-
-Network tạo với chính sách mặc định deny (qua API, hay trong [Terraform](/vi/docs/guides/terraform/)) sẽ bỏ mọi traffic vào và ra, trừ những gì rule cho phép.
+- Network mới chặn traffic từ ngoài network đi vào và cho traffic đi ra. Muốn vào VM từ Internet, hãy thêm rule — ví dụ Ingress TCP 22 để SSH.
+- Chặn chiều vào không chặn traffic giữa các VM cùng network.
+- Network tạo trước khi có mặc định này mà không đặt chính sách — mọi network tạo từ portal trước đó — cho phép mọi traffic cả hai chiều. Trên network như vậy có bật IPv6 công khai, mọi cổng của mọi VM đều mở ra Internet, và rule không đóng được cổng nào. Muốn có mặc định mới, hãy tạo network mới và tạo VM mới trên đó.
 
 ## Chưa nạp tiền được trên portal
 

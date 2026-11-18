@@ -1,11 +1,11 @@
 ---
 title: Public IPv6
-description: Give a network's VMs a public IPv6 address reachable from the Internet, how the quota works, and why you must still harden each VM yourself.
+description: Give a network's VMs a public IPv6 address, open the ports you need with firewall rules, and how the quota works.
 ---
 
-Every network can get its own block of public IPv6 addresses. VMs on that network are then reachable from the Internet over IPv6.
+Every network can get its own block of public IPv6 addresses. VMs on that network then have an address on the Internet over IPv6, and can reach the Internet over it.
 
-**Every port is open by default.** Networks created from the portal keep the default Allow policy, and the portal has no field to change it. This means every port of every VM on a public-IPv6 network is open to the whole Internet, and [firewall rules](/docs/guides/firewall/) created from the portal only add more allowed traffic — on these networks they cannot close any port (see [known limitations](/docs/known-limitations/) for what a deny default policy set over the API or Terraform does instead). Harden each VM yourself before relying on this: for example, run a firewall inside the guest operating system that only allows the ports you intend to expose.
+**Inbound traffic is blocked until you open a port.** A new network blocks traffic coming from the Internet and lets its VMs reach out. Add a [firewall rule](/docs/guides/firewall/) for each port you want to reach from the Internet — for example Ingress TCP 22 from `::/0` for SSH. A network created from the portal before this default keeps every port of every VM open to the whole Internet, and rules cannot close a port there (see [known limitations](/docs/known-limitations/)); on such a network, harden each VM yourself, for example with a firewall inside the guest operating system.
 
 ## Turn it on when you create the network
 
@@ -32,7 +32,7 @@ The default network quota is only 1, so in practice you will reach the network q
 | Public IPv6 quota exceeded — delete a network with public IPv6 first | `IPV6_QUOTA_EXCEEDED` | You already have as many networks with public IPv6 enabled as your account allows (10 by default). |
 | Public IPv6 is not available in this cluster | `IPV6_NOT_AVAILABLE` | The cluster has no public IPv6 configured, or every `/64` block of the cluster (255 total) is already taken. |
 
-A network's `/64` is held until its deletion is finished, not just requested.
+A network's `/64` is held until its deletion is finished, not just requested. If the network could not be created at all, its `/64` is freed at once.
 
 ## Cost
 
