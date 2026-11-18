@@ -5,7 +5,7 @@ description: Give a network's VMs a public IPv6 address, open the ports you need
 
 Every network can get its own block of public IPv6 addresses. VMs on that network then have an address on the Internet over IPv6, and can reach the Internet over it.
 
-**Inbound traffic is blocked until you open a port.** A new network blocks traffic coming from the Internet and lets its VMs reach out. Add a [firewall rule](/docs/guides/firewall/) for each port you want to reach from the Internet — for example Ingress TCP 22 from `::/0` for SSH. A network created from the portal before this default keeps every port of every VM open to the whole Internet, and rules cannot close a port there (see [known limitations](/docs/known-limitations/)); on such a network, harden each VM yourself, for example with a firewall inside the guest operating system.
+**A new network blocks inbound traffic until you open a port.** Traffic coming from the Internet is dropped, and the VMs still reach out. Add a [firewall rule](/docs/guides/firewall/) for each port you want to reach from the Internet — for example Ingress TCP 22 from `::/0` for SSH. A network created from the portal before this default keeps every port of every VM open to the whole Internet, and rules cannot close a port there (see [known limitations](/docs/known-limitations/)); on such a network, harden each VM yourself, for example with a firewall inside the guest operating system.
 
 ## Turn it on when you create the network
 

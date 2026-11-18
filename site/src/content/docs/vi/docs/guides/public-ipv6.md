@@ -5,7 +5,7 @@ description: Cho VM của một network địa chỉ IPv6 công khai, mở các 
 
 Mỗi network đều có thể có một dải địa chỉ IPv6 công khai riêng. VM trên network đó khi ấy có địa chỉ trên Internet qua IPv6, và ra được Internet qua nó.
 
-**Chiều vào bị chặn cho tới khi bạn mở cổng.** Network mới chặn traffic từ Internet đi vào và cho VM của nó đi ra. Hãy thêm [firewall rule](/vi/docs/guides/firewall/) cho mỗi cổng bạn muốn vào được từ Internet — ví dụ Ingress TCP 22 từ `::/0` để SSH. Network tạo từ portal trước khi có mặc định này giữ mọi cổng của mọi VM mở cho cả Internet, và rule không đóng được cổng nào ở đó (xem [giới hạn hiện tại](/vi/docs/known-limitations/)); trên network như vậy, hãy tự bảo vệ từng VM, ví dụ bằng tường lửa bên trong hệ điều hành guest.
+**Network mới chặn chiều vào cho tới khi bạn mở cổng.** Traffic từ Internet đi vào bị bỏ, còn VM vẫn ra ngoài được. Hãy thêm [firewall rule](/vi/docs/guides/firewall/) cho mỗi cổng bạn muốn vào được từ Internet — ví dụ Ingress TCP 22 từ `::/0` để SSH. Network tạo từ portal trước khi có mặc định này giữ mọi cổng của mọi VM mở cho cả Internet, và rule không đóng được cổng nào ở đó (xem [giới hạn hiện tại](/vi/docs/known-limitations/)); trên network như vậy, hãy tự bảo vệ từng VM, ví dụ bằng tường lửa bên trong hệ điều hành guest.
 
 ## Bật lúc tạo network
 
