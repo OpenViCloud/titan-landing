@@ -21,4 +21,4 @@ Network tạo với chính sách mặc định deny (qua API, hay trong [Terrafo
 
 ## Chưa nạp tiền được trên portal
 
-Trong giai đoạn beta, portal chưa có cách nạp tiền vào ví. OpenViCloud cộng tiền vào ví của bạn; liên hệ OpenViCloud khi cần thêm.
+Trong giai đoạn beta, portal chưa có cách nạp tiền vào ví. OpenViCloud cộng tiền vào ví của bạn. Cần thêm thì [mở issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) ở `OpenViCloud/titan-support` trên GitHub và ghi **Mã tenant** ở trang **Hồ sơ**. Issue là công khai: đừng ghi email hay dữ liệu cá nhân nào khác.

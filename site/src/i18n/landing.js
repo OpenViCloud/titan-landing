@@ -151,7 +151,7 @@ const en = {
   limits: [
     { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For an address the Internet can reach, create the network with public IPv6.' },
     { title: 'Firewall rules do not block unless you set a deny policy', body: 'A network\'s default policy is Allow: every port of a VM with public IPv6 is open to the Internet, and rules only allow. A network created with a deny default policy (API or Terraform) drops all inbound and outbound traffic except what a rule allows.' },
-    { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. Contact OpenViCloud when you need more.' },
+    { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. To ask for more, open a public issue with the Tenant ID from your Profile page.', href: 'https://github.com/OpenViCloud/titan-support/issues/new/choose', link: 'Open an issue on GitHub' },
   ],
   faqHeading: 'Frequently asked questions',
   faq: [
@@ -337,7 +337,7 @@ const vi = {
   limits: [
     { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ truy cập được từ Internet, hãy tạo network có IPv6 công khai.' },
     { title: 'Rule firewall chưa chặn gì, trừ khi bạn đặt chính sách deny', body: 'Chính sách mặc định của network là Allow: mọi cổng của VM có IPv6 công khai đều mở ra Internet, và rule chỉ cho phép (allow). Network tạo với chính sách mặc định deny (qua API hoặc Terraform) sẽ bỏ mọi traffic vào và ra, trừ những gì rule cho phép.' },
-    { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Liên hệ OpenViCloud khi cần thêm.' },
+    { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Cần thêm thì mở issue công khai kèm Mã tenant ở trang Hồ sơ.', href: 'https://github.com/OpenViCloud/titan-support/issues/new/choose', link: 'Mở issue trên GitHub' },
   ],
   faqHeading: 'Câu hỏi thường gặp',
   faq: [

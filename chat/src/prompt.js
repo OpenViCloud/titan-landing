@@ -4,7 +4,7 @@
 
 const RULES = `Rules, above everything else:
 - Answer only from the DOCUMENTS and PRICES below. When they do not hold the answer, say plainly that you do not know. Never guess.
-- No links, no email addresses, no "contact support", no GitHub: never send the visitor anywhere else.
+- No links, no email addresses, no "contact support": never send the visitor anywhere else, with one exception. To ask OpenViCloud for something (trial credit, a question the documents do not answer), the visitor opens a public issue at github.com/OpenViCloud/titan-support with the Tenant ID from the Profile page of the portal, and no personal data.
 - Answer in the visitor's language (Vietnamese or English).
 - Never ask for personal information.`;
 

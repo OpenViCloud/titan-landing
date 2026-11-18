@@ -41,7 +41,7 @@ Mở trang **Hoá đơn** để xem danh sách. Mỗi hàng có các cột **K�
 | `Processing` | Bạn vừa bấm trả, tiền đang được trừ khỏi ví. |
 | `Settled` | Đã trả bằng ví. |
 | `Paid` | Đã thanh toán ngoài ví, hoặc hoá đơn tổng bằng 0. |
-| `Payment failed` | Lần trả từ ví không thành công. Ví không bị trừ. Nếu ví thiếu, nhờ OpenViCloud cộng thêm tiền vào ví rồi bấm **Trả từ ví** lại. |
+| `Payment failed` | Lần trả từ ví không thành công. Ví không bị trừ. Nếu ví thiếu, [mở issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) kèm **Mã tenant** ở trang **Hồ sơ** để xin thêm tiền, rồi bấm **Trả từ ví** lại. |
 
 ## Trả hoá đơn từ ví
 
@@ -50,7 +50,7 @@ Mở trang **Hoá đơn** để xem danh sách. Mỗi hàng có các cột **K�
 3. Bấm nút **Trả** kèm số tiền để xác nhận.
 4. Hộp thoại báo **Đã nhận thanh toán — đang xử lý.** Hoá đơn chuyển sang `Processing`, rồi sang `Settled` khi tiền đã trừ xong. Trang tự cập nhật. Dòng **Chi tiêu** xuất hiện trong sao kê ví.
 
-Ví phải đủ tiền trả **trọn** hoá đơn. OpenViCloud không trả một phần. Nếu ví thiếu, nút **Trả từ ví** bị khoá: ở danh sách **Hoá đơn**, di chuột vào nút để xem số tiền còn thiếu; ở trang chi tiết hoá đơn, số tiền còn thiếu hiện ngay cạnh nút. Nếu ví hết đủ tiền ngay lúc bạn bấm, bạn nhận mã `INVOICE_WALLET_INSUFFICIENT` (portal báo **Ví không còn đủ tiền để trả hoá đơn này. Liên hệ OpenViCloud để được cộng thêm tiền vào ví, rồi thử lại.**) và không bị trừ đồng nào.
+Ví phải đủ tiền trả **trọn** hoá đơn. OpenViCloud không trả một phần. Nếu ví thiếu, nút **Trả từ ví** bị khoá: ở danh sách **Hoá đơn**, di chuột vào nút để xem số tiền còn thiếu; ở trang chi tiết hoá đơn, số tiền còn thiếu hiện ngay cạnh nút. Nếu ví hết đủ tiền ngay lúc bạn bấm, bạn nhận mã `INVOICE_WALLET_INSUFFICIENT` (portal báo **Ví không còn đủ tiền để trả hoá đơn này. Để được cộng thêm tiền vào ví, mở issue ở github.com/OpenViCloud/titan-support kèm Mã tenant ở trang Hồ sơ, rồi thử lại.**) và không bị trừ đồng nào. Xin thêm tiền thì [mở issue](https://github.com/OpenViCloud/titan-support/issues/new/choose).
 
 ## Không có trừ tiền tự động
 

@@ -53,3 +53,12 @@ test('the switch on each page points at the other language', () => {
   assert.equal(copy.vi.switchTo.lang, 'en');
   assert.equal(copy.vi.switchTo.href, '/');
 });
+
+test('the card about credit links to a public issue at titan-support in both languages', () => {
+  for (const lang of ['en', 'vi']) {
+    const card = copy[lang].limits.find((l) => l.href !== undefined);
+    assert.ok(card, `${lang}: no limitation card has a link`);
+    assert.equal(card.href, 'https://github.com/OpenViCloud/titan-support/issues/new/choose');
+    assert.doesNotMatch(card.body, /Contact OpenViCloud|Liên hệ OpenViCloud/);
+  }
+});
