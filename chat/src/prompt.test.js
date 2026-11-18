@@ -33,6 +33,13 @@ test('the rules say: only from the documents, otherwise say you do not know; no 
   assert.match(system.content, /no links/i);
 });
 
+test('the one place the rules let the assistant send a visitor is a public issue at titan-support with the Tenant ID', () => {
+  const [system] = buildMessages({ knowledge, prices, lang: 'en', history: [], message: 'q' });
+  assert.match(system.content, /github\.com\/OpenViCloud\/titan-support/);
+  assert.match(system.content, /Tenant ID/);
+  assert.doesNotMatch(system.content, /no GitHub/);
+});
+
 test('history comes after the system message and the question comes last', () => {
   const history = [{ role: 'user', content: 'a' }, { role: 'assistant', content: 'b' }];
   const messages = buildMessages({ knowledge, prices, lang: 'en', history, message: 'c' });
