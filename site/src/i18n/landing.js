@@ -83,7 +83,7 @@ const en = {
   featuresSub: 'Everything below works on OpenViCloud right now.',
   features: [
     { icon: 'vm', title: 'VMs billed by the hour', body: 'Pick a plan from the pricing table. Stop a VM and its compute stops being billed.' },
-    { icon: 'network', title: 'Private networks', body: 'Each network is yours alone. VMs in the same network reach each other over IPv4. Create it with public IPv6 and each VM gets an address the Internet can reach.' },
+    { icon: 'network', title: 'Private networks', body: 'Each network is yours alone. VMs in the same network reach each other over IPv4. Create it with public IPv6 and each VM gets a public address, open on the ports your firewall rules allow.' },
     { icon: 'volume', title: 'Extra volumes', body: 'Create a disk of your own, attach it to a VM, detach it and attach it to another VM in the same cluster.' },
     { icon: 'snapshot', title: 'Snapshots and restore', body: 'Take a VM snapshot and revert to it when you need to. A volume snapshot restores into a new volume.' },
     { icon: 'invoice', title: 'Clear VND invoices', body: 'Usage adds up to a monthly invoice covering VMs, volumes and snapshots. You pay it from your wallet balance.' },
@@ -149,14 +149,14 @@ const en = {
   limitsBody: 'OpenViCloud is still being built. We list what does not work yet so you do not waste time trying.',
   limitsLink: 'Read the current limitations',
   limits: [
-    { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For an address the Internet can reach, create the network with public IPv6.' },
+    { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For a public address, create the network with public IPv6.' },
     { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. To ask for more, open a public issue with the Tenant ID from your Profile page.', href: 'https://github.com/OpenViCloud/titan-support/issues/new/choose', link: 'Open an issue on GitHub' },
   ],
   faqHeading: 'Frequently asked questions',
   faq: [
     { q: 'How does OpenViCloud bill?', a: 'By the hour. A VM is billed while it is Running, Ready, Frozen or Error; a Stopped VM is not billed for compute. Volumes are billed per GB per hour. Each snapshot has a fixed hourly price. A month of usage adds up to one invoice.' },
     { q: 'When is the invoice issued and how do I pay?', a: 'The invoice for a month is issued on the 1st of the next month at 02:00 UTC. You pay it from your wallet balance in the portal.' },
-    { q: 'Can my VM reach the Internet?', a: 'Over IPv4, no: IPv4 only connects VMs in the same network. Over IPv6, a VM on a network created with public IPv6 gets an address the Internet can reach.' },
+    { q: 'Can my VM reach the Internet?', a: 'Over IPv4, no: IPv4 only connects VMs in the same network. Over IPv6, a VM on a network created with public IPv6 reaches the Internet and gets a public address; traffic from the Internet reaches it only on the ports your firewall rules open.' },
     { q: 'Which plans can I choose?', a: 'See the cards in the pricing table. Each card shows vCPU, RAM and price, read straight from the system.' },
     { q: 'How many resources can one account create?', a: 'By default 10 VMs, 1 network, 10 volumes, 3 snapshots per VM, 3 snapshots per volume, 20 firewall rules per network, 10 networks with public IPv6, 20 SSH keys and 5 load balancers.' },
   ],
@@ -268,7 +268,7 @@ const vi = {
   featuresSub: 'Mỗi ô dưới đây chạy được trên OpenViCloud ngay bây giờ.',
   features: [
     { icon: 'vm', title: 'VM tính theo giờ', body: 'Chọn cấu hình ở bảng giá. Tắt VM là ngừng tính tiền máy.' },
-    { icon: 'network', title: 'Network riêng', body: 'Mỗi network là một mạng của riêng bạn. VM trong cùng network thấy nhau qua IPv4. Tạo network có IPv6 công khai thì mỗi VM nhận một địa chỉ truy cập được từ Internet.' },
+    { icon: 'network', title: 'Network riêng', body: 'Mỗi network là một mạng của riêng bạn. VM trong cùng network thấy nhau qua IPv4. Tạo network có IPv6 công khai thì mỗi VM nhận một địa chỉ công khai, mở ở những cổng rule firewall cho phép.' },
     { icon: 'volume', title: 'Volume gắn thêm', body: 'Tạo ổ đĩa riêng, gắn vào VM, gỡ ra rồi gắn sang VM khác cùng cluster.' },
     { icon: 'snapshot', title: 'Snapshot và khôi phục', body: 'Chụp snapshot VM rồi revert khi cần. Snapshot volume khôi phục ra một volume mới.' },
     { icon: 'invoice', title: 'Hoá đơn VND rõ ràng', body: 'Mức dùng gom thành hoá đơn tháng, gồm VM, volume và snapshot. Trả bằng số dư ví.' },
@@ -334,14 +334,14 @@ const vi = {
   limitsBody: 'OpenViCloud đang hoàn thiện. Chúng tôi ghi rõ những gì chưa chạy để bạn không mất công thử.',
   limitsLink: 'Đọc trang giới hạn hiện tại',
   limits: [
-    { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ truy cập được từ Internet, hãy tạo network có IPv6 công khai.' },
+    { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ công khai, hãy tạo network có IPv6 công khai.' },
     { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Cần thêm thì mở issue công khai kèm Mã tenant ở trang Hồ sơ.', href: 'https://github.com/OpenViCloud/titan-support/issues/new/choose', link: 'Mở issue trên GitHub' },
   ],
   faqHeading: 'Câu hỏi thường gặp',
   faq: [
     { q: 'OpenViCloud tính tiền thế nào?', a: 'Theo giờ. VM tính khi ở trạng thái Running, Ready, Frozen hoặc Error; VM Stopped không bị tính tiền máy. Volume tính theo GB mỗi giờ. Mỗi snapshot tính một đơn giá theo giờ cố định. Mức dùng trong tháng gom thành một hoá đơn.' },
     { q: 'Hoá đơn phát hành khi nào và trả bằng gì?', a: 'Hoá đơn của một tháng phát hành ngày 1 tháng sau, lúc 02:00 UTC. Bạn trả bằng số dư ví trong portal.' },
-    { q: 'VM của tôi có truy cập Internet được không?', a: 'Qua IPv4 thì không: IPv4 chỉ nối các VM trong cùng network. Qua IPv6, VM trong network tạo có IPv6 công khai nhận một địa chỉ truy cập được từ Internet.' },
+    { q: 'VM của tôi có truy cập Internet được không?', a: 'Qua IPv4 thì không: IPv4 chỉ nối các VM trong cùng network. Qua IPv6, VM trong network tạo có IPv6 công khai ra được Internet và nhận một địa chỉ công khai; traffic từ Internet chỉ vào được VM ở những cổng rule firewall của bạn mở.' },
     { q: 'Tôi chọn được những cấu hình nào?', a: 'Xem các card ở bảng giá. Mỗi card ghi vCPU, RAM và giá, lấy trực tiếp từ hệ thống.' },
     { q: 'Một tài khoản được tạo bao nhiêu tài nguyên?', a: 'Mặc định 10 VM, 1 network, 10 volume, 3 snapshot mỗi VM, 3 snapshot mỗi volume, 20 firewall rule mỗi network, 10 network có IPv6 công khai, 20 SSH key và 5 load balancer.' },
   ],

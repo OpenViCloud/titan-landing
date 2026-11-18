@@ -17,7 +17,7 @@ Nếu bạn cũng điền **CIDR** trong khi ô này đang được đánh dấu
 
 Dải địa chỉ `/64` của network được giữ ngay khi bạn gửi form, và dòng của network hiện nó ở một dòng dưới cột **CIDR** ngay khi dòng đó tải xong. Mỗi VM trên network nhận một địa chỉ IPv6 công khai riêng trong dải `/64` ấy. Địa chỉ này hiện ở cột **IPv6 công khai** trong danh sách VM và trên trang của VM đó; có thể mất vài phút để hiện ra sau khi VM khởi động.
 
-VM truy cập được từ Internet qua IPv6. IPv4 vẫn không có đường ra Internet, kể cả trên network đã bật IPv6 công khai.
+VM ra được Internet qua IPv6, và từ Internet vào được VM ở những cổng rule firewall của bạn mở. IPv4 vẫn không có đường ra Internet, kể cả trên network đã bật IPv6 công khai.
 
 ## Hạn mức
 

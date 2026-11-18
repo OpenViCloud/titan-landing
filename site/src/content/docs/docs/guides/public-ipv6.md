@@ -17,7 +17,7 @@ If you also fill in **CIDR** while the checkbox is ticked, that CIDR must be ins
 
 The network's `/64` address block is reserved as soon as you submit the form, and its row shows it on a line under the **CIDR** column once the row loads. Each VM on the network gets its own public IPv6 address in that `/64`. The address appears in the **Public IPv6** column of the VM list and on the VM's own page; it can take a couple of minutes to appear after the VM starts.
 
-The VM is reachable from the Internet over IPv6. IPv4 still has no route to the Internet, even on a network with public IPv6 enabled.
+The VM reaches the Internet over IPv6, and the Internet reaches it on the ports your firewall rules open. IPv4 still has no route to the Internet, even on a network with public IPv6 enabled.
 
 ## Quota
 
