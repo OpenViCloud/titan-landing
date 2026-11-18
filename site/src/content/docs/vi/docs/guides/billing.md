@@ -41,7 +41,7 @@ Mở trang **Hoá đơn** để xem danh sách. Mỗi hàng có các cột **K�
 | `Processing` | Bạn vừa bấm trả, tiền đang được trừ khỏi ví. |
 | `Settled` | Đã trả bằng ví. |
 | `Paid` | Đã thanh toán ngoài ví, hoặc hoá đơn tổng bằng 0. |
-| `Payment failed` | Lần trả từ ví không thành công. Ví không bị trừ. Nếu ví thiếu, [mở issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) xin thêm tiền rồi bấm **Trả từ ví** lại. |
+| `Payment failed` | Lần trả từ ví không thành công. Ví không bị trừ. Nếu ví thiếu, [mở issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) kèm **Mã tenant** ở trang **Hồ sơ** để xin thêm tiền, rồi bấm **Trả từ ví** lại. |
 
 ## Trả hoá đơn từ ví
 

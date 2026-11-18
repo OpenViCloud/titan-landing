@@ -41,7 +41,7 @@ Open the **Invoices** page to see the list. Each row has the period (**Period**)
 | `Processing` | You just clicked pay; the money is being taken from your wallet. |
 | `Settled` | Paid from the wallet. |
 | `Paid` | Paid outside the wallet, or the invoice total is 0. |
-| `Payment failed` | The payment from the wallet did not succeed. Your wallet was not charged. If your wallet is short, [open an issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) to ask for credit, then click **Pay from wallet** again. |
+| `Payment failed` | The payment from the wallet did not succeed. Your wallet was not charged. If your wallet is short, [open an issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) with the **Tenant ID** from your **Profile** page to ask for credit, then click **Pay from wallet** again. |
 
 ## Pay an invoice from the wallet
 
