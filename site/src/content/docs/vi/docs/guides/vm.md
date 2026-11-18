@@ -20,12 +20,14 @@ Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Netw
 7. Ở mục **SSH key**, đánh dấu key muốn thêm vào VM này. Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước. Key đã chọn được thêm cho user `ubuntu`.
 8. Nếu muốn, điền **Mật khẩu console**: 12 đến 72 ký tự, để đăng nhập user `ubuntu` trên [console](#mở-console-của-vm) của VM. OpenViCloud chỉ giữ hash của nó, nên không xem lại được. VM tạo không có mật khẩu này thì không có mật khẩu console.
 9. Nếu muốn, đổi **Thời gian dừng (giây)**: thời gian tối đa hệ thống chờ hệ điều hành của VM tự tắt trước khi ngắt nguồn ([Tắt](#stop-start-và-resume)). Từ 30 đến 1800 giây, mặc định 120. VM cần thời gian để tắt êm, như database, nên đặt dài hơn.
-10. Bấm **Tạo VM**.
+10. Nếu muốn, điền **Cloud-init user data**: một tài liệu cloud-init, ví dụ `#cloud-config`, chạy lúc VM khởi động lần đầu. Tối đa 32768 byte.
+11. Bấm **Tạo VM**.
 
 Hãy điền đủ các ô phía trên SSH key. Khi bạn bấm **Tạo VM**, portal kiểm tên, rồi phần còn lại theo thứ tự dưới đây, chỉ báo lỗi đầu tiên tìm thấy, và không gửi gì:
 
 - Mật khẩu console ngắn hơn 12 hay dài hơn 72 ký tự: "Mật khẩu console phải từ 12 đến 72 ký tự."
 - Thời gian dừng không phải số giây nguyên từ 30 đến 1800: "Thời gian dừng phải là số giây nguyên, từ 30 đến 1800."
+- Cloud-init user data dài hơn 32768 byte: "Cloud-init user data dài *n* byte, vượt giới hạn 32768."
 - **Cluster**, **Mạng**, **Template** hay **Cấu hình** còn trống: "Chọn cluster, mạng, template và cấu hình."
 
 VM mới hiện trong danh sách với trạng thái **Creating**. Khi VM chạy, trạng thái chuyển sang **Running** hoặc **Ready**, và ô **IPv4 riêng** hiện địa chỉ của VM trong network. Cột **IPv6 công khai** hiện địa chỉ của VM nếu network của nó có IPv6 công khai, hoặc "—" nếu không; ở trang riêng của VM, ô này hiện "Chưa bật" thay vì "—" khi network không có IPv6 công khai. Nếu tạo không thành, trạng thái là **Failed** kèm một dòng giải thích.
@@ -49,7 +51,16 @@ VM bạn đã bấm xoá thì không còn tính vào giới hạn số VM.
 
 ## Đăng nhập vào VM
 
-Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) — thêm một key, chọn nó khi tạo VM, rồi dùng CLI hoặc kết nối SSH trực tiếp. Để vào VM mà không cần SSH, mở [console](#mở-console-của-vm) của nó.
+Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) — thêm một key, chọn nó khi tạo VM hoặc thêm sau đó, rồi dùng CLI hoặc kết nối SSH trực tiếp. Để vào VM mà không cần SSH, mở [console](#mở-console-của-vm) của nó.
+
+## Thêm SSH key vào VM đang chạy
+
+Trên trang của VM, bấm **Thêm SSH key**. Nút chỉ bật khi VM đang **Running**. Bắt đầu một lần thêm thứ hai trong khi lần trước còn đang chạy sẽ bị từ chối sau khi bạn bấm **Thêm**, kèm câu "VM phải đang Running, và không có lần thêm key nào khác đang chạy." trong hộp thoại.
+
+1. Trong hộp thoại **Thêm SSH key**, chọn 1 đến 10 SSH key đã lưu — xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước.
+2. Bấm **Thêm**.
+
+Portal hiện **Đang thêm…**, rồi **Đang thêm key vào VM…** trong lúc chờ VM. Khi key đã vào, portal hiện **Đã thêm key** — và với một VM tạo từ trước mà chưa có SSH key nào, thêm câu "Key có hiệu lực sau khi bạn Tắt VM rồi Bật lại." (xem [Stop, Start và Resume](#stop-start-và-resume)): portal và CLI báo cho bạn biết khi nào cần vậy. Nếu không thêm được, portal hiện **Không thêm được key** kèm lý do: một key đã chọn bị xoá trong lúc đó ("Một SSH key đã chọn không còn tồn tại — chọn lại."), hoặc, ngay sau khi VM vừa lên **Running**, "The VM is still starting, so the key could not be added yet. Try again in a few minutes." trong lúc guest agent của nó chưa chạy xong.
 
 ## Mở console của VM
 

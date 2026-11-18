@@ -20,12 +20,14 @@ Each VM needs a [network](/docs/guides/network/) in the same cluster. That netwo
 7. Under **SSH keys**, tick the keys to add to this VM. See [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first. Picked keys are added for the user `ubuntu`.
 8. Optionally, fill in **Console password**: 12 to 72 characters, to log in as `ubuntu` on the VM's [console](#open-the-vms-console). OpenViCloud keeps only a hash of it, so it cannot be shown again. A VM created without one has no console password.
 9. Optionally, change **Stop timeout (seconds)**: how long a stop waits for the VM's operating system to shut down before its power is cut ([Stop](#stop-start-and-resume)). 30 to 1800 seconds, default 120. Give a VM that needs time to shut down cleanly, such as a database, a longer one.
-10. Click **Create VM**.
+10. Optionally, fill in **Cloud-init user data**: a cloud-init document, such as `#cloud-config`, run on the VM's first boot. Up to 32768 bytes.
+11. Click **Create VM**.
 
 Fill in every field above SSH keys. When you click **Create VM**, the portal checks the name, then the rest in this order, shows only the first problem it finds, and sends nothing:
 
 - A console password shorter than 12 or longer than 72 characters: "The console password must be 12 to 72 characters."
 - A stop timeout that is not a whole number of seconds from 30 to 1800: "The stop timeout must be a whole number of seconds from 30 to 1800."
+- Cloud-init user data over 32768 bytes: "Cloud-init user data is *n* bytes; the limit is 32768."
 - **Cluster**, **Network**, **Template** or **Size** still empty: "Choose a cluster, network, template and size."
 
 The new VM appears in the list with the state **Creating**. When the VM runs, the state changes to **Running** or **Ready**, and the **Private IPv4** field shows the VM's address in the network. The **Public IPv6** column shows the VM's address if its network has public IPv6, or "—" otherwise; on the VM's own page this field shows "Not enabled" instead when the network has no public IPv6. If creation fails, the state is **Failed** with a line explaining why.
@@ -49,7 +51,16 @@ A VM you have clicked delete on no longer counts toward the VM limit.
 
 ## Log in to a VM
 
-See [SSH keys and logging in](/docs/guides/ssh-keys/) — add a key, pick it when you create a VM, then use the CLI or a direct SSH connection. To reach the VM without SSH, open its [console](#open-the-vms-console).
+See [SSH keys and logging in](/docs/guides/ssh-keys/) — add a key, pick it when you create a VM or add it afterwards, then use the CLI or a direct SSH connection. To reach the VM without SSH, open its [console](#open-the-vms-console).
+
+## Add an SSH key to a running VM
+
+On the VM's page, click **Add SSH key**. The button is enabled only while the VM is **Running**. Starting a second addition while one is already in progress is refused after you click **Add**, with "The VM must be Running, with no other key addition in progress." shown in the dialog.
+
+1. In the **Add an SSH key** dialog, pick 1 to 10 saved SSH keys — see [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first.
+2. Click **Add**.
+
+The portal shows **Adding…**, then **Adding the key to the VM…** while it waits for the VM. When the key is in, it shows **Key added** — and, for a VM created earlier without any SSH key, "The key takes effect once you stop the VM and start it again." (see [Stop, Start and Resume](#stop-start-and-resume)): the portal and the CLI tell you when this applies. If it cannot add the key, the portal shows **Could not add the key** with why: a picked key that was since deleted ("A picked SSH key no longer exists — pick again."), or, right after the VM reaches **Running**, "The VM is still starting, so the key could not be added yet. Try again in a few minutes." while its guest agent is not up yet.
 
 ## Open the VM's console
 

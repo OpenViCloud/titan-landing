@@ -11,15 +11,13 @@ VM của bạn nhận một địa chỉ IPv4 trong [network](/vi/docs/guides/ne
 
 VM chỉ ra được Internet qua IPv6, và chỉ trên network được tạo có bật IPv6 công khai. Xem [IPv6 công khai](/vi/docs/guides/public-ipv6/) để biết cách tạo.
 
-## Portal chưa có nút SSH hay script cloud-init
+## Rule firewall chưa chặn gì, trừ khi bạn đặt chính sách deny
 
-Portal không có nút mở phiên SSH. Để đăng nhập vào VM, hãy dùng CLI hoặc kết nối SSH trực tiếp — xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/). Tab **Console** của VM mở console serial của nó, nơi bạn đăng nhập bằng mật khẩu console đặt lúc tạo VM — xem [console của VM](/vi/docs/guides/vm/#mở-console-của-vm). Hộp thoại **Tạo VM** không có ô nhập script cloud-init. SSH key chỉ chọn được lúc tạo VM, không thêm được vào VM đã có từ portal.
+Portal có nút **Tường lửa** trên mỗi network để thêm rule, và mỗi rule là một rule **cho phép** (allow). Chính sách mặc định của network quyết định traffic không khớp rule nào đi về đâu.
 
-## Rule firewall chưa chặn thêm traffic
+Network tạo từ portal có chính sách mặc định là Allow cho cả hai chiều, và portal chưa có ô để đổi. Trên network như vậy, mọi traffic vào và ra đều được cho phép — trên network có bật IPv6 công khai, mọi cổng của mọi VM trên đó đều mở ra Internet.
 
-Portal có nút **Tường lửa** trên mỗi network để thêm rule. Mỗi rule là một rule **cho phép** (allow), và traffic không khớp rule nào đi theo chính sách mặc định của network. Network tạo từ portal có chính sách mặc định là cho phép mọi traffic, và portal chưa có ô để đổi chính sách này. Vì vậy, thêm rule hiện chưa chặn thêm traffic nào.
-
-Điều này cũng có nghĩa là trên một network có bật IPv6 công khai, mọi cổng của mọi VM trên network đó đều mở ra Internet.
+Network tạo với chính sách mặc định deny (qua API, hay trong [Terraform](/vi/docs/guides/terraform/)) sẽ bỏ mọi traffic vào và ra, trừ những gì rule cho phép.
 
 ## Chưa nạp tiền được trên portal
 

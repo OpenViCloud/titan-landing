@@ -156,7 +156,7 @@ While `OPENVICLOUD_TOKEN` is set, every command — `vm ssh` included — uses t
 - `openvicloud auth login` / `logout` / `status`
 - `openvicloud tenant get` — shows your tenant: ID, name, status, max VMs, max networks, and when it was created.
 - `openvicloud cluster list` / `template list [--cluster <cluster>]` / `size list` — what you can pick when you create a VM. `size list` shows each size's vCPUs, memory and price per hour in VND.
-- `openvicloud vm list` / `get` / `create` / `rename` / `start` / `stop` / `delete` — see [create and manage VMs](#create-and-manage-vms).
+- `openvicloud vm list` / `get` / `create` / `rename` / `add-ssh-key` / `start` / `stop` / `delete` — see [create and manage VMs](#create-and-manage-vms) and [add an SSH key to a VM](#add-an-ssh-key-to-a-vm).
 - `openvicloud ssh-key add` / `list` / `delete` — see [SSH keys](#ssh-keys).
 - `openvicloud vm ssh <vm name or id>` — opens an SSH session to a VM.
 - `openvicloud version` — shows the CLI version and the API and login server it talks to.
@@ -178,6 +178,12 @@ openvicloud vm create web-1 --cluster <cluster> --network <network> --template U
 ```
 
 `--cluster`, `--network`, `--template` and `--size` are required. The network must already exist (create it on the portal). Network, template, size and SSH key can be given by name or by ID. `--ssh-key` can be repeated to add several keys; without one you cannot log in over SSH. `--disk-size <GB>` sets the disk size. If a name does not match, the CLI says which one and creates nothing.
+
+`--user-data <file>` sends the file's exact content as cloud-init user data, up to 32768 bytes UTF-8 — the same limit the server checks. A missing file, one over the limit, or one that is not valid UTF-8 is an error before anything is sent, and nothing is created. Without this flag, no user data is sent:
+
+```bash
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --user-data cloud-init.yaml
+```
 
 `--console-password-stdin` reads a console password (12 to 72 characters) from standard input, to log in as `ubuntu` on the VM's [console](/docs/guides/vm/#open-the-vms-console). The CLI never takes the password on the command line, where other users of the machine and the shell history would see it. Everything on standard input is the password, less one line end at its end; empty input is refused and nothing is created:
 
@@ -228,6 +234,14 @@ Other VM commands take the VM's name or ID:
 - For `stop --wait`, give a `--timeout` longer than the VM's stop timeout, for example `--timeout 35m` for a stop timeout of 30 minutes.
 
 Without `--wait`, the command returns as soon as the request is accepted. See [VM states](/docs/concepts/vm-states/) for what each state means.
+
+## Add an SSH key to a VM
+
+```bash
+openvicloud vm add-ssh-key web-1 --ssh-key laptop
+```
+
+Adds one or more of your [SSH keys](/docs/guides/ssh-keys/) to a VM that is already running. `--ssh-key` can be repeated to add several keys, 1 to 10; the same key named twice counts once. Unlike `create`, `start`, `stop` and `delete`, this command waits by default until the key addition is **Added** or **Failed** before it prints anything, since that is when there is something worth printing — whether the VM needs a stop and a start before the key takes effect, or why it failed. `--no-wait` prints the addition's ID at once instead; `--timeout` (same default as the other waiting commands) changes how long it waits.
 
 ## SSH keys
 

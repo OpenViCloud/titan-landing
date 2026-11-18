@@ -5,7 +5,7 @@ description: Thêm và xoá firewall rule trên một network, các trường v�
 
 ## Một rule thực sự làm gì hôm nay
 
-Mọi firewall rule bạn thêm đều là rule **cho phép (allow)**. Network tạo từ portal mặc định cho qua mọi traffic, và portal không có ô nào để đổi mặc định này. Nghĩa là thêm rule không chặn thêm được traffic nào hôm nay — dù giữa các VM trên network, hay từ Internet tới một VM có [IPv6 công khai](/vi/docs/guides/public-ipv6/). Xem [giới hạn hiện tại](/vi/docs/known-limitations/).
+Mọi firewall rule bạn thêm đều là rule **cho phép (allow)**. Network tạo từ portal giữ chính sách mặc định Allow, và portal không có ô nào để đổi. Vì vậy, trên các network đó, thêm rule không chặn thêm được traffic nào — dù giữa các VM trên network, hay từ Internet tới một VM có [IPv6 công khai](/vi/docs/guides/public-ipv6/). Network tạo với chính sách mặc định deny (qua API, hay Terraform) sẽ bỏ mọi traffic vào và ra, trừ những gì rule cho phép. Xem [giới hạn hiện tại](/vi/docs/known-limitations/).
 
 ## Mở bảng firewall
 

@@ -156,7 +156,7 @@ Khi `OPENVICLOUD_TOKEN` có giá trị, mọi lệnh — kể cả `vm ssh` — 
 - `openvicloud auth login` / `logout` / `status`
 - `openvicloud tenant get` — hiện thông tin tenant của bạn: ID, tên, trạng thái, số VM tối đa, số network tối đa, và ngày tạo.
 - `openvicloud cluster list` / `template list [--cluster <cluster>]` / `size list` — những gì bạn chọn khi tạo VM. `size list` hiện số vCPU, bộ nhớ và giá mỗi giờ (VND) của từng size.
-- `openvicloud vm list` / `get` / `create` / `rename` / `start` / `stop` / `delete` — xem [tạo và quản lý VM](#tạo-và-quản-lý-vm).
+- `openvicloud vm list` / `get` / `create` / `rename` / `add-ssh-key` / `start` / `stop` / `delete` — xem [tạo và quản lý VM](#tạo-và-quản-lý-vm) và [thêm SSH key vào VM](#thêm-ssh-key-vào-vm).
 - `openvicloud ssh-key add` / `list` / `delete` — xem [SSH key](#ssh-key).
 - `openvicloud vm ssh <tên hoặc id VM>` — mở phiên SSH tới một VM.
 - `openvicloud version` — hiện phiên bản CLI và API, login server đang dùng.
@@ -178,6 +178,12 @@ openvicloud vm create web-1 --cluster <cluster> --network <network> --template U
 ```
 
 Bắt buộc có `--cluster`, `--network`, `--template` và `--size`. Network phải có sẵn (tạo trên portal). Network, template, size và SSH key cho theo tên hoặc ID. `--ssh-key` lặp được để thêm nhiều key; không có key thì bạn không đăng nhập được bằng SSH. `--disk-size <GB>` đặt dung lượng đĩa. Tên nào không khớp, CLI báo tên đó và không tạo gì.
+
+`--user-data <file>` gửi đúng nội dung file làm cloud-init user data, tối đa 32768 byte UTF-8 — đúng giới hạn server kiểm. File không có, quá giới hạn, hay không phải UTF-8 hợp lệ thì báo lỗi trước khi gửi gì, và không tạo gì. Không dùng cờ này thì không gửi user data:
+
+```bash
+openvicloud vm create web-1 --cluster <cluster> --network <network> --template Ubuntu-22.04-Standard --size <size> --ssh-key laptop --user-data cloud-init.yaml
+```
 
 `--console-password-stdin` đọc mật khẩu console (12 đến 72 ký tự) từ standard input, để đăng nhập user `ubuntu` trên [console](/vi/docs/guides/vm/#mở-console-của-vm) của VM. CLI không bao giờ nhận mật khẩu trên dòng lệnh, nơi người dùng khác của máy và lịch sử shell nhìn thấy nó. Toàn bộ standard input là mật khẩu, bỏ một dấu xuống dòng ở cuối; input rỗng thì bị từ chối và không tạo gì:
 
@@ -228,6 +234,14 @@ Các lệnh VM khác nhận tên hoặc ID của VM:
 - Với `stop --wait`, đặt `--timeout` dài hơn thời gian dừng của VM, ví dụ `--timeout 35m` cho thời gian dừng 30 phút.
 
 Không có `--wait`, lệnh trả về ngay khi yêu cầu được nhận. Ý nghĩa từng trạng thái ở [trạng thái VM](/vi/docs/concepts/vm-states/).
+
+## Thêm SSH key vào VM
+
+```bash
+openvicloud vm add-ssh-key web-1 --ssh-key laptop
+```
+
+Thêm một hoặc nhiều [SSH key](/vi/docs/guides/ssh-keys/) của bạn vào một VM đang chạy. `--ssh-key` lặp được để thêm nhiều key, từ 1 đến 10; cùng một key gõ hai lần chỉ tính một. Khác với `create`, `start`, `stop` và `delete`, lệnh này chờ mặc định tới khi việc thêm key **Added** (đã thêm) hay **Failed** (thất bại) rồi mới in gì, vì lúc đó mới có gì đáng in — VM có cần tắt rồi bật lại mới dùng được key hay không, hay lý do thất bại. `--no-wait` in ngay ID của lần thêm; `--timeout` (mặc định như các lệnh chờ khác) đổi thời gian chờ.
 
 ## SSH key
 
