@@ -39,7 +39,7 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `VM_QUOTA_EXCEEDED` | 422 | You have used up the number of VMs allowed. | Delete some VMs, see [quotas](/docs/concepts/quotas/). |
 | `VM_NAME_TAKEN` | 409 | You already have another VM with the same name. | Choose another name. |
 | `VM_NOT_FOUND` | 404 | The VM does not exist, or does not belong to your account. | Reload the VM list. |
-| `VM_INVALID_STATUS` | 422 | The VM is in a state that does not allow this action. This also happens when you try to open an SSH or console session to a VM that is not Running or Ready, or that has a stop, delete or snapshot waiting, and when you start, stop, delete, snapshot or revert a VM, or attach a volume to it, while a snapshot of it is being created or reverted, and when you change the name or stop timeout of a deleted VM. | See [VM states](/docs/concepts/vm-states/), and wait for the VM to reach a suitable state. |
+| `VM_INVALID_STATUS` | 422 | The VM is in a state that does not allow this action. This also happens when you try to open an SSH or console session to a VM that is not Running or Ready, or that has a stop, delete or snapshot waiting, and when you start, stop, delete, snapshot or revert a VM, or attach a volume to it, while a snapshot of it is being created or reverted, and when you change the name or stop timeout of a deleted VM, or add an SSH key to a VM that is not Running, or while another key addition on it is still in progress. | See [VM states](/docs/concepts/vm-states/), and wait for the VM to reach a suitable state. |
 | `VM_AGENT_NOT_READY` | 422 | You opened an SSH session while the VM is still starting. | Wait a minute and try again. |
 | `VM_SSH_NOT_READY` | 422 | You opened an SSH session while the VM is running but no SSH server is listening on port 22 yet: the VM is still booting, or its SSH server is stopped. | Wait a minute or two and try again. If it keeps happening, check that the SSH server inside the VM is running. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Your account already has 5 SSH or console sessions open. | Close one, then try again. |
@@ -93,6 +93,7 @@ These two account states (`TENANT_PENDING_APPROVAL`, `TENANT_SUSPENDED`) are ret
 | `SSH_KEY_NAME_TAKEN` | 409 | You already have another SSH key with this name. | Choose another name. |
 | `SSH_KEY_NOT_FOUND` | 404 | The key does not exist, or does not belong to your account. This also happens when you create a VM that refers to an SSH key id like this. | Reload the SSH keys list, see [SSH keys](/docs/guides/ssh-keys/). |
 | `SSH_KEY_QUOTA_EXCEEDED` | 422 | You have used up the number of SSH keys allowed. | Delete a key you no longer need, see [quotas](/docs/concepts/quotas/). |
+| `VM_KEY_ADDITION_NOT_FOUND` | 404 | The key addition does not exist, or does not belong to that VM or your account. | Reload the VM page, see [add an SSH key to a running VM](/docs/guides/vm/#add-an-ssh-key-to-a-running-vm). |
 
 ## API tokens
 

@@ -11,15 +11,13 @@ Your VM gets an IPv4 address in the [network](/docs/guides/network/) it is attac
 
 A VM reaches the Internet only over IPv6, and only on a network created with public IPv6 enabled. See [public IPv6](/docs/guides/public-ipv6/) for how to create one.
 
-## No SSH button or cloud-init script in the portal
+## Firewall rules do not block unless you set a deny policy
 
-The portal has no button to open an SSH session. To log in to a VM, use the CLI or connect directly over SSH — see [SSH keys and logging in](/docs/guides/ssh-keys/). The VM's **Console** tab opens its serial console, where you log in with the console password set when the VM was created — see [the VM console](/docs/guides/vm/#open-the-vms-console). The **Create VM** dialog has no field for a cloud-init script. SSH keys can only be picked when you create the VM, not added to an existing one from the portal.
+The portal has a **Firewall** button on each network for adding rules, and each rule is an **allow** rule. A network's default policy decides what happens to traffic that matches no rule.
 
-## Firewall rules do not block extra traffic yet
+Networks created from the portal have a default policy of Allow for both directions, and the portal has no field to change this. On such a network, all inbound and outbound traffic is allowed — on a network with public IPv6 enabled, every port of every VM on it is open to the Internet.
 
-The portal has a **Firewall** button on each network for adding rules. Each rule is an **allow** rule, and traffic that matches no rule follows the network's default policy. Networks created from the portal have a default policy that allows all traffic, and the portal has no field to change this policy yet. So adding rules does not block any extra traffic today.
-
-This also means that on a network with public IPv6 enabled, every port of every VM on that network is open to the Internet.
+A network created with a deny default policy (over the API, or in [Terraform](/docs/guides/terraform/)) drops all inbound and outbound traffic except what a rule allows.
 
 ## You cannot buy credit in the portal yet
 

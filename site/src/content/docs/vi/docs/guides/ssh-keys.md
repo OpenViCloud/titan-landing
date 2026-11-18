@@ -27,7 +27,9 @@ Loại key được chấp nhận: `ssh-ed25519`, `ecdsa-sha2-nistp256`, `ecdsa-
 
 ## Chọn key khi tạo VM
 
-Hộp thoại [Tạo VM](/vi/docs/guides/vm/) có nhóm ô đánh dấu **SSH key**. Chọn tối đa 10 key cho mỗi VM. Key đã chọn chỉ được cài đúng một lần, sớm trong lần khởi động đầu của VM, vào `/etc/ssh/openvicloud/ubuntu` — file mà SSH server của VM đọc cho user `ubuntu`, cạnh `~/.ssh/authorized_keys`. Bạn không thêm được key vào một VM đã tạo từ portal, và xoá một key không gỡ nó khỏi các VM đã có key đó — muốn gỡ thì xoá dòng của nó trong `/etc/ssh/openvicloud/ubuntu` ngay trong VM (dùng `sudo`); lần khởi động sau nó không quay lại.
+Hộp thoại [Tạo VM](/vi/docs/guides/vm/) có nhóm ô đánh dấu **SSH key**. Chọn tối đa 10 key cho mỗi VM. Key đã chọn chỉ được cài đúng một lần, sớm trong lần khởi động đầu của VM, vào `/etc/ssh/openvicloud/ubuntu` — file mà SSH server của VM đọc cho user `ubuntu`, cạnh `~/.ssh/authorized_keys`.
+
+Muốn thêm key vào một VM đang chạy, dùng [Thêm SSH key vào VM đang chạy](/vi/docs/guides/vm/#thêm-ssh-key-vào-vm-đang-chạy) trên trang của VM, hoặc `openvicloud vm add-ssh-key` ở [CLI](/vi/docs/guides/cli/#ssh-key). Một VM tạo từ trước mà chưa có SSH key nào có thể cần được tắt rồi bật lại thì key mới thêm mới có hiệu lực — portal và CLI báo cho bạn biết khi nào cần vậy; VM đã có sẵn một key, hay chọn key ngay lúc tạo, thì dùng được key mới ngay. Xoá một key không gỡ nó khỏi các VM đã có key đó — muốn gỡ thì xoá dòng của nó trong `/etc/ssh/openvicloud/ubuntu` ngay trong VM (dùng `sudo`); lần khởi động sau nó không quay lại.
 
 Template duy nhất đang cho khách chọn hôm nay là **Ubuntu-22.04-Standard**.
 
@@ -57,6 +59,6 @@ Xem [trang hướng dẫn CLI](/vi/docs/guides/cli/) để cài `openvicloud` v�
 ssh ubuntu@<địa chỉ Public IPv6 của VM>
 ```
 
-Cách này chỉ dùng được với VM trên network có bật IPv6 công khai (xem [IPv6 công khai](/vi/docs/guides/public-ipv6/)). Trên network như vậy, mọi cổng của VM đều mở ra Internet, và rule firewall tạo từ portal hiện chưa chặn được cổng nào — xem [giới hạn hiện tại](/vi/docs/known-limitations/) và [rule firewall](/vi/docs/guides/firewall/).
+Cách này chỉ dùng được với VM trên network có bật IPv6 công khai (xem [IPv6 công khai](/vi/docs/guides/public-ipv6/)). Network tạo từ portal giữ chính sách mặc định Allow, nên mọi cổng của VM đều mở ra Internet, và rule firewall tạo ở đó chỉ thêm traffic được phép — xem [giới hạn hiện tại](/vi/docs/known-limitations/) và [rule firewall](/vi/docs/guides/firewall/).
 
 Bản thân portal không có nút mở phiên SSH. Tab **Console** của nó mở console serial của VM — xem [console của VM](/vi/docs/guides/vm/#mở-console-của-vm).

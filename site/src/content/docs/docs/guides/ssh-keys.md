@@ -27,7 +27,9 @@ Accepted key types: `ssh-ed25519`, `ecdsa-sha2-nistp256`, `ecdsa-sha2-nistp384`,
 
 ## Pick keys when you create a VM
 
-The [Create VM](/docs/guides/vm/) dialog has an **SSH keys** checkbox group. Pick up to 10 keys per VM. Picked keys are installed only once, early in the VM's first boot, into `/etc/ssh/openvicloud/ubuntu`, a file the VM's SSH server reads for the `ubuntu` user next to `~/.ssh/authorized_keys`. You cannot add a key to a VM after it is created from the portal, and deleting a key does not remove it from VMs that already have it — remove its line from `/etc/ssh/openvicloud/ubuntu` inside the VM (with `sudo`) if you need to; it does not come back at the next boot.
+The [Create VM](/docs/guides/vm/) dialog has an **SSH keys** checkbox group. Pick up to 10 keys per VM. Picked keys are installed only once, early in the VM's first boot, into `/etc/ssh/openvicloud/ubuntu`, a file the VM's SSH server reads for the `ubuntu` user next to `~/.ssh/authorized_keys`.
+
+To add a key to a VM that is already running, use [Add an SSH key to a running VM](/docs/guides/vm/#add-an-ssh-key-to-a-running-vm) on the VM's page, or `openvicloud vm add-ssh-key` in the [CLI](/docs/guides/cli/#ssh-keys). A VM created earlier without any SSH key may need to be stopped and started for the added key to take effect — the portal and the CLI tell you when this applies; a VM that already had a key, or was created with one, gets the new key right away. Deleting a key does not remove it from VMs that already have it — remove its line from `/etc/ssh/openvicloud/ubuntu` inside the VM (with `sudo`) if you need to; it does not come back at the next boot.
 
 The only template offered to customers today is **Ubuntu-22.04-Standard**.
 
@@ -57,6 +59,6 @@ See the [CLI guide](/docs/guides/cli/) to install `openvicloud` and log in.
 ssh ubuntu@<the VM's Public IPv6 address>
 ```
 
-This only works for a VM on a network with public IPv6 enabled (see [public IPv6](/docs/guides/public-ipv6/)). On such a network, every port of the VM is open to the Internet, and firewall rules created from the portal cannot close any port yet — see [known limitations](/docs/known-limitations/) and [firewall rules](/docs/guides/firewall/).
+This only works for a VM on a network with public IPv6 enabled (see [public IPv6](/docs/guides/public-ipv6/)). A network created from the portal keeps the default Allow policy, so every port of the VM is open to the Internet, and firewall rules created there only add more allowed traffic — see [known limitations](/docs/known-limitations/) and [firewall rules](/docs/guides/firewall/).
 
 The portal itself has no button to open an SSH session. Its **Console** tab opens the VM's serial console instead — see [the VM console](/docs/guides/vm/#open-the-vms-console).

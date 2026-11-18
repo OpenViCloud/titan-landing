@@ -150,8 +150,7 @@ const en = {
   limitsLink: 'Read the current limitations',
   limits: [
     { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For an address the Internet can reach, create the network with public IPv6.' },
-    { title: 'No SSH button in the portal', body: 'Log in with your SSH key through the command-line tool, or on the VM\'s serial console in the portal with the console password set when you created the VM.', href: '/docs/guides/cli/', link: 'Command-line tool guide' },
-    { title: 'Firewall rules do not block more traffic yet', body: 'A network allows all traffic by default, and rules are only allow rules. On a network with public IPv6, every port of its VMs is open to the Internet.' },
+    { title: 'Firewall rules do not block unless you set a deny policy', body: 'A network\'s default policy is Allow: every port of a VM with public IPv6 is open to the Internet, and rules only allow. A network created with a deny default policy (API or Terraform) drops all inbound and outbound traffic except what a rule allows.' },
     { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. Contact OpenViCloud when you need more.' },
   ],
   faqHeading: 'Frequently asked questions',
@@ -337,8 +336,7 @@ const vi = {
   limitsLink: 'Đọc trang giới hạn hiện tại',
   limits: [
     { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ truy cập được từ Internet, hãy tạo network có IPv6 công khai.' },
-    { title: 'Portal chưa có nút SSH', body: 'Đăng nhập bằng SSH key qua công cụ dòng lệnh, hoặc trên console serial của VM trong portal bằng mật khẩu console đặt lúc tạo VM.', href: '/vi/docs/guides/cli/', link: 'Hướng dẫn công cụ dòng lệnh' },
-    { title: 'Rule firewall chưa chặn thêm traffic', body: 'Network mặc định cho phép mọi traffic, rule hiện chỉ là rule cho phép. Trên network có IPv6 công khai, mọi cổng của VM đều mở ra Internet.' },
+    { title: 'Rule firewall chưa chặn gì, trừ khi bạn đặt chính sách deny', body: 'Chính sách mặc định của network là Allow: mọi cổng của VM có IPv6 công khai đều mở ra Internet, và rule chỉ cho phép (allow). Network tạo với chính sách mặc định deny (qua API hoặc Terraform) sẽ bỏ mọi traffic vào và ra, trừ những gì rule cho phép.' },
     { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Liên hệ OpenViCloud khi cần thêm.' },
   ],
   faqHeading: 'Câu hỏi thường gặp',

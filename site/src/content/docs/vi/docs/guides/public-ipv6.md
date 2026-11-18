@@ -5,7 +5,7 @@ description: Cho VM của một network địa chỉ IPv6 công khai truy cập 
 
 Mỗi network đều có thể có một dải địa chỉ IPv6 công khai riêng. VM trên network đó khi ấy truy cập được từ Internet qua IPv6.
 
-**Mọi cổng đều mở theo mặc định.** Network tạo từ portal mặc định cho qua mọi traffic, và portal không có ô nào để đổi điều này. Nghĩa là mọi cổng của mọi VM trên một network có IPv6 công khai đều mở cho cả Internet, và [firewall rule](/vi/docs/guides/firewall/) tạo từ portal không chặn được cổng nào — chúng chỉ thêm traffic được phép. Hãy tự bảo vệ từng VM trước khi dựa vào tính năng này: ví dụ, chạy một tường lửa bên trong hệ điều hành guest chỉ cho phép đúng những cổng bạn muốn mở ra ngoài.
+**Mọi cổng đều mở theo mặc định.** Network tạo từ portal giữ chính sách mặc định Allow, và portal không có ô nào để đổi. Nghĩa là mọi cổng của mọi VM trên một network có IPv6 công khai đều mở cho cả Internet, và [firewall rule](/vi/docs/guides/firewall/) tạo từ portal chỉ thêm traffic được phép — trên các network đó chúng không chặn được cổng nào (xem [giới hạn hiện tại](/vi/docs/known-limitations/) để biết chính sách mặc định deny đặt qua API hay Terraform làm được gì). Hãy tự bảo vệ từng VM trước khi dựa vào tính năng này: ví dụ, chạy một tường lửa bên trong hệ điều hành guest chỉ cho phép đúng những cổng bạn muốn mở ra ngoài.
 
 ## Bật lúc tạo network
 

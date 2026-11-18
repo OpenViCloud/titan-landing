@@ -41,6 +41,7 @@ Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`
 | **Tiếp tục** | `Frozen` (nút **Bật** đổi tên thành **Tiếp tục**) |
 | Tạo snapshot | `Running`, `Ready`, `Stopped`, `Frozen` |
 | Gắn volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
+| **Thêm SSH key** ([thêm SSH key vào VM đang chạy](/vi/docs/guides/vm/#thêm-ssh-key-vào-vm-đang-chạy)) | `Running` |
 | Phiên SSH ([đăng nhập vào VM](/vi/docs/guides/ssh-keys/)) hoặc phiên console ([console của VM](/vi/docs/guides/vm/#mở-console-của-vm)) | `Running` hoặc `Ready` |
 | **Xoá** | Mọi trạng thái, trừ `Creating`, `Deleting` và `Snapshotting` |
 

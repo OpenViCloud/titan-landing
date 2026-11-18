@@ -41,6 +41,7 @@ During that time, the action column has a greyed-out button, for example `Stoppi
 | **Resume** | `Frozen` (the **Start** button is renamed **Resume**) |
 | Create snapshot | `Running`, `Ready`, `Stopped`, `Frozen` |
 | Attach volume | `Running`, `Ready`, `Stopped`, `Frozen`, `Starting` |
+| **Add SSH key** ([add an SSH key to a running VM](/docs/guides/vm/#add-an-ssh-key-to-a-running-vm)) | `Running` |
 | SSH session ([log in to a VM](/docs/guides/ssh-keys/)) or console session ([the VM console](/docs/guides/vm/#open-the-vms-console)) | `Running` or `Ready` |
 | **Delete** | Any state, except `Creating`, `Deleting` and `Snapshotting` |
 

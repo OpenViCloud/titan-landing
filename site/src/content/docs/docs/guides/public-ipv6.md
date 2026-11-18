@@ -5,7 +5,7 @@ description: Give a network's VMs a public IPv6 address reachable from the Inter
 
 Every network can get its own block of public IPv6 addresses. VMs on that network are then reachable from the Internet over IPv6.
 
-**Every port is open by default.** Networks created from the portal allow all traffic by default, and the portal has no field to change this. This means every port of every VM on a public-IPv6 network is open to the whole Internet, and [firewall rules](/docs/guides/firewall/) created from the portal cannot close any port — they can only add more allowed traffic. Harden each VM yourself before relying on this: for example, run a firewall inside the guest operating system that only allows the ports you intend to expose.
+**Every port is open by default.** Networks created from the portal keep the default Allow policy, and the portal has no field to change it. This means every port of every VM on a public-IPv6 network is open to the whole Internet, and [firewall rules](/docs/guides/firewall/) created from the portal only add more allowed traffic — on these networks they cannot close any port (see [known limitations](/docs/known-limitations/) for what a deny default policy set over the API or Terraform does instead). Harden each VM yourself before relying on this: for example, run a firewall inside the guest operating system that only allows the ports you intend to expose.
 
 ## Turn it on when you create the network
 

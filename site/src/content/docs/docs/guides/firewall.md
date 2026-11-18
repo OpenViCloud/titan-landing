@@ -5,7 +5,7 @@ description: Add and delete firewall rules on a network, their fields and limits
 
 ## What a rule does today
 
-Every firewall rule you add is an **allow** rule. Networks created from the portal allow all traffic by default, and the portal has no field to change this default. This means adding rules does not block any extra traffic today — not between VMs on the network, and not from the Internet to a VM with [public IPv6](/docs/guides/public-ipv6/). See [known limitations](/docs/known-limitations/).
+Every firewall rule you add is an **allow** rule. Networks created from the portal keep the default Allow policy, and the portal has no field to change it — so on those networks, adding rules does not block any extra traffic, not between VMs on the network, and not from the Internet to a VM with [public IPv6](/docs/guides/public-ipv6/). A network created with a deny default policy (over the API, or Terraform) drops all inbound and outbound traffic except what a rule allows. See [known limitations](/docs/known-limitations/).
 
 ## Open the firewall panel
 

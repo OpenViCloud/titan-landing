@@ -39,7 +39,7 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `VM_QUOTA_EXCEEDED` | 422 | Bạn đã dùng hết số VM được phép. | Xoá bớt VM, xem [giới hạn](/vi/docs/concepts/quotas/). |
 | `VM_NAME_TAKEN` | 409 | Bạn đã có một VM khác cùng tên. | Chọn tên khác. |
 | `VM_NOT_FOUND` | 404 | VM không tồn tại, hoặc không thuộc tài khoản của bạn. | Tải lại danh sách VM. |
-| `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH hay console tới một VM không ở trạng thái Running hoặc Ready, hoặc đang có lệnh tắt, xoá hay snapshot chờ, và khi bạn bật, tắt, xoá, tạo snapshot, quay về snapshot hay gắn volume cho một VM trong lúc một snapshot của nó đang được tạo hoặc đang quay về, và khi bạn đổi tên hay thời gian dừng của VM đã xoá. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
+| `VM_INVALID_STATUS` | 422 | VM đang ở trạng thái không cho phép thao tác này. Mã này cũng xuất hiện khi bạn mở phiên SSH hay console tới một VM không ở trạng thái Running hoặc Ready, hoặc đang có lệnh tắt, xoá hay snapshot chờ, và khi bạn bật, tắt, xoá, tạo snapshot, quay về snapshot hay gắn volume cho một VM trong lúc một snapshot của nó đang được tạo hoặc đang quay về, và khi bạn đổi tên hay thời gian dừng của VM đã xoá, hay thêm SSH key vào một VM không ở trạng thái Running, hoặc trong lúc một lần thêm key khác trên VM đó còn đang chạy. | Xem [trạng thái VM](/vi/docs/concepts/vm-states/), chờ VM tới trạng thái phù hợp. |
 | `VM_AGENT_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM còn đang khởi động. | Chờ một phút rồi thử lại. |
 | `VM_SSH_NOT_READY` | 422 | Bạn mở phiên SSH trong lúc VM đã chạy nhưng chưa có SSH server nào sẵn sàng nhận kết nối ở cổng 22: VM còn đang khởi động, hoặc SSH server trong VM đã bị tắt. | Chờ một hai phút rồi thử lại. Nếu vẫn gặp, kiểm tra SSH server trong VM có đang chạy không. |
 | `VM_SESSION_LIMIT_REACHED` | 422 | Tài khoản của bạn đã mở đủ 5 phiên SSH hoặc console. | Đóng bớt một phiên rồi thử lại. |
@@ -93,6 +93,7 @@ Hai mã trạng thái tài khoản này (`TENANT_PENDING_APPROVAL`, `TENANT_SUSP
 | `SSH_KEY_NAME_TAKEN` | 409 | Bạn đã có một SSH key khác cùng tên. | Chọn tên khác. |
 | `SSH_KEY_NOT_FOUND` | 404 | Key không tồn tại, hoặc không thuộc tài khoản của bạn. Mã này cũng xuất hiện khi bạn tạo VM với một id SSH key như vậy. | Tải lại danh sách SSH key, xem [SSH key](/vi/docs/guides/ssh-keys/). |
 | `SSH_KEY_QUOTA_EXCEEDED` | 422 | Bạn đã dùng hết số SSH key được phép. | Xoá một key không cần dùng nữa, xem [giới hạn](/vi/docs/concepts/quotas/). |
+| `VM_KEY_ADDITION_NOT_FOUND` | 404 | Lần thêm key này không tồn tại, hoặc không thuộc VM đó hay tài khoản của bạn. | Tải lại trang VM, xem [thêm SSH key vào VM đang chạy](/vi/docs/guides/vm/#thêm-ssh-key-vào-vm-đang-chạy). |
 
 ## Token API
 
