@@ -21,4 +21,4 @@ A network created with a deny default policy (over the API, or in [Terraform](/d
 
 ## You cannot buy credit in the portal yet
 
-During the beta the portal has no way to buy credit. OpenViCloud adds credit to your wallet; contact OpenViCloud when you need more.
+During the beta the portal has no way to buy credit. OpenViCloud adds credit to your wallet. To ask for more, [open an issue](https://github.com/OpenViCloud/titan-support/issues/new/choose) at `OpenViCloud/titan-support` on GitHub and write the **Tenant ID** shown on your **Profile** page. The issue is public: do not write your email or other personal data in it.
