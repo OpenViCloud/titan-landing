@@ -1,11 +1,17 @@
 ---
 title: Use firewall rules
-description: Add and delete firewall rules on a network, their fields and limits, and what a rule actually does today.
+description: Add and delete firewall rules on a network, their fields and limits, and what a network does with traffic no rule allows.
 ---
 
-## What a rule does today
+## What a rule does
 
-Every firewall rule you add is an **allow** rule. Networks created from the portal keep the default Allow policy, and the portal has no field to change it — so on those networks, adding rules does not block any extra traffic, not between VMs on the network, and not from the Internet to a VM with [public IPv6](/docs/guides/public-ipv6/). A network created with a deny default policy (over the API, or Terraform) drops all inbound and outbound traffic except what a rule allows. See [known limitations](/docs/known-limitations/).
+Every firewall rule you add is an **allow** rule. What happens to traffic no rule allows is the network's default policy, shown at the top of the firewall panel:
+
+- A new network shows "Inbound from outside the network: blocked unless a rule allows it" and "Outbound: allowed". Traffic from the Internet reaches a VM with [public IPv6](/docs/guides/public-ipv6/) only on the ports your Ingress rules open. This does not block traffic between VMs of the same network.
+- A network created before this default without a policy — every network created from the portal before then — shows "Inbound from outside the network: allowed" and "Outbound: allowed": every port is open, and rules cannot close one.
+- A network created over the API or [Terraform](/docs/guides/terraform/) with a Deny outbound policy shows "Outbound: blocked unless a rule allows it": VMs reach out, and reach each other, only where an Egress rule allows it.
+
+The default policy cannot be changed after the network is created. See [known limitations](/docs/known-limitations/).
 
 ## Open the firewall panel
 
@@ -28,7 +34,7 @@ There is no way to change a rule once created. Delete it and add a new one inste
 
 ## Delete a rule
 
-Click **Delete** on the rule's row. There is no confirmation dialog. The portal shows "Rule deletion requested", the row shows **Deleting**, and then the rule disappears from the list once the deletion is finished. If OpenViCloud cannot delete the rule, the row goes back to its previous state and shows the reason in red after the state.
+Click **Delete** on the rule's row. There is no confirmation dialog. The portal shows "Rule deletion requested", the row shows **Deleting**, and then the rule disappears from the list once the deletion is finished. If OpenViCloud cannot delete the rule, the row shows the state OpenViCloud last read for the rule — **Unknown** if it has none — and the reason in red after the state.
 
 A network's rules are deleted together with the network when you delete it.
 

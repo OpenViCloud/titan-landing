@@ -1,11 +1,11 @@
 ---
 title: IPv6 công khai
-description: Cho VM của một network địa chỉ IPv6 công khai truy cập được từ Internet, cách tính hạn mức, và vì sao bạn vẫn phải tự bảo vệ từng VM.
+description: Cho VM của một network địa chỉ IPv6 công khai, mở các cổng cần dùng bằng firewall rule, và cách tính hạn mức.
 ---
 
-Mỗi network đều có thể có một dải địa chỉ IPv6 công khai riêng. VM trên network đó khi ấy truy cập được từ Internet qua IPv6.
+Mỗi network đều có thể có một dải địa chỉ IPv6 công khai riêng. VM trên network đó khi ấy có địa chỉ trên Internet qua IPv6, và ra được Internet qua nó.
 
-**Mọi cổng đều mở theo mặc định.** Network tạo từ portal giữ chính sách mặc định Allow, và portal không có ô nào để đổi. Nghĩa là mọi cổng của mọi VM trên một network có IPv6 công khai đều mở cho cả Internet, và [firewall rule](/vi/docs/guides/firewall/) tạo từ portal chỉ thêm traffic được phép — trên các network đó chúng không chặn được cổng nào (xem [giới hạn hiện tại](/vi/docs/known-limitations/) để biết chính sách mặc định deny đặt qua API hay Terraform làm được gì). Hãy tự bảo vệ từng VM trước khi dựa vào tính năng này: ví dụ, chạy một tường lửa bên trong hệ điều hành guest chỉ cho phép đúng những cổng bạn muốn mở ra ngoài.
+**Network mới chặn chiều vào cho tới khi bạn mở cổng.** Traffic từ Internet đi vào bị bỏ, còn VM vẫn ra ngoài được. Hãy thêm [firewall rule](/vi/docs/guides/firewall/) cho mỗi cổng bạn muốn vào được từ Internet — ví dụ Ingress TCP 22 từ `::/0` để SSH. Network tạo từ portal trước khi có mặc định này giữ mọi cổng của mọi VM mở cho cả Internet, và rule không đóng được cổng nào ở đó (xem [giới hạn hiện tại](/vi/docs/known-limitations/)); trên network như vậy, hãy tự bảo vệ từng VM, ví dụ bằng tường lửa bên trong hệ điều hành guest.
 
 ## Bật lúc tạo network
 
@@ -17,7 +17,7 @@ Nếu bạn cũng điền **CIDR** trong khi ô này đang được đánh dấu
 
 Dải địa chỉ `/64` của network được giữ ngay khi bạn gửi form, và dòng của network hiện nó ở một dòng dưới cột **CIDR** ngay khi dòng đó tải xong. Mỗi VM trên network nhận một địa chỉ IPv6 công khai riêng trong dải `/64` ấy. Địa chỉ này hiện ở cột **IPv6 công khai** trong danh sách VM và trên trang của VM đó; có thể mất vài phút để hiện ra sau khi VM khởi động.
 
-VM truy cập được từ Internet qua IPv6. IPv4 vẫn không có đường ra Internet, kể cả trên network đã bật IPv6 công khai.
+VM ra được Internet qua IPv6. IPv4 vẫn không có đường ra Internet, kể cả trên network đã bật IPv6 công khai.
 
 ## Hạn mức
 
@@ -32,7 +32,7 @@ Hạn mức network mặc định chỉ là 1, nên trên thực tế bạn sẽ
 | Đã vượt hạn mức IPv6 công khai — xoá bớt một mạng có IPv6 công khai trước | `IPV6_QUOTA_EXCEEDED` | Bạn đã có đủ số network bật IPv6 công khai mà tài khoản được phép (mặc định 10). |
 | Cluster này chưa có IPv6 công khai | `IPV6_NOT_AVAILABLE` | Cluster chưa cấu hình IPv6 công khai, hoặc mọi dải `/64` của cluster (255 dải) đã dùng hết. |
 
-Dải `/64` của một network được giữ tới khi việc xoá network đó xong, không chỉ khi bạn bấm xoá.
+Dải `/64` của một network được giữ tới khi việc xoá network đó xong, không chỉ khi bạn bấm xoá. Nếu network không tạo được, dải `/64` của nó được trả ngay.
 
 ## Chi phí
 

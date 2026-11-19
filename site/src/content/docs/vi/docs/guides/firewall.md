@@ -1,11 +1,17 @@
 ---
 title: Dùng firewall rule
-description: Thêm và xoá firewall rule trên một network, các trường và giới hạn của nó, và một rule thực sự làm gì hôm nay.
+description: Thêm và xoá firewall rule trên một network, các trường và giới hạn của nó, và network làm gì với traffic không rule nào cho phép.
 ---
 
-## Một rule thực sự làm gì hôm nay
+## Một rule làm gì
 
-Mọi firewall rule bạn thêm đều là rule **cho phép (allow)**. Network tạo từ portal giữ chính sách mặc định Allow, và portal không có ô nào để đổi. Vì vậy, trên các network đó, thêm rule không chặn thêm được traffic nào — dù giữa các VM trên network, hay từ Internet tới một VM có [IPv6 công khai](/vi/docs/guides/public-ipv6/). Network tạo với chính sách mặc định deny (qua API, hay Terraform) sẽ bỏ mọi traffic vào và ra, trừ những gì rule cho phép. Xem [giới hạn hiện tại](/vi/docs/known-limitations/).
+Mọi firewall rule bạn thêm đều là rule **cho phép (allow)**. Traffic không rule nào cho phép đi về đâu là chính sách mặc định của network, hiện ở đầu bảng tường lửa:
+
+- Network mới hiện "Chiều vào từ ngoài mạng: bị chặn trừ khi có quy tắc cho phép" và "Chiều ra: cho phép". Traffic từ Internet chỉ tới được VM có [IPv6 công khai](/vi/docs/guides/public-ipv6/) ở những cổng rule Ingress của bạn mở. Điều này không chặn traffic giữa các VM cùng network.
+- Network tạo trước khi có mặc định này mà không đặt chính sách — mọi network tạo từ portal trước đó — hiện "Chiều vào từ ngoài mạng: cho phép" và "Chiều ra: cho phép": mọi cổng đều mở, và rule không đóng được cổng nào.
+- Network tạo qua API hay [Terraform](/vi/docs/guides/terraform/) với chính sách chiều ra Deny hiện "Chiều ra: bị chặn trừ khi có quy tắc cho phép": VM chỉ ra ngoài, và tới các VM khác, ở chỗ rule Egress cho phép.
+
+Không đổi được chính sách mặc định sau khi đã tạo network. Xem [giới hạn hiện tại](/vi/docs/known-limitations/).
 
 ## Mở bảng firewall
 
@@ -28,7 +34,7 @@ Không có cách nào đổi một rule sau khi đã tạo. Hãy xoá rồi thê
 
 ## Xoá rule
 
-Bấm **Xoá** trên dòng của rule. Không có hộp thoại xác nhận. Portal báo "Đã gửi yêu cầu xoá quy tắc", dòng đó hiện **Deleting**, rồi rule biến mất khỏi danh sách khi xoá xong. Nếu OpenViCloud không xoá được rule, dòng đó trở về trạng thái trước và hiện lý do bằng chữ đỏ sau trạng thái.
+Bấm **Xoá** trên dòng của rule. Không có hộp thoại xác nhận. Portal báo "Đã gửi yêu cầu xoá quy tắc", dòng đó hiện **Deleting**, rồi rule biến mất khỏi danh sách khi xoá xong. Nếu OpenViCloud không xoá được rule, dòng đó hiện trạng thái OpenViCloud đọc được gần nhất của rule — **Unknown** nếu chưa có — và lý do bằng chữ đỏ sau trạng thái.
 
 Các rule của một network bị xoá cùng network khi bạn xoá network đó.
 

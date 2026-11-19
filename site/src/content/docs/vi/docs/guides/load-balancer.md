@@ -63,6 +63,7 @@ Xoá một VM mà một load balancer vẫn còn gửi traffic tới sẽ bị t
 
 - Load balancer chuyển tiếp nguyên gói TCP hoặc UDP tới các VM bạn đã chọn; nó không terminate TLS, không đọc HTTP.
 - Backend thấy địa chỉ nguồn thật của client, không phải địa chỉ của load balancer.
+- Tường lửa của network xét mỗi gói theo target port, không theo cổng của listener. Network mới chặn chiều vào, nên hãy thêm [rule firewall](/vi/docs/guides/firewall/) Ingress cho từng target port, nếu không load balancer không nhận được gì. Form nhắc điều này dưới **Listener**: "Nếu tường lửa của mạng chặn chiều vào (mặc định của mạng mới), hãy thêm quy tắc Ingress cho từng target port."
 - Health check luôn bật và không tắt được. Một VM ngừng trả lời sẽ sớm ngừng nhận traffic mới; OpenViCloud không hiện trạng thái sức khoẻ của từng backend.
 - Mỗi backend nhận traffic trên địa chỉ dựng từ card mạng của nó (địa chỉ EUI-64 trên dải `/64` của network). Giữ nguyên cách đặt địa chỉ IPv6 mặc định của VM trên card mạng đó — đổi sang kiểu địa chỉ khác có thể khiến VM ngừng nhận traffic từ load balancer.
 

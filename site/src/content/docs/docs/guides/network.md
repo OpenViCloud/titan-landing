@@ -12,7 +12,7 @@ A network is a private network that connects your VMs to each other. Each VM nee
 3. Fill in **Name**. The name is at most 100 characters, uses only letters, digits, hyphens (`-`) and underscores (`_`), and must start with a letter or a digit.
 4. Choose a **Cluster**. If you leave it empty, the portal shows "Choose a cluster" and sends nothing.
 5. Fill in **CIDR** if you want to choose the address range, for example `10.0.0.0/24`. This field is optional. If you leave it empty, the system picks a range and shows it in the **CIDR** column when the network is created.
-6. Tick **Enable public IPv6** if you want VMs on this network reachable from the Internet over IPv6. See [public IPv6](/docs/guides/public-ipv6/) before you tick it.
+6. Tick **Enable public IPv6** if you want VMs on this network to have a public IPv6 address. Traffic from the Internet is blocked until you add a [firewall rule](/docs/guides/firewall/) — see [public IPv6](/docs/guides/public-ipv6/) before you tick it.
 7. Click **Create Network**.
 
 The new network appears in the table with the state **Creating**. The table polls every 5 seconds while a row is still changing, then stops. When **Creating** ends, the network may show **Pending** for a while as the infrastructure finishes setting it up. When the state becomes **Created**, you can create VMs and firewall rules on that network. If creation fails, the row shows **Failed**, **Errored**, **Unavailable**, **Unknown** or **Not found**.
@@ -45,6 +45,6 @@ By default, a new account can create 1 network. When you reach it, the portal sh
 
 While the network still has VMs or a [load balancer](/docs/guides/load-balancer/) that has not finished deleting, the **Delete** button is disabled; when the reason is a load balancer, hovering over the button shows "Delete the load balancers of this network first". If the server still refuses, the portal shows "Cannot delete: the network still has VMs or load balancers" (code `NETWORK_NOT_EMPTY`). Delete in this order: load balancers, then VMs, then the network.
 
-After you confirm, the portal shows "Network deleted", but the network stays in the table with the state **Deleting** until the deletion is finished, and only then disappears. The network's firewall rules are deleted with the network. If OpenViCloud cannot delete the network, the row goes back to its previous state and shows the reason in red under the cluster line; click **Delete** again to retry.
+After you confirm, the portal shows "Network deleted", but the network stays in the table with the state **Deleting** until the deletion is finished, and only then disappears. The network's firewall rules are deleted with the network. If OpenViCloud cannot delete the network, the row shows the state OpenViCloud last read for the network — **Unknown** if it has none — and the reason in red under the cluster line; click **Delete** again to retry.
 
 The **Delete** button is also disabled while the network is **Creating** or **Deleting**. A network in the **Failed** or **Not found** state can still be deleted.

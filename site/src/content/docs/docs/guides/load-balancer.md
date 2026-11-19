@@ -63,6 +63,7 @@ Deleting a VM that a load balancer still sends traffic to is refused: "Cannot de
 
 - The load balancer passes TCP or UDP packets through to the VMs you picked; it does not terminate TLS or read HTTP.
 - Backends see the real source address of the client, not the load balancer's address.
+- The network's firewall checks each packet against the target port, not the listener port. A new network blocks inbound traffic, so add an Ingress [firewall rule](/docs/guides/firewall/) for each target port, or the load balancer receives nothing. The form says so under **Listeners**: "If the network firewall blocks inbound traffic (the default for new networks), add an Ingress rule for each target port."
 - Health checking is always on and cannot be turned off. A VM that stops responding stops receiving new traffic quickly; OpenViCloud does not expose a health status for individual backends.
 - Each backend receives traffic on the address built from its network card (its EUI-64 address on the network's `/64`). Keep the VM's default IPv6 addressing on that network card — changing it to a different kind of address can stop the VM from receiving load-balanced traffic.
 

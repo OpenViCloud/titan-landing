@@ -705,7 +705,7 @@ function tokens(line: string) {
       .terminal .line.cont::before { content: none; }
       .terminal .step { display: block; }
       .terminal .step + .step { margin-top: 0.75rem; }
-      .terminal .term-out { display: block; white-space: pre-wrap; word-break: break-all; color: var(--color-muted-foreground); }
+      .terminal .term-out { display: block; white-space: pre; color: var(--color-muted-foreground); }
 
       .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; counter-reset: step; }
       .steps li { counter-increment: step; padding: 1.5rem; border-top: 2px solid var(--color-accent); background: var(--color-raised); border-radius: 0 0 var(--radius) var(--radius); }

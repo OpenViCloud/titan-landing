@@ -24,7 +24,7 @@ const notLabels = {
     composed: ['I have read and agree to the Terms of Service.'],
     // A step or list item that starts with its topic in bold.
     topics: ['Create a snapshot.', 'Delete a snapshot.', 'Restore.', 'Revert.', 'Snapshot', 'VM and network', 'Volume and VM',
-      'VMs, networks, firewall rules, load balancers', 'Every port is open by default.'],
+      'VMs, networks, firewall rules, load balancers', 'A new network blocks inbound traffic until you open a port.'],
     // Emphasis inside a sentence.
     emphasis: ['allow', 'networks', 'new', 'not', 'paying invoices', 'size', 'template', 'whole',
       'you cannot create any', '×'],
@@ -34,8 +34,8 @@ const notLabels = {
     keycloak: ['Đăng nhập bằng GitHub.', 'Đăng nhập bằng GitHub:', 'Đăng ký bằng email và mật khẩu', 'Đăng ký bằng email và mật khẩu:'],
     composed: ['Tôi đã đọc và đồng ý với Điều khoản dịch vụ.'],
     topics: ['Tạo snapshot.', 'Xoá snapshot.', 'Restore.', 'Revert.', 'Volume', 'VM và network', 'Volume và VM',
-      'VM, network, firewall rule, load balancer', 'Mọi cổng đều mở theo mặc định.'],
-    emphasis: ['cho phép', 'cho phép (allow)', 'chưa', 'không được tạo cái nào', 'mới', 'network', 'size', 'template',
+      'VM, network, firewall rule, load balancer', 'Network mới chặn chiều vào cho tới khi bạn mở cổng.'],
+    emphasis: ['cho phép (allow)', 'chưa', 'không được tạo cái nào', 'mới', 'network', 'size', 'template',
       'trả hoá đơn', 'trọn', '×'],
   },
 };
