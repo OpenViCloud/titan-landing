@@ -32,6 +32,8 @@ Khi bạn vừa bấm một nút, VM hiện trạng thái đang chuyển cho t�
 
 Trong lúc đó, ở cột thao tác có một nút mờ, ví dụ `Stopping…`, và bạn không bấm được **Tắt** hay **Bật**. Danh sách tự làm mới cho tới khi VM tới trạng thái mới.
 
+Mỗi ngày một lần, OpenViCloud backup mọi VM và volume mà không tắt chúng. Thao tác bạn bấm trong lúc VM hay volume đó đang backup sẽ chờ tới khi backup xong, nên trạng thái đang chuyển (ví dụ `Stopping`) có thể kéo dài hơn thường lệ, có khi vài phút hoặc hơn.
+
 ## Thao tác được phép
 
 | Thao tác | Bấm được khi VM ở |

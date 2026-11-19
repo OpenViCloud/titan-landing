@@ -32,6 +32,8 @@ When you have just clicked a button, the VM shows a changing state until the act
 
 During that time, the action column has a greyed-out button, for example `Stopping…`, and you cannot click **Stop** or **Start**. The list refreshes by itself until the VM reaches its new state.
 
+Once a day, OpenViCloud backs up every VM and volume without stopping it. An action you click while the backup of that VM or volume is running waits until the backup is done, so the changing state (for example `Stopping`) can last longer than usual, sometimes for several minutes.
+
 ## Allowed actions
 
 | Action | Available when the VM is |
