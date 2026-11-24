@@ -49,7 +49,7 @@ Từ màn hình rộng ít nhất 900 pixel, phần đầu trang có ô tìm ki�
 
 ## Ngôn ngữ
 
-Chọn **English** hoặc **Tiếng Việt** trong menu tài khoản. Màn hình chờ duyệt và màn hình điều khoản dịch vụ mỗi cái đều có nút chuyển ngôn ngữ riêng ở góc, vì bạn gặp hai màn hình này trước khi có menu tài khoản.
+Bấm nút ngôn ngữ trên thanh trên cùng, cạnh tên tài khoản. Nút ghi **Tiếng Việt** khi portal đang hiện English, và ghi **English** khi portal đang hiện Tiếng Việt. Bạn cũng chọn được một trong hai ở menu tài khoản. Màn hình chờ duyệt và màn hình điều khoản dịch vụ mỗi cái đều có nút chuyển ngôn ngữ riêng ở góc, vì bạn gặp hai màn hình này trước khi có menu tài khoản.
 
 Lựa chọn của bạn được ghi nhớ trên trình duyệt này. Lần đầu vào, khi chưa có gì được ghi nhớ, portal hiện Tiếng Việt nếu bạn ở Việt Nam, còn lại hiện English. Trang đăng nhập theo lựa chọn đã ghi nhớ của bạn; nếu chưa có gì được ghi nhớ, nó theo ngôn ngữ của trình duyệt.
 

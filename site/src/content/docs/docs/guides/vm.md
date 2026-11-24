@@ -17,13 +17,15 @@ Each VM needs a [network](/docs/guides/network/) in the same cluster. That netwo
 4. Choose a **Network**. This field only shows networks in the cluster you just chose.
 5. Choose a **Template**, which is the operating system. This field only shows templates available in that cluster.
 6. Choose a **Size**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) or Extra Large (8 vCPU, 16 GB).
-7. Under **SSH keys**, tick the keys to add to this VM. See [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first. Picked keys are added for the user `ubuntu`.
-8. Optionally, fill in **Console password**: 12 to 72 characters, to log in as `ubuntu` on the VM's [console](#open-the-vms-console). OpenViCloud keeps only a hash of it, so it cannot be shown again. A VM created without one has no console password.
-9. Optionally, change **Stop timeout (seconds)**: how long a stop waits for the VM's operating system to shut down before its power is cut ([Stop](#stop-start-and-resume)). 30 to 1800 seconds, default 120. Give a VM that needs time to shut down cleanly, such as a database, a longer one.
-10. Optionally, fill in **Cloud-init user data**: a cloud-init document, such as `#cloud-config`, run on the VM's first boot. Up to 32768 bytes.
-11. Click **Create VM**.
+7. Under **Access (optional)**, choose how you will log in. Nothing here is required: without an SSH key, you log in on the VM's [console](#open-the-vms-console) with a console password, or add a key later on the VM's page ([add an SSH key to a running VM](#add-an-ssh-key-to-a-running-vm)).
+   - Under **SSH keys**, tick the keys to add to this VM. See [SSH keys and logging in](/docs/guides/ssh-keys/) to add one first. Picked keys are added for the user `ubuntu`.
+   - Fill in **Console password**: 12 to 72 characters, to log in as `ubuntu` on the VM's console. OpenViCloud keeps only a hash of it, so it cannot be shown again. A VM created without one has no console password, and none can be set later.
+8. Click **Advanced** to change the stop timeout or add cloud-init user data. It is closed at first; what you type stays when you close it again.
+   - **Stop timeout (seconds)**: how long a stop waits for the VM's operating system to shut down before its power is cut ([Stop](#stop-start-and-resume)). 30 to 1800 seconds, default 120. Give a VM that needs time to shut down cleanly, such as a database, a longer one.
+   - **Cloud-init user data**: a cloud-init document, such as `#cloud-config`, run on the VM's first boot. Up to 32768 bytes.
+9. Click **Create VM**.
 
-Fill in every field above SSH keys. When you click **Create VM**, the portal checks the name, then the rest in this order, shows only the first problem it finds, and sends nothing:
+Fill in every field above **Access (optional)**. When you click **Create VM**, the portal checks the name, then the rest in this order, shows only the first problem it finds, and sends nothing. A problem with the stop timeout or the cloud-init user data opens **Advanced**, so you see it:
 
 - A console password shorter than 12 or longer than 72 characters: "The console password must be 12 to 72 characters."
 - A stop timeout that is not a whole number of seconds from 30 to 1800: "The stop timeout must be a whole number of seconds from 30 to 1800."
