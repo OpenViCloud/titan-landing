@@ -19,7 +19,7 @@ Mỗi tài khoản OpenViCloud có chín giới hạn. Khi bạn đã dùng hế
 | Snapshot của một volume | 3 | mỗi volume | `VOLUME_SNAPSHOT_QUOTA_EXCEEDED` |
 | Firewall rule của một network | 20 | mỗi network | `FIREWALL_QUOTA_EXCEEDED` |
 
-Hạn mức network tính cả network `default` mà OpenViCloud tạo cho bạn khi tài khoản được duyệt — xem [network](/vi/docs/guides/network/).
+Hạn mức network tính cả network `default`, nếu OpenViCloud đã tạo nó cho tài khoản bạn lúc được duyệt — xem [network](/vi/docs/guides/network/).
 
 Tất cả các mã lỗi trên đều trả về HTTP `422`.
 

@@ -25,7 +25,7 @@ The VM reaches the Internet over IPv6. IPv4 still has no route to the Internet, 
 
 By default, an account can have public IPv6 enabled on 10 networks at once. This is shown on the Overview page's Quota card as **Public IPv6**. A network stops counting toward this quota as soon as you click delete on it, not when the deletion finishes.
 
-The network quota is 2 by default — the `default` network plus one of your own — so in practice you will reach the network quota before the public IPv6 quota.
+The network quota is 2 by default, so in practice you will reach the network quota before the public IPv6 quota.
 
 ## When it is refused
 

@@ -19,7 +19,7 @@ Each OpenViCloud account has nine quotas. When you have used up a quota, OpenViC
 | Snapshots of a volume | 3 | per volume | `VOLUME_SNAPSHOT_QUOTA_EXCEEDED` |
 | Firewall rules of a network | 20 | per network | `FIREWALL_QUOTA_EXCEEDED` |
 
-The network quota counts the `default` network OpenViCloud creates for you when your account is approved — see [networks](/docs/guides/network/).
+The network quota counts the `default` network, if OpenViCloud created one for your account when it was approved — see [networks](/docs/guides/network/).
 
 All the error codes above return HTTP `422`.
 

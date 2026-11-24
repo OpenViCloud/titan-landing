@@ -3,7 +3,7 @@ title: Tạo và xoá network
 description: Tạo network riêng cho VM trên portal, chọn tên, cluster, dải CIDR, và xoá network khi không dùng nữa.
 ---
 
-Network là mạng riêng nối các VM của bạn với nhau. Tài khoản thường đã có sẵn một network tên `default`, tạo tự động khi tài khoản được duyệt — xem [network mặc định của bạn](#network-mặc-định-của-bạn) bên dưới. Tạo thêm một cái ở đây nếu bạn muốn nhiều hơn.
+Network là mạng riêng nối các VM của bạn với nhau. Tài khoản thường đã có sẵn một network tên `default`, tạo tự động khi tài khoản được duyệt — xem [network mặc định của bạn](#network-mặc-định-của-bạn) bên dưới. Chưa có, hay muốn thêm, thì tạo ở đây.
 
 ## Network mặc định của bạn
 
@@ -45,7 +45,7 @@ Network nằm trong cluster bạn chọn lúc tạo. Khi tạo VM, portal chỉ 
 
 ## Hạn mức
 
-Mặc định, một tài khoản mới được tạo 2 network — network mặc định cộng một network của riêng bạn. Khi đã đủ, portal báo "Đã vượt hạn mức mạng" (mã `NETWORK_QUOTA_EXCEEDED`). Hạn mức này có thể được điều chỉnh riêng cho tài khoản của bạn. Network đang xoá không còn tính vào hạn mức.
+Mặc định, một tài khoản mới có tối đa 2 network; network `default`, nếu bạn có, cũng tính vào đó. Khi đã đủ, portal báo "Đã vượt hạn mức mạng" (mã `NETWORK_QUOTA_EXCEEDED`). Hạn mức này có thể được điều chỉnh riêng cho tài khoản của bạn. Network đang xoá không còn tính vào hạn mức.
 
 ## Xoá network
 

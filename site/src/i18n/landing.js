@@ -142,7 +142,7 @@ const en = {
   stepLabel: 'Step',
   steps: [
     { title: 'Create an account', body: 'With GitHub or email, then wait for approval.', href: '/docs/guides/sign-up/', link: 'Sign-up guide' },
-    { title: 'Use your network', body: 'An approved account usually already has a network named default, with public IPv6 and SSH open. If yours has none, or you need more, create one.', href: '/docs/guides/network/', link: 'Network guide' },
+    { title: 'Use your network', body: 'An approved account usually already has a network named default, with public IPv6 and, once it is ready, SSH open. If yours has none, or you need more, create one.', href: '/docs/guides/network/', link: 'Network guide' },
     { title: 'Create a VM', body: 'Pick an operating system and a plan. The VM runs in your network.', href: '/docs/guides/vm/', link: 'VM guide' },
   ],
   limitsHeading: 'What we cannot do yet',
@@ -327,7 +327,7 @@ const vi = {
   stepLabel: 'Bước',
   steps: [
     { title: 'Đăng ký tài khoản', body: 'Bằng GitHub hoặc email, rồi chờ duyệt.', href: '/vi/docs/guides/sign-up/', link: 'Hướng dẫn đăng ký' },
-    { title: 'Dùng network của bạn', body: 'Tài khoản đã duyệt thường có sẵn một network tên default, bật IPv6 công khai và mở SSH. Chưa có, hay cần thêm, thì tạo network.', href: '/vi/docs/guides/network/', link: 'Hướng dẫn network' },
+    { title: 'Dùng network của bạn', body: 'Tài khoản đã duyệt thường có sẵn một network tên default, bật IPv6 công khai và, khi đã sẵn sàng, mở SSH. Chưa có, hay cần thêm, thì tạo network.', href: '/vi/docs/guides/network/', link: 'Hướng dẫn network' },
     { title: 'Tạo VM', body: 'Chọn hệ điều hành và cấu hình. VM chạy trong network của bạn.', href: '/vi/docs/guides/vm/', link: 'Hướng dẫn tạo VM' },
   ],
   limitsHeading: 'Điều chúng tôi chưa làm được',

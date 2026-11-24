@@ -25,7 +25,7 @@ VM ra được Internet qua IPv6. IPv4 vẫn không có đường ra Internet, k
 
 Mặc định, một tài khoản có thể bật IPv6 công khai cho tối đa 10 network cùng lúc. Hạn mức này hiện ở thẻ Hạn mức trên trang Tổng quan dưới tên **IPv6 công khai**. Một network thôi tính vào hạn mức này ngay khi bạn bấm xoá, không phải khi việc xoá xong.
 
-Hạn mức network mặc định là 2 — network `default` cộng một network của riêng bạn — nên trên thực tế bạn sẽ chạm hạn mức network trước khi chạm hạn mức IPv6 công khai.
+Hạn mức network mặc định là 2, nên trên thực tế bạn sẽ chạm hạn mức network trước khi chạm hạn mức IPv6 công khai.
 
 ## Khi bị từ chối
 

@@ -3,7 +3,7 @@ title: Create and delete networks
 description: Create a private network for your VMs in the portal, choose its name, cluster and CIDR range, and delete the network when you no longer need it.
 ---
 
-A network is a private network that connects your VMs to each other. An account usually already has one, named `default`, created automatically when the account was approved — see [your default network](#your-default-network) below. Create another one here if you want more than that.
+A network is a private network that connects your VMs to each other. An account usually already has one, named `default`, created automatically when the account was approved — see [your default network](#your-default-network) below. Create one here if you have none, or want another.
 
 ## Your default network
 
@@ -45,7 +45,7 @@ A network lives in the cluster you choose when you create it. When you create a 
 
 ## Quota
 
-By default, a new account can create 2 networks — the default network plus one of your own. When you reach it, the portal shows "Network quota exceeded" (code `NETWORK_QUOTA_EXCEEDED`). This quota can be adjusted for your account. A network that is being deleted no longer counts toward the quota.
+By default, a new account can have 2 networks; the `default` network, if you have one, counts toward them. When you reach it, the portal shows "Network quota exceeded" (code `NETWORK_QUOTA_EXCEEDED`). This quota can be adjusted for your account. A network that is being deleted no longer counts toward the quota.
 
 ## Delete a network
 
