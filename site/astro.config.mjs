@@ -6,6 +6,10 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'OpenViCloud',
+      // One icon on every page (titan-ops features/public-site/design.md#brand-icon).
+      logo: { src: './src/assets/brand-mark.png' },
+      favicon: '/favicon.png',
+      head: [{ tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } }],
       defaultLocale: 'root',
       locales: {
         root: { label: 'English', lang: 'en' },

@@ -19,3 +19,11 @@
   --sl-color-accent: hsl(30 90% 32%);
   --sl-color-accent-high: hsl(28 85% 22%);
 }
+
+/* The docs header shows the brand icon at the landing's size, corners rounded like the landing's
+   (titan-ops features/public-site/design.md#brand-icon). */
+.site-title img {
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 0.5rem;
+}

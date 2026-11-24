@@ -10,6 +10,7 @@ import '../styles/tokens.css';
 import { copy } from '../i18n/landing.js';
 import { breakSegments } from '../scripts/terminal.js';
 import Chat from './Chat.astro';
+import brandMark from '../assets/brand-mark.png';
 
 interface Props {
   lang: 'en' | 'vi';
@@ -38,7 +39,8 @@ function tokens(line: string) {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{t.title}</title>
     <meta name="description" content={t.description} />
   </head>
@@ -47,9 +49,7 @@ function tokens(line: string) {
     <header class="site-header">
       <div class="wrap header-row">
         <a class="brand" href={t.home}>
-          <span class="brand-mark" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2.5" width="12" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.6"/><rect x="2" y="9" width="12" height="4.5" rx="1.2" stroke="currentColor" stroke-width="1.6"/><circle cx="4.8" cy="4.75" r="0.9" fill="currentColor"/><circle cx="4.8" cy="11.25" r="0.9" fill="currentColor"/></svg>
-          </span>
+          <img class="brand-mark" src={brandMark.src} width="28" height="28" alt="" />
           <span class="brand-name">
             OpenViCloud
             <span class="brand-beta">{t.beta}</span>
@@ -468,7 +468,7 @@ function tokens(line: string) {
       .site-header { position: sticky; top: 0; z-index: 10; background: hsl(225 18% 5% / 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
       .header-row { display: flex; align-items: center; gap: 1.5rem; min-height: 4rem; }
       .brand { display: flex; align-items: center; gap: 0.625rem; text-decoration: none; font-weight: 800; font-size: 1.125rem; letter-spacing: -0.02em; }
-      .brand-mark { width: 1.75rem; height: 1.75rem; border-radius: 0.5rem; background: var(--color-accent); color: var(--color-accent-foreground); display: grid; place-items: center; }
+      .brand-mark { width: 1.75rem; height: 1.75rem; border-radius: 0.5rem; flex-shrink: 0; }
       .brand-name { display: flex; align-items: center; gap: 0.625rem; }
       .brand-beta { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-accent); background: var(--color-accent-soft); border: 1px solid hsl(38 95% 58% / 0.35); padding: 0.125rem 0.5rem; border-radius: 999px; }
       .site-header nav { display: flex; align-items: center; gap: 1.375rem; margin-left: auto; font-size: 0.9375rem; }
