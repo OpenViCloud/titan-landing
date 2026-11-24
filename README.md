@@ -72,7 +72,8 @@ live prices of the API; its manner is in `chat/persona.md`. Every page of the si
 `site/src/components/PageFrame.astro`); where `/api/chat` reaches no service, every answer is the busy text. The route from `/api/chat` of the
 site's origin to the assistant belongs to each environment's network layer, so the site's image knows nothing of it.
 Dev has it, as an Ingress path (`gitops/chat/ingress.yaml` of OpenViCloud/titan-local-cluster); dev has no OpenRouter
-key, so there every answer is still the busy text. Prd has no route yet. Rules:
+key, so there every answer is still the busy text. Prd has it as a rule of the Cloudflare tunnel, path `^/api/chat$`
+to Service `chat`. Rules:
 `titan-ops features/public-site/design.md#chat-assistant`.
 
 ```sh

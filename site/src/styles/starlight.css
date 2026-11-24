@@ -8,6 +8,13 @@
   --sl-color-accent-low: hsl(36 45% 14%);
   --sl-color-accent: hsl(38 95% 50%);
   --sl-color-accent-high: hsl(38 95% 58%);
+}
+
+/* The dark backgrounds of the brand, for the dark theme only. Starlight's own colours sit in a cascade layer, so a
+   rule outside any layer wins over its light block whatever the selector: on :root these made the light theme a dark
+   page with dark text. */
+:root:not([data-theme='light']),
+:root:not([data-theme='light']) ::backdrop {
   --sl-color-black: hsl(225 18% 5%);
   --sl-color-gray-6: hsl(225 16% 8%);
   --sl-color-gray-5: hsl(225 12% 18%);
