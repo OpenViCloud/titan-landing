@@ -1,7 +1,7 @@
 /* Starlight mapped onto the site brand (tokens.css). Starlight's own colours sit in a cascade layer and this file does
-   not, so every value set here wins over both of Starlight's themes whatever the selector. A value meant for one
-   theme sits under that theme's selector: light mode has its own accents (the landing amber is too light to read on
-   white), and the dark backgrounds are for the dark theme only. */
+   not, so every value set here wins over both of Starlight's themes whatever the selector. The light theme overrides
+   the accents under its own selector (the landing amber is too light to read on white), and the dark backgrounds sit
+   under a selector that leaves the light theme out. */
 :root,
 ::backdrop {
   --sl-font: var(--font-sans);
