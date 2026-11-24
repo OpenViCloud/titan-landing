@@ -149,7 +149,7 @@ const en = {
   limitsBody: 'OpenViCloud is still being built. We list what does not work yet so you do not waste time trying.',
   limitsLink: 'Read the current limitations',
   limits: [
-    { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For a public address, use a network with public IPv6, such as your default network.' },
+    { title: 'VMs cannot use the Internet over IPv4', body: 'IPv4 only connects VMs in the same network. For a public address, use a network with public IPv6.' },
     { title: 'You cannot buy credit in the portal yet', body: 'During the beta, OpenViCloud adds credit to your wallet. To ask for more, open a public issue with the Tenant ID from your Profile page.', href: 'https://github.com/OpenViCloud/titan-support/issues/new/choose', link: 'Open an issue on GitHub' },
   ],
   faqHeading: 'Frequently asked questions',
@@ -334,7 +334,7 @@ const vi = {
   limitsBody: 'OpenViCloud đang hoàn thiện. Chúng tôi ghi rõ những gì chưa chạy để bạn không mất công thử.',
   limitsLink: 'Đọc trang giới hạn hiện tại',
   limits: [
-    { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ công khai, hãy dùng network có IPv6 công khai, như network default của bạn.' },
+    { title: 'VM chưa dùng được Internet qua IPv4', body: 'IPv4 chỉ nối các VM trong cùng network. Muốn có địa chỉ công khai, hãy dùng network có IPv6 công khai.' },
     { title: 'Chưa nạp tiền được trên portal', body: 'Trong giai đoạn beta, OpenViCloud cộng tiền vào ví của bạn. Cần thêm thì mở issue công khai kèm Mã tenant ở trang Hồ sơ.', href: 'https://github.com/OpenViCloud/titan-support/issues/new/choose', link: 'Mở issue trên GitHub' },
   ],
   faqHeading: 'Câu hỏi thường gặp',
