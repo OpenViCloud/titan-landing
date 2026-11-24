@@ -1,0 +1,156 @@
+---
+// The chat box of the site, on every page (titan-ops features/public-site/design.md#chat-assistant): Landing.astro puts it
+// on the two landings, PageFrame.astro on every Starlight page. Without JavaScript it stays hidden. It brings its own
+// styles: Starlight pages have none of the landing's.
+import { copy } from '../i18n/landing.js';
+
+interface Props {
+  lang: 'en' | 'vi';
+}
+
+const t = copy[Astro.props.lang].chat;
+---
+<div class="chat">
+  <button type="button" class="chat-button chat-button-primary chat-open" data-chat-open aria-expanded="false" aria-controls="chat-panel" hidden>{t.open}</button>
+  <section id="chat-panel" class="chat-panel" role="dialog" aria-labelledby="chat-title" data-chat-panel hidden>
+    <div class="chat-head">
+      <div>
+        <h2 id="chat-title">{t.title}</h2>
+        <p class="chat-subtitle">{t.subtitle}</p>
+      </div>
+      <button type="button" class="chat-close" data-chat-close aria-label={t.close}>×</button>
+    </div>
+    <div class="chat-notice">
+      <p>{t.notice}</p>
+      <button type="button" class="chat-button chat-button-ghost" data-chat-understand>{t.understand}</button>
+    </div>
+    <div class="chat-log" data-chat-log aria-live="polite"></div>
+    <p class="chat-waiting" data-chat-waiting hidden>{t.waiting}</p>
+    <form class="chat-form" data-chat-form>
+      <input type="text" data-chat-input maxlength="500" autocomplete="off" aria-label={t.placeholder} placeholder={t.placeholder} disabled />
+      <button type="submit" class="chat-button chat-button-primary" data-chat-send disabled>{t.send}</button>
+    </form>
+  </section>
+</div>
+
+<script>
+  import { askAssistant, canSend, historyAfter, newConversationId } from '../scripts/chat.js';
+  import { copy } from '../i18n/landing.js';
+
+  const lang = document.documentElement.lang === 'vi' ? 'vi' : 'en';
+  const words = copy[lang].chat;
+  const opener = document.querySelector('[data-chat-open]');
+  const panel = document.querySelector('[data-chat-panel]');
+  const understand = panel.querySelector('[data-chat-understand]');
+  const log = panel.querySelector('[data-chat-log]');
+  const waiting = panel.querySelector('[data-chat-waiting]');
+  const form = panel.querySelector('[data-chat-form]');
+  const input = panel.querySelector('[data-chat-input]');
+  const send = panel.querySelector('[data-chat-send]');
+
+  const conversationId = newConversationId(window.crypto);
+  let history = [];
+  let understood = false;
+  let answering = false;
+
+  // The opener hides while the box is open: the box covers it, and a covered button would still take focus.
+  function setOpen(open) {
+    panel.hidden = !open;
+    opener.hidden = open;
+    opener.setAttribute('aria-expanded', String(open));
+    if (!open) opener.focus();
+    else if (!understood) understand.focus();
+    else if (answering) panel.querySelector('[data-chat-close]').focus();
+    else input.focus();
+  }
+
+  function refresh() {
+    input.disabled = !understood || answering;
+    send.disabled = !understood || answering || !canSend(input.value);
+    waiting.hidden = !answering;
+  }
+
+  // textContent only: an answer is text, never markup.
+  function addMessage(role, text) {
+    const item = document.createElement('div');
+    item.className = `chat-message chat-message-${role}`;
+    const who = document.createElement('span');
+    who.className = 'chat-visually-hidden';
+    who.textContent = `${role === 'user' ? words.you : words.assistant}: `;
+    item.append(who, document.createTextNode(text));
+    log.append(item);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  opener.hidden = false;
+  opener.addEventListener('click', () => setOpen(true));
+  panel.querySelector('[data-chat-close]').addEventListener('click', () => setOpen(false));
+  panel.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setOpen(false);
+  });
+  understand.addEventListener('click', () => {
+    understood = true;
+    understand.hidden = true;
+    refresh();
+    input.focus();
+  });
+  input.addEventListener('input', refresh);
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const message = input.value;
+    if (!understood || answering || !canSend(message)) return;
+    answering = true;
+    input.value = '';
+    addMessage('user', message);
+    refresh();
+    const reply = await askAssistant({ fetch: window.fetch.bind(window), conversationId, lang, message, history, busy: words.busy });
+    history = historyAfter(history, message, reply);
+    addMessage('assistant', reply.answer);
+    answering = false;
+    refresh();
+    input.focus();
+  });
+</script>
+
+{/* Global, not scoped: the script builds the messages at run time, and those elements carry no scope attribute. */}
+<style is:global>
+  .chat, .chat *, .chat *::before, .chat *::after { box-sizing: border-box; }
+  .chat { font-family: var(--font-sans); font-size: 16px; line-height: 1.6; color: var(--color-foreground); }
+  /* .chat-button sets display, which would beat the hidden attribute. */
+  .chat [hidden] { display: none !important; }
+  .chat :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 6px; }
+  .chat-visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .chat-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 1.25rem; border-radius: 0.625rem; border: 1px solid transparent; font: inherit; font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: transform 0.15s ease, background 0.15s ease; }
+  .chat-button-primary { background: var(--color-accent); color: var(--color-accent-foreground); }
+  .chat-button-primary:hover { transform: translateY(-1px); }
+  .chat-button-ghost { border-color: var(--color-border); background: var(--color-raised); color: var(--color-foreground); }
+  .chat-button-ghost:hover { background: var(--color-surface); }
+  .chat-button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .chat-open { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 30; box-shadow: 0 10px 30px hsl(225 30% 2% / 0.5); }
+  .chat-panel { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 31; display: flex; flex-direction: column; gap: 0.75rem; width: min(24rem, calc(100vw - 2.5rem)); max-height: min(36rem, calc(100vh - 2.5rem)); max-height: min(36rem, calc(100dvh - 2.5rem)); padding: 1rem; border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-raised); box-shadow: 0 20px 50px hsl(225 30% 2% / 0.6); }
+  .chat-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+  .chat-head h2 { margin: 0; font-size: 1rem; line-height: 1.4; letter-spacing: -0.02em; color: var(--color-foreground); }
+  .chat-subtitle { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--color-muted-foreground); }
+  .chat-close { flex: none; width: 44px; height: 44px; border: 1px solid var(--color-border); border-radius: 0.625rem; background: transparent; color: var(--color-foreground); font: inherit; font-size: 1.25rem; cursor: pointer; }
+  .chat-close:hover { background: var(--color-surface); }
+  .chat-notice { padding: 0.75rem; border-radius: 0.625rem; background: var(--color-accent-soft); font-size: 0.8125rem; }
+  .chat-notice p { margin: 0; }
+  .chat-notice .chat-button { margin-top: 0.625rem; font-size: 0.8125rem; }
+  .chat-log { display: flex; flex-direction: column; gap: 0.5rem; overflow-y: auto; min-height: 0; }
+  .chat-message { max-width: 85%; padding: 0.5rem 0.75rem; border-radius: 0.75rem; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .chat-message-user { align-self: flex-end; background: var(--color-surface); }
+  .chat-message-assistant { align-self: flex-start; border: 1px solid var(--color-border); }
+  .chat-waiting { margin: 0; font-size: 0.8125rem; color: var(--color-muted-foreground); }
+  .chat-form { display: flex; gap: 0.5rem; margin: 0; }
+  .chat-form input { flex: 1; min-width: 0; min-height: 44px; margin: 0; padding: 0 0.75rem; border: 1px solid var(--color-border); border-radius: 0.625rem; background: var(--color-background); color: var(--color-foreground); font: inherit; font-size: 0.9375rem; }
+  .chat-form input::placeholder { color: var(--color-muted-foreground); }
+  .chat-form input:disabled { opacity: 0.6; }
+  @media (max-width: 35rem) {
+    .chat-open { right: 1rem; bottom: 1rem; }
+    .chat-panel { right: 0.5rem; bottom: 0.5rem; width: calc(100vw - 1rem); max-height: calc(100vh - 1rem); max-height: calc(100dvh - 1rem); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chat-button { transition: none; }
+    .chat-button-primary:hover { transform: none; }
+  }
+</style>

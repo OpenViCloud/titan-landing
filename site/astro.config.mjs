@@ -18,7 +18,7 @@ export default defineConfig({
         './src/styles/tokens.css',
         './src/styles/starlight.css',
       ],
-      components: { Head: './src/components/Head.astro' },
+      components: { Head: './src/components/Head.astro', PageFrame: './src/components/PageFrame.astro' },
       sidebar: [
         { label: 'Overview', translations: { vi: 'Tổng quan' }, slug: 'docs' },
         { label: 'Known limitations', translations: { vi: 'Giới hạn hiện tại' }, slug: 'docs/known-limitations' },
