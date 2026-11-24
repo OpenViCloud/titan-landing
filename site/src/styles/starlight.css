@@ -1,6 +1,7 @@
-/* Starlight mapped onto the site brand (tokens.css). Starlight's own light-theme block is
-   :root[data-theme='light'], more specific than :root, so light mode needs its own accents:
-   the landing amber is too light to read on white. */
+/* Starlight mapped onto the site brand (tokens.css). Starlight's own colours sit in a cascade layer and this file does
+   not, so every value set here wins over both of Starlight's themes whatever the selector. A value meant for one
+   theme sits under that theme's selector: light mode has its own accents (the landing amber is too light to read on
+   white), and the dark backgrounds are for the dark theme only. */
 :root,
 ::backdrop {
   --sl-font: var(--font-sans);
@@ -10,9 +11,7 @@
   --sl-color-accent-high: hsl(38 95% 58%);
 }
 
-/* The dark backgrounds of the brand, for the dark theme only. Starlight's own colours sit in a cascade layer, so a
-   rule outside any layer wins over its light block whatever the selector: on :root these made the light theme a dark
-   page with dark text. */
+/* On plain :root these would also cover the light theme, under its dark text. */
 :root:not([data-theme='light']),
 :root:not([data-theme='light']) ::backdrop {
   --sl-color-black: hsl(225 18% 5%);
