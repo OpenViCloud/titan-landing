@@ -3,11 +3,11 @@ title: Tạo và xoá network
 description: Tạo network riêng cho VM trên portal, chọn tên, cluster, dải CIDR, và xoá network khi không dùng nữa.
 ---
 
-Network là mạng riêng nối các VM của bạn với nhau. Tài khoản nào cũng đã có sẵn một network tên `default`, tạo tự động khi tài khoản được duyệt — xem [network mặc định của bạn](#network-mặc-định-của-bạn) bên dưới. Tạo thêm một cái ở đây nếu bạn muốn nhiều hơn.
+Network là mạng riêng nối các VM của bạn với nhau. Tài khoản thường đã có sẵn một network tên `default`, tạo tự động khi tài khoản được duyệt — xem [network mặc định của bạn](#network-mặc-định-của-bạn) bên dưới. Tạo thêm một cái ở đây nếu bạn muốn nhiều hơn.
 
 ## Network mặc định của bạn
 
-Khi tài khoản của bạn được duyệt, OpenViCloud tạo cho bạn một network tên `default`, bật sẵn IPv6 công khai, trên cluster đầu tiên có IPv6. Giống mọi network mới, nó chặn traffic từ ngoài vào theo mặc định, nhưng đã mở sẵn hai rule để bạn vào được ngay: Ingress TCP cổng 22 (SSH) từ bất kỳ đâu, qua cả IPv6 (`::/0`) lẫn IPv4 (`0.0.0.0/0`). Xem [firewall rule](/vi/docs/guides/firewall/) và [IPv6 công khai](/vi/docs/guides/public-ipv6/).
+Khi tài khoản của bạn được duyệt, OpenViCloud tạo cho bạn một network tên `default`, bật sẵn IPv6 công khai, trên cluster đầu tiên có IPv6. Giống mọi network mới, nó chặn traffic từ ngoài vào theo mặc định, và khi đã sẵn sàng thường đã mở sẵn hai rule để bạn vào được ngay: Ingress TCP cổng 22 (SSH) từ bất kỳ đâu, qua cả IPv6 (`::/0`) lẫn IPv4 (`0.0.0.0/0`). Xem [firewall rule](/vi/docs/guides/firewall/) và [IPv6 công khai](/vi/docs/guides/public-ipv6/).
 
 Nếu lúc tài khoản bạn được duyệt chưa cluster nào có IPv6 công khai, bạn không nhận network này — tự tạo một cái như hướng dẫn bên dưới.
 

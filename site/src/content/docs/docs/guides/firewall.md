@@ -11,7 +11,7 @@ Every firewall rule you add is an **allow** rule. What happens to traffic no rul
 - A network created before this default without a policy — every network created from the portal before then — shows "Inbound from outside the network: allowed" and "Outbound: allowed": every port is open, and rules cannot close one.
 - A network created over the API or [Terraform](/docs/guides/terraform/) with a Deny outbound policy shows "Outbound: blocked unless a rule allows it": VMs reach out, and reach each other, only where an Egress rule allows it.
 
-Your account's `default` network (see [networks](/docs/guides/network/#your-default-network)) already has two Ingress rules open once it is ready: TCP port 22 (SSH) from `::/0` and from `0.0.0.0/0`. A network you create yourself starts with no rules — add your own as described below.
+Your account's `default` network, if you have one (see [networks](/docs/guides/network/#your-default-network)), normally has two Ingress rules open once it is ready: TCP port 22 (SSH) from `::/0` and from `0.0.0.0/0`. A network you create yourself starts with no rules — add your own as described below.
 
 The default policy cannot be changed after the network is created. See [known limitations](/docs/known-limitations/).
 

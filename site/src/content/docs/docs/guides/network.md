@@ -3,11 +3,11 @@ title: Create and delete networks
 description: Create a private network for your VMs in the portal, choose its name, cluster and CIDR range, and delete the network when you no longer need it.
 ---
 
-A network is a private network that connects your VMs to each other. Every account already has one, named `default`, created automatically when the account was approved — see [your default network](#your-default-network) below. Create another one here if you want more than that.
+A network is a private network that connects your VMs to each other. An account usually already has one, named `default`, created automatically when the account was approved — see [your default network](#your-default-network) below. Create another one here if you want more than that.
 
 ## Your default network
 
-When your account was approved, OpenViCloud created a network named `default` for you, with public IPv6 enabled, on the first cluster that offers it. Like every new network it blocks inbound traffic from outside it by default, but it already has two rules open so you can reach it right away: Ingress TCP port 22 (SSH) from anywhere, over both IPv6 (`::/0`) and IPv4 (`0.0.0.0/0`). See [firewall rules](/docs/guides/firewall/) and [public IPv6](/docs/guides/public-ipv6/).
+When your account was approved, OpenViCloud created a network named `default` for you, with public IPv6 enabled, on the first cluster that offers it. Like every new network it blocks inbound traffic from outside it by default, and once it is ready it normally has two rules open so you can reach it right away: Ingress TCP port 22 (SSH) from anywhere, over both IPv6 (`::/0`) and IPv4 (`0.0.0.0/0`). See [firewall rules](/docs/guides/firewall/) and [public IPv6](/docs/guides/public-ipv6/).
 
 If no cluster had public IPv6 available yet when your account was approved, you did not get this network — create one yourself below, as before.
 

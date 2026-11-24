@@ -9,7 +9,7 @@ Read the [known limitations](/docs/known-limitations/) before you start.
 
 ## Quick start
 
-1. [Sign up](/docs/guides/sign-up/). An account waits for an administrator's approval, whether you made it with GitHub or with email. Once approved, your account already has a [network](/docs/guides/network/) ready to use.
+1. [Sign up](/docs/guides/sign-up/). An account waits for an administrator's approval, whether you made it with GitHub or with email. Once approved, your account usually already has a [network](/docs/guides/network/) ready to use.
 2. [Add an SSH key](/docs/guides/ssh-keys/).
 3. [Create a VM](/docs/guides/vm/) — use that network, or [create your own](/docs/guides/network/) first.
 
