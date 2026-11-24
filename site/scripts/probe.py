@@ -85,6 +85,25 @@ def chat_box_checks(base):
     return results
 
 
+# One icon on every page, the files served as PNG (titan-ops features/public-site/design.md#brand-icon).
+ICON_FILES = ("/favicon.png", "/apple-touch-icon.png")
+ICON_PAGES = ("/", "/vi/", "/docs/", "/vi/docs/")
+
+
+def icon_checks(base):
+    results = []
+    for path in ICON_FILES:
+        status, headers, body = fetch_bytes(base + path)
+        is_png = headers.get("Content-Type") == "image/png" and body.startswith(b"\x89PNG")
+        results.append((f"{path} is a PNG", status == 200 and is_png, f"status={status} Content-Type={headers.get('Content-Type')}"))
+    pages = [(path, 200) for path in ICON_PAGES] + [("/missing-page-" + "z" * 8, 404)]
+    for path, expected in pages:
+        status, _, page = fetch(base + path)
+        linked = [href for href in ICON_FILES if f'href="{href}"' in page]
+        results.append((f"{path} links both icons", status == expected and len(linked) == len(ICON_FILES), f"status={status} linked={linked}"))
+    return results
+
+
 def main():
     base = sys.argv[1].rstrip("/")
     results = []
@@ -120,6 +139,7 @@ def main():
     results.append(("config.json not cached", headers.get("Cache-Control") == "no-store", f"Cache-Control={headers.get('Cache-Control')}"))
 
     results.extend(beta_label_checks(base))
+    results.extend(icon_checks(base))
     results.extend(chat_box_checks(base))
     results.extend(cli_download_checks(base))
     results.extend(install_script_checks(base))

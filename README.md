@@ -15,6 +15,9 @@ Node 22.
 (cd site && npm install && npm run dev)
 ```
 
+`site/brand/mark-380.png` is the OpenViCloud icon at 380×380. The site, both portals and the sign-in page use copies of
+it scaled down to 64, 180 and 56 pixels; it is not served itself.
+
 ## Test
 
 ```sh
@@ -28,6 +31,17 @@ read it and not in CI (the path absolute or relative to `site/`):
 ```sh
 (cd site && npm run build && node scripts/check-dist.mjs --require-docs --docs-dir <titan-ops checkout>/docs)
 ```
+
+CI runs `site/scripts/probe.py` on the image. To run its page checks on a machine without Docker, serve the build with
+Astro's preview server, which answers a missing page with `404.html` and status 404:
+
+```sh
+(cd site && npm run build && npx astro preview --port 4329)
+python3 site/scripts/probe.py http://localhost:4329
+```
+
+Two checks read headers that only the image's `site/nginx.conf` sets, so they fail there: `404 not cached` and
+`config.json not cached`.
 
 `site/` checks that the bold labels of its docs are labels the portal shows. It reads `portal-labels/` (the portal's
 words) and the API contract `api/openapi-v1.json`, both copies made at a pinned commit:
@@ -58,7 +72,8 @@ live prices of the API; its manner is in `chat/persona.md`. Every page of the si
 `site/src/components/PageFrame.astro`); where `/api/chat` reaches no service, every answer is the busy text. The route from `/api/chat` of the
 site's origin to the assistant belongs to each environment's network layer, so the site's image knows nothing of it.
 Dev has it, as an Ingress path (`gitops/chat/ingress.yaml` of OpenViCloud/titan-local-cluster); dev has no OpenRouter
-key, so there every answer is still the busy text. Prd has no route yet. Rules:
+key, so there every answer is still the busy text. Prd has it as a rule of the Cloudflare tunnel, path `^/api/chat$`
+to Service `chat`. Rules:
 `titan-ops features/public-site/design.md#chat-assistant`.
 
 ```sh

@@ -1,6 +1,7 @@
-/* Starlight mapped onto the site brand (tokens.css). Starlight's own light-theme block is
-   :root[data-theme='light'], more specific than :root, so light mode needs its own accents:
-   the landing amber is too light to read on white. */
+/* Starlight mapped onto the site brand (tokens.css). Starlight's own colours sit in a cascade layer and this file does
+   not, so every value set here wins over both of Starlight's themes whatever the selector. The light theme overrides
+   the accents under its own selector (the landing amber is too light to read on white), and the dark backgrounds sit
+   under a selector that leaves the light theme out. */
 :root,
 ::backdrop {
   --sl-font: var(--font-sans);
@@ -8,6 +9,11 @@
   --sl-color-accent-low: hsl(36 45% 14%);
   --sl-color-accent: hsl(38 95% 50%);
   --sl-color-accent-high: hsl(38 95% 58%);
+}
+
+/* On plain :root these would also cover the light theme, under its dark text. */
+:root:not([data-theme='light']),
+:root:not([data-theme='light']) ::backdrop {
   --sl-color-black: hsl(225 18% 5%);
   --sl-color-gray-6: hsl(225 16% 8%);
   --sl-color-gray-5: hsl(225 12% 18%);
@@ -18,4 +24,12 @@
   --sl-color-accent-low: hsl(40 90% 90%);
   --sl-color-accent: hsl(30 90% 32%);
   --sl-color-accent-high: hsl(28 85% 22%);
+}
+
+/* The docs header shows the brand icon at the landing's size, corners rounded like the landing's
+   (titan-ops features/public-site/design.md#brand-icon). */
+.site-title img {
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 0.5rem;
 }

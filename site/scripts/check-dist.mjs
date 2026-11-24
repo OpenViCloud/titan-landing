@@ -8,7 +8,26 @@ import { existsSync, readdirSync, readFileSync, realpathSync, statSync } from 'n
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const required = ['index.html', 'vi/index.html', 'docs/index.html', 'vi/docs/index.html', '404.html', 'robots.txt', 'config.json'];
+const pages = ['index.html', 'vi/index.html', 'docs/index.html', 'vi/docs/index.html', '404.html'];
+const required = [...pages, 'robots.txt', 'config.json', 'favicon.png', 'apple-touch-icon.png'];
+
+// Every page names the same icon (titan-ops features/public-site/design.md#brand-icon). The landing writes its head by
+// hand and Starlight writes the docs' and the 404's, so a change to one leaves the other on the old icon.
+const iconLinks = [
+  { rels: ['icon', 'shortcut icon'], href: '/favicon.png', name: 'icon' },
+  { rels: ['apple-touch-icon'], href: '/apple-touch-icon.png', name: 'apple-touch-icon' },
+];
+
+function linksIcon(page, { rels, href }) {
+  const tags = page.match(/<link\b[^>]*>/g);
+  if (tags === null) return false;
+  for (const tag of tags) {
+    const rel = tag.match(/\brel="([^"]*)"/);
+    const target = tag.match(/\bhref="([^"]*)"/);
+    if (rel !== null && target !== null && rels.includes(rel[1]) && target[1] === href) return true;
+  }
+  return false;
+}
 
 function walk(dir) {
   const files = [];
@@ -29,6 +48,14 @@ export function distProblems({ distDir, docsDir, requireDocs }) {
   const distFiles = walk(distDir);
   for (const path of required) {
     if (!existsSync(join(distDir, path))) problems.push(`missing ${path}`);
+  }
+
+  for (const path of pages) {
+    if (!existsSync(join(distDir, path))) continue;
+    const page = readFileSync(join(distDir, path), 'utf8');
+    for (const link of iconLinks) {
+      if (!linksIcon(page, link)) problems.push(`${path} does not link ${link.href} as its ${link.name}`);
+    }
   }
 
   for (const file of distFiles) {
