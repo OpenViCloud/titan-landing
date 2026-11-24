@@ -90,7 +90,7 @@ Trên trang của VM, tab **Tổng quan** có mục **Thời gian dừng**. Gõ 
 1. Bấm **Xoá** trên hàng của VM.
 2. Bấm **Xác nhận** trong hộp thoại "Xoá *tên VM*?".
 
-Xoá không chờ hệ điều hành: VM bị ngắt nguồn rồi bị xoá. Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM được gỡ ra và giữ lại; volume vẫn tính tiền cho tới khi xoá xong ([volume](/vi/docs/guides/volume/)).
+Xoá không chờ hệ điều hành: VM bị ngắt nguồn rồi bị xoá. Xoá VM thì xoá luôn mọi snapshot của VM đó. Volume đang gắn vào VM được gỡ ra và giữ lại; volume vẫn tính tiền cho tới khi xoá xong ([volume](/vi/docs/guides/volume/)), trừ volume khôi phục từ backup, vẫn miễn phí.
 
 Bạn chưa xoá được VM trong ba trường hợp:
 
@@ -129,11 +129,22 @@ Khi chưa có gì để hiện:
 
 Các số này chỉ để bạn xem: chúng không đổi hoá đơn hay hạn mức của bạn.
 
+## Tài nguyên khôi phục từ backup
+
+Khi bạn mất dữ liệu, đội vận hành có thể khôi phục một VM hoặc volume bạn đang có từ một trong các bản backup hằng ngày của nó, thành một VM hoặc volume **mới** trong tài khoản của bạn. VM hay volume bạn đã xoá thì không khôi phục được theo cách này. Bản gốc không bị thay đổi. Portal hiện **Đã khôi phục · miễn phí** cạnh tên của nó ở danh sách VM, trang VM và danh sách volume.
+
+- Nó miễn phí và không tính vào hạn mức cho tới khi bạn xoá, kể cả khi VM đang chạy.
+- VM khôi phục bắt đầu ở trạng thái Stopped. Mỗi volume đang gắn vào VM gốc được khôi phục cùng nó và gắn vào VM mới. Bạn bật nó lên khi cần.
+- Hệ điều hành của nó là của VM gốc lúc backup, cùng hostname và SSH host key. Khi bật lên, nó có MAC và địa chỉ IP riêng.
+- Snapshot bạn tạo từ nó vẫn có giới hạn và tính tiền như thường.
+- Bạn dùng và xoá nó như mọi VM hay volume khác. Volume khôi phục cùng VM giữ tên của volume gốc: danh sách volume hiện cả hai, và nhãn giúp phân biệt.
+
 ## VM được tính tiền khi nào
 
 - Tiền compute tính theo giờ, theo giá của size. VM bị tính khi ở trạng thái Running, Ready, Frozen hoặc Error, và trong lúc Stopping, cho tới khi dừng xong.
 - VM ở trạng thái **Stopped** không bị tính tiền compute.
 - Mỗi snapshot có trên hạ tầng bị tính một mức giá cố định theo giờ, không phụ thuộc dung lượng, tới khi việc xoá xong. Snapshot đang quay về vẫn bị tính.
 - Volume tính tiền riêng, xem trang [volume](/vi/docs/guides/volume/).
+- VM khôi phục từ backup không bị tính tiền compute, xem [Tài nguyên khôi phục từ backup](#tài-nguyên-khôi-phục-từ-backup).
 
 Giá theo giờ của từng size VM có ở [bảng giá](/vi/#pricing).

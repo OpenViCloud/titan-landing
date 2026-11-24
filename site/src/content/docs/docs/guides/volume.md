@@ -16,7 +16,7 @@ A volume is a separate data disk, independent of any VM. All actions are under *
 
 The new volume shows **Creating**, then **Available** once it exists on the infrastructure. If creation fails, a line explains why: the volume shows **Failed** (click **Delete** to remove it), or **Available** if the disk was made before the failure. If an attach, detach or delete does not go through, the volume goes back to how it was, with a line explaining why; so does a snapshot whose delete does not go through.
 
-Each account has at most 10 volumes by default. When you reach it, the portal shows "Volume quota exceeded (max 10)." (code `VOLUME_QUOTA_EXCEEDED`). Volumes you have clicked delete on, **Failed** volumes and **Not found** volumes do not count.
+Each account has at most 10 volumes by default. When you reach it, the portal shows "Volume quota exceeded (max 10)." (code `VOLUME_QUOTA_EXCEEDED`). Volumes you have clicked delete on, **Failed** volumes, **Not found** volumes and volumes restored from a backup do not count.
 
 ## Attach a volume to a VM
 
@@ -65,5 +65,6 @@ The new volume has the same cluster, offering and size as the original volume. T
 - A volume is billed per GB per hour while it exists on the infrastructure (**Available** or **Attached**). A volume detached from a VM is still billed. A volume attached to a Stopped VM is still billed.
 - A volume stops being billed when the deletion is finished, not when you click delete. A **Not found** volume is not billed.
 - Each snapshot that exists on the infrastructure is billed at a fixed hourly price, which does not depend on size, also until the deletion is finished.
+- A volume restored from a backup (**Restored · free**) is not billed until you delete it. Its snapshots are billed as usual. See [Restored from a backup](/docs/guides/vm/#restored-from-a-backup).
 
 The per-GB volume price is on the [pricing table](/#pricing).

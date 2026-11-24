@@ -61,6 +61,6 @@ Badge luôn hiện trạng thái VM đang ở. Ví dụ: nếu bạn tắt hệ 
 
 ## Trạng thái và chi phí
 
-VM ở `Running`, `Ready`, `Frozen` hoặc `Error` được tính phí theo giờ của size VM. VM ở `Stopping` vẫn bị tính cho tới khi dừng xong. VM ở `Stopped` thì không bị tính phí này. Tuy vậy, volume gắn vào VM và snapshot của VM vẫn được tính phí khi VM ở `Stopped`. Giá theo giờ của từng size VM xem ở [bảng giá](/vi/#pricing).
+VM ở `Running`, `Ready`, `Frozen` hoặc `Error` được tính phí theo giờ của size VM. VM ở `Stopping` vẫn bị tính cho tới khi dừng xong. VM ở `Stopped` thì không bị tính phí này. Tuy vậy, volume gắn vào VM và snapshot của VM vẫn được tính phí khi VM ở `Stopped`. VM khôi phục từ backup, cùng các volume khôi phục theo nó, không bị tính phí ở trạng thái nào; snapshot của chúng thì có ([Tài nguyên khôi phục từ backup](/vi/docs/guides/vm/#tài-nguyên-khôi-phục-từ-backup)). Giá theo giờ của từng size VM xem ở [bảng giá](/vi/#pricing).
 
 Xem thêm: [Mã lỗi](/vi/docs/concepts/error-codes/) · [Giới hạn tài khoản](/vi/docs/concepts/quotas/)

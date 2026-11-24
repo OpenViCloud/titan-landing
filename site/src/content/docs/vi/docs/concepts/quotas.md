@@ -33,6 +33,7 @@ Giới hạn IPv6 đếm **network**, không đếm VM: nó đếm bao nhiêu ne
 - **Volume**: được tính trừ khi bạn đã bấm xoá, nó đã bị xoá, hoặc nó đang ở trạng thái lỗi.
 - **Snapshot**: được tính khi đang tạo hoặc đã sẵn sàng. Snapshot bạn đã bấm xoá thì không tính nữa.
 - **SSH key**: được tính là mọi key bạn đã lưu. Xoá một key là xoá ngay và vĩnh viễn, nên key đã xoá không bao giờ còn tính.
+- VM và volume khôi phục từ backup (**Đã khôi phục · miễn phí**): không bao giờ tính, xem [Tài nguyên khôi phục từ backup](/vi/docs/guides/vm/#tài-nguyên-khôi-phục-từ-backup).
 
 Nghĩa là khi yêu cầu xoá được chấp nhận, chỗ đó được trả lại cho giới hạn ngay, không cần chờ xoá xong. Riêng SSH key, việc xoá là tức thì.
 

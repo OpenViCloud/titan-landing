@@ -90,7 +90,7 @@ On the VM's page, the **Overview** tab shows **Stop timeout**. Type a new number
 1. Click **Delete** on the VM's row.
 2. Click **Confirm** in the "Delete *VM name*?" dialog.
 
-Delete does not wait for the operating system: it cuts the VM's power, then deletes it. Deleting a VM also deletes all of its snapshots. Volumes attached to the VM are detached and kept; a volume is still billed until its deletion finishes ([volumes](/docs/guides/volume/)).
+Delete does not wait for the operating system: it cuts the VM's power, then deletes it. Deleting a VM also deletes all of its snapshots. Volumes attached to the VM are detached and kept; a volume is still billed until its deletion finishes ([volumes](/docs/guides/volume/)), except a volume restored from a backup, which stays free.
 
 You cannot delete a VM yet in three cases:
 
@@ -129,11 +129,22 @@ When there is nothing to show:
 
 These numbers are for you to see only: they do not change your bill or your quotas.
 
+## Restored from a backup
+
+If you lose data, the platform team can restore one of your existing VMs or volumes from one of its daily backups as a **new** VM or volume in your account. A VM or volume you have already deleted cannot be restored this way. The original is not changed. The portal shows **Restored · free** next to its name in the VM list, on the VM page and in the volume list.
+
+- It is free of charge and outside your quota until you delete it, also while the VM runs.
+- A restored VM starts out Stopped. Each volume attached to the original VM is restored with it and attached to the new VM. Start it when you need it.
+- Its operating system is the original's as it was at the backup, with the same hostname and SSH host keys. When started, it has its own MAC and IP address.
+- Snapshots you take of it are limited and billed as usual.
+- You use and delete it like any other VM or volume. A volume restored with a VM keeps the original volume's name: the volume list shows both, and the label tells them apart.
+
 ## When a VM is billed
 
 - Compute is billed by the hour, at the price of the size. A VM is billed when it is Running, Ready, Frozen or Error, and while it is Stopping, until it has stopped.
 - A VM in the **Stopped** state is not billed for compute.
 - Each snapshot that exists on the infrastructure is billed at a fixed hourly price, which does not depend on size, until the deletion is finished. A snapshot being reverted is still billed.
 - Volumes are billed separately, see the [volumes](/docs/guides/volume/) page.
+- A VM restored from a backup is not billed for compute, see [Restored from a backup](#restored-from-a-backup).
 
 The hourly price of each VM size is on the [pricing table](/#pricing).

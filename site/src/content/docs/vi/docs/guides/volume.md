@@ -16,7 +16,7 @@ Volume là ổ đĩa dữ liệu riêng, tách khỏi VM. Mọi thao tác nằm 
 
 Volume mới hiện **Creating**, rồi **Available** khi đã có trên hạ tầng. Nếu tạo không thành công, một dòng nói lý do: volume hiện **Failed** (bạn bấm **Xoá** để bỏ nó đi), hoặc **Available** nếu ổ đĩa đã được tạo trước khi lỗi. Nếu gắn, gỡ hay xoá không thành công, volume trở lại như trước, kèm một dòng nói lý do; snapshot xoá không thành công cũng vậy.
 
-Mỗi tài khoản có tối đa 10 volume theo mặc định. Khi đã đủ, portal báo "Đã vượt hạn mức ổ đĩa (tối đa 10)." (mã `VOLUME_QUOTA_EXCEEDED`). Volume bạn đã bấm xoá, volume **Failed** và volume **Not found** thì không tính.
+Mỗi tài khoản có tối đa 10 volume theo mặc định. Khi đã đủ, portal báo "Đã vượt hạn mức ổ đĩa (tối đa 10)." (mã `VOLUME_QUOTA_EXCEEDED`). Volume bạn đã bấm xoá, volume **Failed**, volume **Not found** và volume khôi phục từ backup thì không tính.
 
 ## Gắn volume vào VM
 
@@ -65,5 +65,6 @@ Volume mới có cùng cluster, cùng offering và cùng dung lượng với vol
 - Volume tính tiền theo GB theo giờ, khi volume có trên hạ tầng (**Available** hoặc **Attached**). Volume đã gỡ khỏi VM vẫn bị tính. Volume gắn vào VM đang Stopped cũng vẫn bị tính.
 - Volume thôi bị tính khi việc xoá xong, không phải lúc bạn bấm xoá. Volume **Not found** không bị tính.
 - Mỗi snapshot có trên hạ tầng bị tính một mức giá cố định theo giờ, không phụ thuộc dung lượng, cũng tới khi việc xoá xong.
+- Volume khôi phục từ backup (**Đã khôi phục · miễn phí**) không bị tính tiền cho tới khi bạn xoá. Snapshot của nó vẫn tính tiền như thường. Xem [Tài nguyên khôi phục từ backup](/vi/docs/guides/vm/#tài-nguyên-khôi-phục-từ-backup).
 
 Giá volume theo GB có ở [bảng giá](/vi/#pricing).
