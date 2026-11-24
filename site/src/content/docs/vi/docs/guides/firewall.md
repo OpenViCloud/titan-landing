@@ -11,6 +11,8 @@ Mọi firewall rule bạn thêm đều là rule **cho phép (allow)**. Traffic k
 - Network tạo trước khi có mặc định này mà không đặt chính sách — mọi network tạo từ portal trước đó — hiện "Chiều vào từ ngoài mạng: cho phép" và "Chiều ra: cho phép": mọi cổng đều mở, và rule không đóng được cổng nào.
 - Network tạo qua API hay [Terraform](/vi/docs/guides/terraform/) với chính sách chiều ra Deny hiện "Chiều ra: bị chặn trừ khi có quy tắc cho phép": VM chỉ ra ngoài, và tới các VM khác, ở chỗ rule Egress cho phép.
 
+Network `default` của tài khoản bạn, nếu có (xem [network mặc định của bạn](/vi/docs/guides/network/#network-mặc-định-của-bạn)), thường đã mở sẵn hai rule Ingress khi đã sẵn sàng: TCP cổng 22 (SSH) từ `::/0` và từ `0.0.0.0/0`. Network bạn tự tạo thì chưa có rule nào — tự thêm rule như hướng dẫn bên dưới.
+
 Không đổi được chính sách mặc định sau khi đã tạo network. Xem [giới hạn hiện tại](/vi/docs/known-limitations/).
 
 ## Mở bảng firewall

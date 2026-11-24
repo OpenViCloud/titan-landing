@@ -7,7 +7,7 @@ A load balancer puts one public IPv6 address in front of several VMs of a networ
 
 ## Before you create one
 
-A load balancer attaches to one network that has [public IPv6](/docs/guides/public-ipv6/) enabled and is ready. If no network of yours has public IPv6 yet, the portal shows "No network has public IPv6 yet. Tick "Enable public IPv6" when you create a network." and the form cannot be submitted.
+A load balancer attaches to one network that has [public IPv6](/docs/guides/public-ipv6/) enabled and is ready. Your account's `default` network already has public IPv6 enabled, if your account has one — see [your default network](/docs/guides/network/#your-default-network) — so it may already be usable here. If no network of yours has public IPv6 yet, the portal shows "No network has public IPv6 yet. Tick "Enable public IPv6" when you create a network." and the form cannot be submitted.
 
 ## Create a load balancer
 

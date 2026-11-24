@@ -5,6 +5,8 @@ description: Give a network's VMs a public IPv6 address, open the ports you need
 
 Every network can get its own block of public IPv6 addresses. VMs on that network then have an address on the Internet over IPv6, and can reach the Internet over it.
 
+Your account's `default` network (see [networks](/docs/guides/network/#your-default-network)) already has public IPv6 enabled, if your account has one — so you may already have a network with public IPv6 without creating it yourself.
+
 **A new network blocks inbound traffic until you open a port.** Traffic coming from the Internet is dropped, and the VMs still reach out. Add a [firewall rule](/docs/guides/firewall/) for each port you want to reach from the Internet — for example Ingress TCP 22 from `::/0` for SSH. A network created from the portal before this default keeps every port of every VM open to the whole Internet, and rules cannot close a port there (see [known limitations](/docs/known-limitations/)); on such a network, harden each VM yourself, for example with a firewall inside the guest operating system.
 
 ## Turn it on when you create the network
@@ -23,7 +25,7 @@ The VM reaches the Internet over IPv6. IPv4 still has no route to the Internet, 
 
 By default, an account can have public IPv6 enabled on 10 networks at once. This is shown on the Overview page's Quota card as **Public IPv6**. A network stops counting toward this quota as soon as you click delete on it, not when the deletion finishes.
 
-The default network quota is only 1, so in practice you will reach the network quota before the public IPv6 quota.
+The network quota is 2 by default, so in practice you will reach the network quota before the public IPv6 quota.
 
 ## When it is refused
 
@@ -32,7 +34,7 @@ The default network quota is only 1, so in practice you will reach the network q
 | Public IPv6 quota exceeded — delete a network with public IPv6 first | `IPV6_QUOTA_EXCEEDED` | You already have as many networks with public IPv6 enabled as your account allows (10 by default). |
 | Public IPv6 is not available in this cluster | `IPV6_NOT_AVAILABLE` | The cluster has no public IPv6 configured, or every `/64` block of the cluster (255 total) is already taken. |
 
-A network's `/64` is held until its deletion is finished, not just requested. If the network could not be created at all, its `/64` is freed at once.
+A network's `/64` is held until its deletion finishes, not as soon as you request it. A network shown as **Failed** never reached the infrastructure, and its `/64` was freed at once.
 
 ## Cost
 

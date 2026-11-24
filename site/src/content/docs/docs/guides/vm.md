@@ -7,14 +7,14 @@ All VM actions are on the **Virtual Machines** page in the left sidebar. What ea
 
 ## Before you create a VM
 
-Each VM needs a [network](/docs/guides/network/) in the same cluster. That network must be in the **Created** state. The portal only lists ready networks in the cluster you choose. A VM gets a public IPv6 address only when its network was created with public IPv6 enabled — see [public IPv6](/docs/guides/public-ipv6/).
+Each VM needs a [network](/docs/guides/network/) in the same cluster. That network must be in the **Created** state. The portal only lists ready networks in the cluster you choose. Your account already has a `default` network ready to use, if your account has one — see [your default network](/docs/guides/network/#your-default-network). A VM gets a public IPv6 address only when its network was created with public IPv6 enabled — see [public IPv6](/docs/guides/public-ipv6/).
 
 ## Create a VM
 
 1. Click **Create VM**.
 2. Fill in **Name**. The name is at most 64 characters, uses only letters, digits and hyphens (`-`), and must start with a letter or a digit. It must differ from the names of the VMs you have. The name of a deleted VM can be used again.
 3. Choose a **Cluster**.
-4. Choose a **Network**. This field only shows networks in the cluster you just chose.
+4. Choose a **Network**. This field only shows networks in the cluster you just chose. If that cluster has exactly one usable network, it is already selected for you — you can still pick a different one if there is more than one.
 5. Choose a **Template**, which is the operating system. This field only shows templates available in that cluster.
 6. Choose a **Size**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) or Extra Large (8 vCPU, 16 GB).
 7. Under **Access (optional)**, choose how you will log in. Nothing here is required: without an SSH key, you log in on the VM's [console](#open-the-vms-console) with a console password, or add a key later on the VM's page ([add an SSH key to a running VM](#add-an-ssh-key-to-a-running-vm)).
