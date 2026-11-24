@@ -25,7 +25,7 @@ VM ra được Internet qua IPv6. IPv4 vẫn không có đường ra Internet, k
 
 Mặc định, một tài khoản có thể bật IPv6 công khai cho tối đa 10 network cùng lúc. Hạn mức này hiện ở thẻ Hạn mức trên trang Tổng quan dưới tên **IPv6 công khai**. Một network thôi tính vào hạn mức này ngay khi bạn bấm xoá, không phải khi việc xoá xong.
 
-Hạn mức network mặc định là 2 — network `default` cộng một network của riêng bạn — nên trên thực tế bạn sẽ chạm hạn mức network trước khi chạm hạn mức IPv6 công khai, nếu cả hai network của bạn đều bật IPv6 công khai.
+Hạn mức network mặc định là 2 — network `default` cộng một network của riêng bạn — nên trên thực tế bạn sẽ chạm hạn mức network trước khi chạm hạn mức IPv6 công khai.
 
 ## Khi bị từ chối
 
@@ -34,7 +34,7 @@ Hạn mức network mặc định là 2 — network `default` cộng một netwo
 | Đã vượt hạn mức IPv6 công khai — xoá bớt một mạng có IPv6 công khai trước | `IPV6_QUOTA_EXCEEDED` | Bạn đã có đủ số network bật IPv6 công khai mà tài khoản được phép (mặc định 10). |
 | Cluster này chưa có IPv6 công khai | `IPV6_NOT_AVAILABLE` | Cluster chưa cấu hình IPv6 công khai, hoặc mọi dải `/64` của cluster (255 dải) đã dùng hết. |
 
-Dải `/64` của một network chỉ được trả khi việc xoá network đó xong, không phải ngay khi bạn bấm xoá — kể cả network đang ở trạng thái **Failed** mà trước đó đã tạo xong trên hạ tầng; hãy xoá nó để lấy lại `/64`. Nếu network hỏng trước khi kịp tạo trên hạ tầng, `/64` của nó được trả ngay.
+Dải `/64` của một network được giữ tới khi việc xoá network đó xong, không phải ngay khi bạn bấm xoá. Network hiện trạng thái **Failed** là network chưa kịp tạo trên hạ tầng, và `/64` của nó đã được trả ngay.
 
 ## Chi phí
 

@@ -7,7 +7,7 @@ A network is a private network that connects your VMs to each other. Every accou
 
 ## Your default network
 
-When your account was approved, OpenViCloud created a network named `default` for you, with public IPv6 enabled, on a cluster that offers it. Like every new network it blocks inbound traffic from outside it by default, but it already has two rules open so you can reach it right away: Ingress TCP port 22 (SSH) from anywhere, over both IPv6 (`::/0`) and IPv4 (`0.0.0.0/0`). See [firewall rules](/docs/guides/firewall/) and [public IPv6](/docs/guides/public-ipv6/).
+When your account was approved, OpenViCloud created a network named `default` for you, with public IPv6 enabled, on the first cluster that offers it. Like every new network it blocks inbound traffic from outside it by default, but it already has two rules open so you can reach it right away: Ingress TCP port 22 (SSH) from anywhere, over both IPv6 (`::/0`) and IPv4 (`0.0.0.0/0`). See [firewall rules](/docs/guides/firewall/) and [public IPv6](/docs/guides/public-ipv6/).
 
 If no cluster had public IPv6 available yet when your account was approved, you did not get this network — create one yourself below, as before.
 
