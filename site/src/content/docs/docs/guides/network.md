@@ -3,7 +3,17 @@ title: Create and delete networks
 description: Create a private network for your VMs in the portal, choose its name, cluster and CIDR range, and delete the network when you no longer need it.
 ---
 
-A network is a private network that connects your VMs to each other. Each VM needs a network, so you create the network first and then [create the VM](/docs/guides/vm/).
+A network is a private network that connects your VMs to each other. Every account already has one, named `default`, created automatically when the account was approved — see [your default network](#your-default-network) below. Create another one here if you want more than that.
+
+## Your default network
+
+When your account was approved, OpenViCloud created a network named `default` for you, with public IPv6 enabled, on a cluster that offers it. Like every new network it blocks inbound traffic from outside it by default, but it already has two rules open so you can reach it right away: Ingress TCP port 22 (SSH) from anywhere, over both IPv6 (`::/0`) and IPv4 (`0.0.0.0/0`). See [firewall rules](/docs/guides/firewall/) and [public IPv6](/docs/guides/public-ipv6/).
+
+If no cluster had public IPv6 available yet when your account was approved, you did not get this network — create one yourself below, as before.
+
+The default network is a normal network: rename it, add or remove firewall rules, or delete it like any other. Once deleted, it does not come back.
+
+Accounts created before this existed also received a `default` network, unless they already had at least one network of their own.
 
 ## Create a network
 
@@ -35,7 +45,7 @@ A network lives in the cluster you choose when you create it. When you create a 
 
 ## Quota
 
-By default, a new account can create 1 network. When you reach it, the portal shows "Network quota exceeded" (code `NETWORK_QUOTA_EXCEEDED`). This quota can be adjusted for your account. A network that is being deleted no longer counts toward the quota.
+By default, a new account can create 2 networks — the default network plus one of your own. When you reach it, the portal shows "Network quota exceeded" (code `NETWORK_QUOTA_EXCEEDED`). This quota can be adjusted for your account. A network that is being deleted no longer counts toward the quota.
 
 ## Delete a network
 

@@ -10,7 +10,7 @@ Each OpenViCloud account has nine quotas. When you have used up a quota, OpenViC
 | Quota | Default | Counted per | Error code when exceeded |
 |----------|----------|-----------|-----------------|
 | Number of VMs | 10 | account | `VM_QUOTA_EXCEEDED` |
-| Number of networks | 1 | account | `NETWORK_QUOTA_EXCEEDED` |
+| Number of networks | 2 | account | `NETWORK_QUOTA_EXCEEDED` |
 | Number of volumes | 10 | account | `VOLUME_QUOTA_EXCEEDED` |
 | Number of networks with public IPv6 | 10 | account | `IPV6_QUOTA_EXCEEDED` |
 | Number of SSH keys | 20 | account | `SSH_KEY_QUOTA_EXCEEDED` |
@@ -18,6 +18,8 @@ Each OpenViCloud account has nine quotas. When you have used up a quota, OpenViC
 | Snapshots of a VM | 3 | per VM | `VM_SNAPSHOT_QUOTA_EXCEEDED` |
 | Snapshots of a volume | 3 | per volume | `VOLUME_SNAPSHOT_QUOTA_EXCEEDED` |
 | Firewall rules of a network | 20 | per network | `FIREWALL_QUOTA_EXCEEDED` |
+
+The network quota counts the `default` network OpenViCloud creates for you when your account is approved — see [networks](/docs/guides/network/).
 
 All the error codes above return HTTP `422`.
 

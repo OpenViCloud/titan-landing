@@ -7,14 +7,14 @@ Mọi thao tác với VM nằm ở trang **Máy ảo** trên thanh bên trái. �
 
 ## Trước khi tạo VM
 
-Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Network đó phải ở trạng thái **Created**. Portal chỉ liệt kê network đã sẵn sàng của cluster bạn chọn. VM chỉ có địa chỉ IPv6 công khai khi network của nó được tạo có bật IPv6 công khai — xem [IPv6 công khai](/vi/docs/guides/public-ipv6/).
+Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Network đó phải ở trạng thái **Created**. Portal chỉ liệt kê network đã sẵn sàng của cluster bạn chọn. Tài khoản bạn đã có sẵn một network `default` để dùng, nếu tài khoản bạn có network này — xem [network mặc định của bạn](/vi/docs/guides/network/#network-mặc-định-của-bạn). VM chỉ có địa chỉ IPv6 công khai khi network của nó được tạo có bật IPv6 công khai — xem [IPv6 công khai](/vi/docs/guides/public-ipv6/).
 
 ## Tạo VM
 
 1. Bấm **Tạo VM**.
 2. Điền **Tên**. Tên dài tối đa 64 ký tự, chỉ gồm chữ, số và dấu gạch ngang (`-`), và phải bắt đầu bằng chữ hoặc số. Tên phải khác tên các VM bạn đang có. Tên của VM đã xoá thì dùng lại được.
 3. Chọn **Cluster**.
-4. Chọn **Mạng**. Ô này chỉ hiện network thuộc cluster vừa chọn.
+4. Chọn **Mạng**. Ô này chỉ hiện network thuộc cluster vừa chọn. Nếu cluster đó chỉ có đúng một network dùng được, ô này đã chọn sẵn network đó — bạn vẫn chọn được network khác nếu có nhiều hơn một.
 5. Chọn **Template**, tức hệ điều hành. Ô này chỉ hiện template đã có ở cluster đó.
 6. Chọn **Cấu hình**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) hoặc Extra Large (8 vCPU, 16 GB).
 7. Ở mục **Truy cập (không bắt buộc)**, chọn cách bạn sẽ đăng nhập. Không ô nào ở đây là bắt buộc: không có SSH key thì bạn đăng nhập trên [console](#mở-console-của-vm) của VM bằng mật khẩu console, hoặc thêm key sau ở trang của VM ([thêm SSH key vào VM đang chạy](#thêm-ssh-key-vào-vm-đang-chạy)).

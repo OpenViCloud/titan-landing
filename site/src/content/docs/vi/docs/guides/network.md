@@ -3,7 +3,17 @@ title: Tạo và xoá network
 description: Tạo network riêng cho VM trên portal, chọn tên, cluster, dải CIDR, và xoá network khi không dùng nữa.
 ---
 
-Network là mạng riêng nối các VM của bạn với nhau. Mỗi VM cần một network, nên bạn tạo network trước rồi mới [tạo VM](/vi/docs/guides/vm/).
+Network là mạng riêng nối các VM của bạn với nhau. Tài khoản nào cũng đã có sẵn một network tên `default`, tạo tự động khi tài khoản được duyệt — xem [network mặc định của bạn](#network-mặc-định-của-bạn) bên dưới. Tạo thêm một cái ở đây nếu bạn muốn nhiều hơn.
+
+## Network mặc định của bạn
+
+Khi tài khoản của bạn được duyệt, OpenViCloud tạo cho bạn một network tên `default`, bật sẵn IPv6 công khai, trên một cluster có IPv6. Giống mọi network mới, nó chặn traffic từ ngoài vào theo mặc định, nhưng đã mở sẵn hai rule để bạn vào được ngay: Ingress TCP cổng 22 (SSH) từ bất kỳ đâu, qua cả IPv6 (`::/0`) lẫn IPv4 (`0.0.0.0/0`). Xem [firewall rule](/vi/docs/guides/firewall/) và [IPv6 công khai](/vi/docs/guides/public-ipv6/).
+
+Nếu lúc tài khoản bạn được duyệt chưa cluster nào có IPv6 công khai, bạn không nhận network này — tự tạo một cái như hướng dẫn bên dưới.
+
+Network mặc định là một network bình thường: đổi tên, thêm/xoá firewall rule, hay xoá nó như mọi network khác. Xoá rồi thì nó không tự mọc lại.
+
+Tài khoản tạo từ trước khi có tính năng này cũng nhận một network `default`, trừ khi đã có sẵn ít nhất một network của riêng mình.
 
 ## Tạo network
 
@@ -35,7 +45,7 @@ Network nằm trong cluster bạn chọn lúc tạo. Khi tạo VM, portal chỉ 
 
 ## Hạn mức
 
-Mặc định, một tài khoản mới được tạo 1 network. Khi đã đủ, portal báo "Đã vượt hạn mức mạng" (mã `NETWORK_QUOTA_EXCEEDED`). Hạn mức này có thể được điều chỉnh riêng cho tài khoản của bạn. Network đang xoá không còn tính vào hạn mức.
+Mặc định, một tài khoản mới được tạo 2 network — network mặc định cộng một network của riêng bạn. Khi đã đủ, portal báo "Đã vượt hạn mức mạng" (mã `NETWORK_QUOTA_EXCEEDED`). Hạn mức này có thể được điều chỉnh riêng cho tài khoản của bạn. Network đang xoá không còn tính vào hạn mức.
 
 ## Xoá network
 

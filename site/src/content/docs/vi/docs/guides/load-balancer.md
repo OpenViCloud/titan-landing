@@ -7,7 +7,7 @@ Load balancer đặt một địa chỉ IPv6 công khai trước nhiều VM củ
 
 ## Trước khi tạo
 
-Load balancer gắn vào một network đã bật [IPv6 công khai](/vi/docs/guides/public-ipv6/) và đã sẵn sàng. Nếu chưa network nào của bạn có IPv6 công khai, portal báo "Chưa có mạng nào có IPv6 công khai. Đánh dấu "Bật IPv6 công khai" khi tạo mạng." và form không gửi được.
+Load balancer gắn vào một network đã bật [IPv6 công khai](/vi/docs/guides/public-ipv6/) và đã sẵn sàng. Network `default` của tài khoản bạn đã bật sẵn IPv6 công khai, nếu tài khoản bạn có network này — xem [network mặc định của bạn](/vi/docs/guides/network/#network-mặc-định-của-bạn) — nên có thể dùng được ngay ở đây. Nếu chưa network nào của bạn có IPv6 công khai, portal báo "Chưa có mạng nào có IPv6 công khai. Đánh dấu "Bật IPv6 công khai" khi tạo mạng." và form không gửi được.
 
 ## Tạo load balancer
 
