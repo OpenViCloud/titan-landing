@@ -49,7 +49,7 @@ From a screen at least 900 pixels wide, the header has a search box. Press `/` t
 
 ## Language
 
-Pick **English** or **Tiếng Việt** in the account menu. The waiting-for-approval screen and the terms-of-service screen each have their own language switch in the corner, since you reach them before the account menu is available.
+Click the language button in the top bar, next to your account name. It shows **Tiếng Việt** while the portal is in English, and **English** while it is in Tiếng Việt. You can also pick either one in the account menu. The waiting-for-approval screen and the terms-of-service screen each have their own language switch in the corner, since you reach them before the account menu is available.
 
 Your choice is remembered in this browser. On your first visit, with nothing remembered yet, the portal shows Tiếng Việt if you are in Vietnam, English otherwise. The sign-in page follows your remembered choice; with nothing remembered, it follows your browser's language instead.
 
