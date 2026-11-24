@@ -60,22 +60,28 @@ def beta_label_checks(base):
     return results
 
 
-# The chat box is on the two landings only, its data notice before the box where a question is typed
-# (titan-ops features/public-site/design.md#chat-assistant).
+# The chat box is on every page of the site, its data notice, in the page's language, before the input where a
+# question is typed (titan-ops features/public-site/design.md#chat-assistant).
+CHAT_NOTICE = {"en": "Your questions are stored by OpenViCloud", "vi": "Câu hỏi của bạn được OpenViCloud"}
+CHAT_PAGES = {"/": "en", "/vi/": "vi", "/docs/": "en", "/vi/docs/": "vi", "/docs/guides/vm/": "en", "/vi/docs/guides/vm/": "vi"}
+
+
+def chat_box_found(page, lang):
+    opener = "data-chat-open" in page
+    at_notice, at_input = page.find(CHAT_NOTICE[lang]), page.find("data-chat-input")
+    ordered = at_notice != -1 and at_input != -1 and at_notice < at_input
+    return opener and ordered, f"opener={opener} notice at={at_notice} input at={at_input}"
+
+
 def chat_box_checks(base):
-    notices = {"/": "Your questions are stored by OpenViCloud", "/vi/": "Câu hỏi của bạn được OpenViCloud"}
     results = []
-    for path, notice in notices.items():
+    for path, lang in CHAT_PAGES.items():
         status, _, page = fetch(base + path)
-        opener = "data-chat-open" in page
-        at_notice, at_input = page.find(notice), page.find("data-chat-input")
-        ordered = at_notice != -1 and at_input != -1 and at_notice < at_input
-        results.append((f"{path} has the chat box, notice before the input", status == 200 and opener and ordered,
-                        f"status={status} opener={opener} notice at={at_notice} input at={at_input}"))
-    for path in ("/docs/", "/vi/docs/"):
-        status, _, page = fetch(base + path)
-        absent = "data-chat-open" not in page
-        results.append((f"{path} has no chat box", status == 200 and absent, f"status={status} opener absent={absent}"))
+        found, detail = chat_box_found(page, lang)
+        results.append((f"{path} has the chat box, notice before the input", status == 200 and found, f"status={status} {detail}"))
+    status, _, page = fetch(base + "/missing-page-" + "y" * 8)
+    found, detail = chat_box_found(page, "en")
+    results.append(("missing page has the chat box, notice before the input", status == 404 and found, f"status={status} {detail}"))
     return results
 
 

@@ -1,0 +1,20 @@
+---
+// Starlight's page frame plus the chat box, so every docs page and the 404 page has it
+// (titan-ops features/public-site/design.md#chat-assistant). The box sits outside <main>: search does not index it.
+import Default from '@astrojs/starlight/components/PageFrame.astro';
+import Chat from './Chat.astro';
+
+const lang = Astro.locals.starlightRoute.lang === 'vi' ? 'vi' : 'en';
+---
+
+<Default>
+  <slot name="header" slot="header" />
+  <slot name="sidebar" slot="sidebar" />
+  <slot />
+</Default>
+<Chat lang={lang} />
+
+<style is:global>
+  /* Room under the last card (pagination) so the fixed chat opener does not cover it. */
+  .main-frame { padding-bottom: 5rem; }
+</style>
