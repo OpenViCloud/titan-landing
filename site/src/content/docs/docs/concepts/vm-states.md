@@ -61,6 +61,6 @@ The badge always shows the state the VM is in. For example: if you shut down the
 
 ## States and cost
 
-A VM in `Running`, `Ready`, `Frozen` or `Error` is billed at the hourly price of its size. A VM in `Stopping` is still billed until it has stopped. A VM in `Stopped` is not charged this price. However, volumes attached to the VM and the VM's snapshots are still billed while the VM is `Stopped`. The hourly price of each VM size is on the [pricing table](/#pricing).
+A VM in `Running`, `Ready`, `Frozen` or `Error` is billed at the hourly price of its size. A VM in `Stopping` is still billed until it has stopped. A VM in `Stopped` is not charged this price. However, volumes attached to the VM and the VM's snapshots are still billed while the VM is `Stopped`. A VM restored from a backup, and the volumes restored with it, are not billed in any state; their snapshots are ([Restored from a backup](/docs/guides/vm/#restored-from-a-backup)). The hourly price of each VM size is on the [pricing table](/#pricing).
 
 See also: [Error codes](/docs/concepts/error-codes/) · [Account quotas](/docs/concepts/quotas/)

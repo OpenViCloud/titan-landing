@@ -33,6 +33,7 @@ The IPv6 quota counts **networks**, not VMs: it counts how many of your networks
 - **Volumes**: counted unless you have clicked delete, it has been deleted, or it is in an error state.
 - **Snapshots**: counted while being created or once ready. Snapshots you have clicked delete on no longer count.
 - **SSH keys**: counted as every key you have saved. Deleting a key is immediate and permanent, so a deleted key never counts.
+- VMs and volumes restored from a backup (**Restored · free**): never counted, see [Restored from a backup](/docs/guides/vm/#restored-from-a-backup).
 
 This means that when a delete request is accepted, the slot goes back to the quota immediately, without waiting for the deletion to finish. For SSH keys, the delete itself is immediate.
 
