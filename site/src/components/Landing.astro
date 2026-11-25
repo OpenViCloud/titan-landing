@@ -551,7 +551,8 @@ function tokens(line: string) {
       .meter div { min-width: 0; border: 1px solid var(--color-border); border-radius: 0.75rem; padding: 0.75rem 0.875rem; background: var(--color-background); }
       .meter small { display: block; font-size: 0.75rem; color: var(--color-muted-foreground); }
       .meter b { font-family: var(--font-mono); font-weight: 400; font-size: 0.875rem; }
-      .panel figcaption { margin-top: 0.75rem; font-size: 0.75rem; color: var(--color-muted-foreground); text-align: right; }
+      /* Left: the fixed chat opener sits in the bottom right corner of the window and covers a caption that ends there. */
+      .panel figcaption { margin-top: 0.75rem; font-size: 0.75rem; color: var(--color-muted-foreground); text-align: left; }
 
       .subnav { border-bottom: 1px solid var(--color-border); }
       .subnav-row { display: flex; gap: 0.375rem; overflow-x: auto; padding-top: 0.625rem; padding-bottom: 0.625rem; }
@@ -637,7 +638,9 @@ function tokens(line: string) {
       .cta h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; }
       .cta p { color: var(--color-muted-foreground); margin: 0.75rem auto 1.625rem; max-width: 34em; }
 
-      .site-footer { border-top: 1px solid var(--color-border); }
+      /* Room under the footer links, as PageFrame.astro leaves under the docs pages, so the fixed chat opener does not
+         cover them once the page is scrolled to its end. */
+      .site-footer { border-top: 1px solid var(--color-border); padding-bottom: 5rem; }
       .footer-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; padding-top: 2.25rem; padding-bottom: 2.25rem; font-size: 0.875rem; color: var(--color-muted-foreground); }
       .footer-row nav { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-left: auto; }
       .footer-row a { text-decoration: none; }
