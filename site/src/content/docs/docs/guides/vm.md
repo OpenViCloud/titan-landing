@@ -11,7 +11,7 @@ Each VM needs a [network](/docs/guides/network/) in the same cluster. That netwo
 
 ## Create a VM
 
-1. Click **Create VM**. The line under the title shows the cluster and network the VM goes to, such as `Singapore 01 · default`.
+1. Click **Create VM**. Once a cluster and a network are chosen, the line under the title shows them, such as `Singapore 01 · default`.
 2. Fill in **Name**. The name is at most 64 characters, uses only letters, digits and hyphens (`-`), and must start with a letter or a digit. It must differ from the names of the VMs you have. The name of a deleted VM can be used again.
 3. Check the cluster and network. If you have one cluster, it is already chosen; if that cluster has exactly one usable network, that network is chosen too. To pick another, click **Change** next to them: the **Cluster** and **Network** fields open. They also show by themselves while a cluster or network still has to be chosen. The **Network** field only shows usable networks in the chosen cluster.
 4. Choose a **Template**, which is the operating system. The list only shows templates available in that cluster; if it has only one, it is already chosen. With templates of two or more operating systems, pick the operating system on the left, then the template on the right. With more than six templates, type in **Search templates** to find one by name or description.

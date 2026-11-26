@@ -7,7 +7,7 @@ Khi tạo VM, bạn chọn hai thứ riêng biệt: **template** quyết định
 
 ## Size của VM
 
-OpenViCloud có bốn size. Trong danh sách **Cấu hình** của form **Tạo VM**, mỗi size là một hàng ghi vCPU, RAM và giá theo giờ, ví dụ `Medium 2 vCPU 4 GB RAM`.
+OpenViCloud có bốn size. Trong danh sách **Cấu hình** của form **Tạo VM**, mỗi size là một hàng ghi tên, vCPU và RAM, ví dụ `Medium 2 vCPU 4 GB RAM`, rồi tới giá theo giờ.
 
 | Size | vCPU | RAM |
 |------|------|-----|
@@ -24,7 +24,7 @@ Nếu size bạn chọn không còn tồn tại, OpenViCloud từ chối với l
 
 Template cho biết VM chạy hệ điều hành gì. Danh sách **Template** nhóm template theo hệ điều hành; mỗi template ghi tên, dưới là mô tả.
 
-Danh sách template phụ thuộc vào [cluster](/vi/docs/concepts/cluster/) bạn chọn. Form liệt kê template của cluster ghi ở dòng dưới tiêu đề; bấm **Đổi** ở đó để chọn cluster khác.
+Danh sách template phụ thuộc vào [cluster](/vi/docs/concepts/cluster/) bạn chọn. Form liệt kê template của cluster đã chọn; muốn chọn cluster khác, bấm **Đổi** ở dòng dưới tiêu đề, hoặc dùng ô **Cluster** khi nó hiện.
 
 Hai lỗi có thể gặp khi chọn template:
 

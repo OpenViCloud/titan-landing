@@ -27,7 +27,7 @@ Loại key được chấp nhận: `ssh-ed25519`, `ecdsa-sha2-nistp256`, `ecdsa-
 
 ## Chọn key khi tạo VM
 
-Trong hộp thoại [Tạo VM](/vi/docs/guides/vm/), bấm **SSH key** ở mục **Truy cập (không bắt buộc)** để mở danh sách key của bạn, rồi đánh dấu key muốn thêm. Chọn tối đa 10 key cho mỗi VM. Key đã chọn chỉ được cài đúng một lần, sớm trong lần khởi động đầu của VM, vào `/etc/ssh/openvicloud/ubuntu` — file mà SSH server của VM đọc cho user `ubuntu`, cạnh `~/.ssh/authorized_keys`.
+Trong hộp thoại [Tạo VM](/vi/docs/guides/vm/), bấm nút dưới **SSH key** ở mục **Truy cập (không bắt buộc)** (ghi *Chưa chọn key nào* tới khi bạn chọn) để mở danh sách key của bạn, rồi đánh dấu key muốn thêm. Chọn tối đa 10 key cho mỗi VM. Key đã chọn chỉ được cài đúng một lần, sớm trong lần khởi động đầu của VM, vào `/etc/ssh/openvicloud/ubuntu` — file mà SSH server của VM đọc cho user `ubuntu`, cạnh `~/.ssh/authorized_keys`.
 
 Muốn thêm key vào một VM đang chạy, dùng [Thêm SSH key vào VM đang chạy](/vi/docs/guides/vm/#thêm-ssh-key-vào-vm-đang-chạy) trên trang của VM, hoặc `openvicloud vm add-ssh-key` ở [CLI](/vi/docs/guides/cli/#thêm-ssh-key-vào-vm). Một VM tạo từ trước mà chưa có SSH key nào có thể cần được tắt rồi bật lại thì key mới thêm mới có hiệu lực — portal và CLI báo cho bạn biết khi nào cần vậy; VM đã có sẵn một key, hay chọn key ngay lúc tạo, thì dùng được key mới ngay. Xoá một key không gỡ nó khỏi các VM đã có key đó — muốn gỡ thì xoá dòng của nó trong `/etc/ssh/openvicloud/ubuntu` ngay trong VM (dùng `sudo`); lần khởi động sau nó không quay lại.
 

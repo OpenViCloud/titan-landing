@@ -11,7 +11,7 @@ Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Netw
 
 ## Tạo VM
 
-1. Bấm **Tạo VM**. Dòng dưới tiêu đề hiện cluster và network mà VM sẽ nằm trên, ví dụ `Singapore 01 · default`.
+1. Bấm **Tạo VM**. Khi đã có cluster và network được chọn, dòng dưới tiêu đề ghi chúng, ví dụ `Singapore 01 · default`.
 2. Điền **Tên**. Tên dài tối đa 64 ký tự, chỉ gồm chữ, số và dấu gạch ngang (`-`), và phải bắt đầu bằng chữ hoặc số. Tên phải khác tên các VM bạn đang có. Tên của VM đã xoá thì dùng lại được.
 3. Xem cluster và network. Bạn chỉ có một cluster thì cluster đó đã được chọn sẵn; cluster đó có đúng một network dùng được thì network cũng được chọn sẵn. Muốn chọn khác, bấm **Đổi** cạnh chúng: ô **Cluster** và **Mạng** mở ra. Hai ô này cũng tự hiện khi còn phải chọn cluster hay network. Ô **Mạng** chỉ hiện network dùng được của cluster đã chọn.
 4. Chọn **Template**, tức hệ điều hành. Danh sách chỉ hiện template đã có ở cluster đó; chỉ có một thì nó đã được chọn sẵn. Có template của từ hai hệ điều hành trở lên thì chọn hệ điều hành ở bên trái, rồi template ở bên phải. Có trên sáu template thì gõ vào **Tìm template** để tìm theo tên hay mô tả.
