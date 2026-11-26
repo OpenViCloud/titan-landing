@@ -11,21 +11,20 @@ Mỗi VM cần một [network](/vi/docs/guides/network/) ở cùng cluster. Netw
 
 ## Tạo VM
 
-1. Bấm **Tạo VM**.
+1. Bấm **Tạo VM**. Khi đã có cluster và network được chọn, dòng dưới tiêu đề ghi chúng, ví dụ `Singapore 01 · default`.
 2. Điền **Tên**. Tên dài tối đa 64 ký tự, chỉ gồm chữ, số và dấu gạch ngang (`-`), và phải bắt đầu bằng chữ hoặc số. Tên phải khác tên các VM bạn đang có. Tên của VM đã xoá thì dùng lại được.
-3. Chọn **Cluster**.
-4. Chọn **Mạng**. Ô này chỉ hiện network thuộc cluster vừa chọn. Nếu cluster đó chỉ có đúng một network dùng được, ô này đã chọn sẵn network đó — bạn vẫn chọn được network khác nếu có nhiều hơn một.
-5. Chọn **Template**, tức hệ điều hành. Ô này chỉ hiện template đã có ở cluster đó.
-6. Chọn **Cấu hình**: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) hoặc Extra Large (8 vCPU, 16 GB).
-7. Ở mục **Truy cập (không bắt buộc)**, chọn cách bạn sẽ đăng nhập. Không ô nào ở đây là bắt buộc: không có SSH key thì bạn đăng nhập trên [console](#mở-console-của-vm) của VM bằng mật khẩu console, hoặc thêm key sau ở trang của VM ([thêm SSH key vào VM đang chạy](#thêm-ssh-key-vào-vm-đang-chạy)).
-   - Ở mục **SSH key**, đánh dấu key muốn thêm vào VM này. Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước. Key đã chọn được thêm cho user `ubuntu`.
+3. Xem cluster và network. Bạn chỉ có một cluster thì cluster đó đã được chọn sẵn; cluster đó có đúng một network dùng được thì network cũng được chọn sẵn. Muốn chọn khác, bấm **Đổi** cạnh chúng: ô **Cluster** và **Mạng** mở ra. Hai ô này cũng tự hiện khi còn phải chọn cluster hay network. Ô **Mạng** chỉ hiện network dùng được của cluster đã chọn.
+4. Chọn **Template**, tức hệ điều hành. Danh sách chỉ hiện template đã có ở cluster đó; chỉ có một thì nó đã được chọn sẵn. Có template của từ hai hệ điều hành trở lên thì chọn hệ điều hành ở bên trái, rồi template ở bên phải. Có trên sáu template thì gõ vào **Tìm template** để tìm theo tên hay mô tả.
+5. Chọn **Cấu hình**. Mỗi hàng ghi tên, vCPU, RAM và giá theo giờ của cấu hình đó: Small (1 vCPU, 2 GB RAM), Medium (2 vCPU, 4 GB), Large (4 vCPU, 8 GB) hoặc Extra Large (8 vCPU, 16 GB). Không cấu hình nào được chọn sẵn. Cuối form ghi template, cấu hình và giá theo giờ bạn đã chọn.
+6. Ở mục **Truy cập (không bắt buộc)**, chọn cách bạn sẽ đăng nhập. Không ô nào ở đây là bắt buộc: không có SSH key thì bạn đăng nhập trên [console](#mở-console-của-vm) của VM bằng mật khẩu console, hoặc thêm key sau ở trang của VM ([thêm SSH key vào VM đang chạy](#thêm-ssh-key-vào-vm-đang-chạy)).
+   - Bấm nút dưới **SSH key** (ghi *Chưa chọn key nào* tới khi bạn chọn), rồi đánh dấu key muốn thêm vào VM này. Xem [SSH key và đăng nhập](/vi/docs/guides/ssh-keys/) để thêm key trước. Key đã chọn được thêm cho user `ubuntu`.
    - Điền **Mật khẩu console**: 12 đến 72 ký tự, để đăng nhập user `ubuntu` trên console của VM. OpenViCloud chỉ giữ hash của nó, nên không xem lại được. VM tạo không có mật khẩu này thì không có mật khẩu console, và không đặt thêm sau được.
-8. Bấm **Nâng cao** để đổi thời gian dừng hay thêm cloud-init user data. Mục này đóng sẵn; đóng lại thì chữ đã gõ vẫn giữ.
+7. Bấm **Nâng cao** để đổi thời gian dừng hay thêm cloud-init user data. Mục này đóng sẵn; đóng lại thì chữ đã gõ vẫn giữ.
    - **Thời gian dừng (giây)**: thời gian tối đa hệ thống chờ hệ điều hành của VM tự tắt trước khi ngắt nguồn ([Tắt](#stop-start-và-resume)). Từ 30 đến 1800 giây, mặc định 120. VM cần thời gian để tắt êm, như database, nên đặt dài hơn.
    - **Cloud-init user data**: một tài liệu cloud-init, ví dụ `#cloud-config`, chạy lúc VM khởi động lần đầu. Tối đa 32768 byte.
-9. Bấm **Tạo VM**.
+8. Bấm **Tạo VM**.
 
-Hãy điền đủ các ô phía trên **Truy cập (không bắt buộc)**. Khi bạn bấm **Tạo VM**, portal kiểm tên, rồi phần còn lại theo thứ tự dưới đây, chỉ báo lỗi đầu tiên tìm thấy, và không gửi gì. Lỗi ở thời gian dừng hay cloud-init user data làm mục **Nâng cao** tự mở, để bạn thấy lỗi:
+Hãy chọn cluster, mạng, template và cấu hình. Khi bạn bấm **Tạo VM**, portal kiểm tên, rồi phần còn lại theo thứ tự dưới đây, chỉ báo lỗi đầu tiên tìm thấy, và không gửi gì. Lỗi ở thời gian dừng hay cloud-init user data làm mục **Nâng cao** tự mở, để bạn thấy lỗi:
 
 - Mật khẩu console ngắn hơn 12 hay dài hơn 72 ký tự: "Mật khẩu console phải từ 12 đến 72 ký tự."
 - Thời gian dừng không phải số giây nguyên từ 30 đến 1800: "Thời gian dừng phải là số giây nguyên, từ 30 đến 1800."
