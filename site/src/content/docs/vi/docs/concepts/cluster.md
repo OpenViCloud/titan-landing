@@ -17,9 +17,9 @@ Bạn chọn cluster một lần, lúc tạo tài nguyên. Sau khi tạo, bạn 
 
 Trong form **Tạo VM**:
 
-1. Chọn **Cluster** trước.
+1. Dòng dưới tiêu đề ghi cluster và network. Bạn chỉ có một cluster thì nó đã được chọn sẵn; bấm **Đổi** để thấy ô **Cluster** và **Mạng**.
 2. Ô **Mạng** chỉ liệt kê các network đang hoạt động trong cluster đó.
-3. Ô **Template** chỉ liệt kê các template có sẵn ở cluster đó. Nếu cluster chưa có template nào, ô này báo *Cluster này chưa có template*.
+3. Danh sách **Template** chỉ hiện các template có sẵn ở cluster đó. Nếu cluster chưa có template nào, ô này báo *Cluster này chưa có template*.
 
 ## Tài nguyên phải cùng cluster
 

@@ -27,7 +27,7 @@ Accepted key types: `ssh-ed25519`, `ecdsa-sha2-nistp256`, `ecdsa-sha2-nistp384`,
 
 ## Pick keys when you create a VM
 
-The [Create VM](/docs/guides/vm/) dialog has an **SSH keys** checkbox group. Pick up to 10 keys per VM. Picked keys are installed only once, early in the VM's first boot, into `/etc/ssh/openvicloud/ubuntu`, a file the VM's SSH server reads for the `ubuntu` user next to `~/.ssh/authorized_keys`.
+In the [Create VM](/docs/guides/vm/) dialog, click **SSH keys** under **Access (optional)** to open the list of your keys, then tick the ones to add. Pick up to 10 keys per VM. Picked keys are installed only once, early in the VM's first boot, into `/etc/ssh/openvicloud/ubuntu`, a file the VM's SSH server reads for the `ubuntu` user next to `~/.ssh/authorized_keys`.
 
 To add a key to a VM that is already running, use [Add an SSH key to a running VM](/docs/guides/vm/#add-an-ssh-key-to-a-running-vm) on the VM's page, or `openvicloud vm add-ssh-key` in the [CLI](/docs/guides/cli/#ssh-keys). A VM created earlier without any SSH key may need to be stopped and started for the added key to take effect — the portal and the CLI tell you when this applies; a VM that already had a key, or was created with one, gets the new key right away. Deleting a key does not remove it from VMs that already have it — remove its line from `/etc/ssh/openvicloud/ubuntu` inside the VM (with `sudo`) if you need to; it does not come back at the next boot.
 

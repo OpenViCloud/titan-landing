@@ -7,7 +7,7 @@ When you create a VM, you choose two separate things: the **template** decides t
 
 ## VM sizes
 
-OpenViCloud has four sizes. In the **Size** field of the **Create VM** form, each size shows as `Medium — 2 vCPU · 4 GB`.
+OpenViCloud has four sizes. In the **Size** list of the **Create VM** form, each size is a row with its vCPU, RAM and price per hour, such as `Medium 2 vCPU 4 GB RAM`.
 
 | Size | vCPU | RAM |
 |------|------|-----|
@@ -22,9 +22,9 @@ If the size you chose no longer exists, OpenViCloud refuses with the error `VM_O
 
 ## Operating system templates
 
-A template tells which operating system the VM runs. The **Template** field shows the template name and the operating system, as `<name> — <operating system>`.
+A template tells which operating system the VM runs. The **Template** list groups templates by operating system; each template shows its name with its description under it.
 
-The template list depends on the [cluster](/docs/concepts/cluster/) you choose. You must choose the cluster first, then you can choose a template.
+The template list depends on the [cluster](/docs/concepts/cluster/) you choose. The form lists the templates of the cluster it shows on the line under its title; click **Change** there to pick another cluster.
 
 Two errors can happen when you choose a template:
 

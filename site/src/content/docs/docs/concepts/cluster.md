@@ -17,9 +17,9 @@ You choose the cluster once, when you create the resource. After it is created, 
 
 In the **Create VM** form:
 
-1. Choose the **Cluster** first.
+1. The line under the title shows the cluster and network. If you have one cluster, it is already chosen; click **Change** to see the **Cluster** and **Network** fields.
 2. The **Network** field only lists active networks in that cluster.
-3. The **Template** field only lists templates available in that cluster. If the cluster has no templates yet, this field shows *No templates in this cluster yet*.
+3. The **Template** list only shows templates available in that cluster. If the cluster has no templates yet, this field shows *No templates in this cluster yet*.
 
 ## Resources must be in the same cluster
 
